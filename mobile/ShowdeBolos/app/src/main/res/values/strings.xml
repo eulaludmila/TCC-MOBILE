@@ -10,5 +10,6 @@
         <item>Masculino</item>
         <item>Feminino</item>
         <item>Outros</item>
+        <item>Não Informar</item>
     </string-array>
 </resources>
