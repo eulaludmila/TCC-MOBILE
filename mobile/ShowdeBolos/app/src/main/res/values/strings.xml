@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Show de Bolos</string>
+    <string name="entrar"><u>Entrar sem cadastro</u></string>
+    <string name="senha"><u>Esqueceu a senha?</u></string>
+    <string name="cadastro"><u>Cadastre-se</u></string>
+    <string name="cadastro_cliente">Cadastro de Cliente</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cadastro_confeiteiro">Cadastro de Confeiteiro</string>
+    <string-array name="array_sexo">
+        <item>Masculino</item>
+        <item>Feminino</item>
+        <item>Outros</item>
+    </string-array>
+</resources>
