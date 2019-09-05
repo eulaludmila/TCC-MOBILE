@@ -9,4 +9,6 @@
     <color name="claro2">#d9167d</color>
     <color name="branco">#fff</color>
     <color name="preto">#000</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
 </resources>
+

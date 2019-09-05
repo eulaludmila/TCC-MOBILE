@@ -15,7 +15,7 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
 
         txt_cpf_confeiteiro.addTextChangedListener(Mask.mask("###.###.###-##", txt_cpf_confeiteiro))
         txt_celular_confeiteiro.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_confeiteiro))
-        txt_dt_nascimento_confeiteiro.addTextChangedListener(Mask.mask("##/##/####", txt_celular_confeiteiro))
+        txt_dt_nascimento_confeiteiro.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_confeiteiro))
 
     }
 
