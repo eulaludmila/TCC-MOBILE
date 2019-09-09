@@ -7,8 +7,8 @@
             <solid android:color="@color/escuro">
 
             </solid>
-            <corners android:bottomLeftRadius="10dp"
-                android:topLeftRadius="10dp">
+            <corners android:bottomLeftRadius="5dp"
+                android:topLeftRadius="5dp">
 
             </corners>
         </shape>
