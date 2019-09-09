@@ -1,38 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroEnderecoCliente"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/background_gradient" >
+    >
 
-    <android.support.design.widget.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:boxStrokeColor="@color/escuro"
-        app:boxStrokeWidth="5px"
-        android:layout_marginTop="28dp"
-        android:hint="CEP:"
-        app:boxBackgroundMode="outline"
-        android:textColorHint="@color/escuro"
-        app:hintTextAppearance="@style/HintTextStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CadastroEnderecoCliente">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/txt_cep_cliente"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:elevation="10dp"
-            android:inputType="number"
-            android:textColor="@color/preto"
-            android:visibility="visible">
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.8"
+            android:background="@drawable/text_background"
+            android:gravity="center"
+            android:text="Insira suas informações de envio"
+            android:textAlignment="center"
+            android:textColor="@color/branco"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </android.support.design.widget.TextInputEditText>
-    </android.support.design.widget.TextInputLayout>
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="252dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:hint="CEP:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_cep_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout6"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:hint="UF:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_uf_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:enabled="false"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout12"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Cidade:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_cidade_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:enabled="false"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout13"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Bairro:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_bairro_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:enabled="false"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout9"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Rua:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_rua_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:enabled="false"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout10"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Numero:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_numero_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout11"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Complemento:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_complemento_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
