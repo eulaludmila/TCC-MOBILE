@@ -28,13 +28,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//        val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros")
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item
-//                ,sexo )
-//
-//        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-//
-//        spn_sexo_confeiteiro.adapter = adapter
+
 
 
 

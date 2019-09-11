@@ -12,7 +12,7 @@ class LoginClienteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login_cliente)
 
         txt_cadastro_cliente.setOnClickListener {
-            val intent = Intent(this, CadastroEnderecoCliente::class.java)
+            val intent = Intent(this, CadastroClienteActivity::class.java)
             startActivity(intent)
         }
 
