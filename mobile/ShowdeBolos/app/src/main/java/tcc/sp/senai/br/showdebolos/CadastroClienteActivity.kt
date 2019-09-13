@@ -7,19 +7,35 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
-import tcc.sp.senai.br.util.Verificacao
+import tcc.sp.senai.br.utils.Verificacao
 import java.util.*
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.widget.*
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarClienteTasks
 import java.io.ByteArrayOutputStream
 import android.os.Build
+import android.provider.MediaStore
 import android.support.annotation.RequiresApi
+import android.util.Log
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tcc.sp.senai.br.showdebolos.model.Foto
+import tcc.sp.senai.br.showdebolos.services.ApiConfig
+import tcc.sp.senai.br.showdebolos.services.FotosService
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarFotoClienteTasks
+import java.io.File
+import java.net.URI
+import kotlin.math.log
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -27,10 +43,14 @@ class CadastroClienteActivity : AppCompatActivity() {
     val COD_IMAGE = 101
     //forçando a varialvel a ser nula
     var imageBitmap: Bitmap? = null
+    var imagePath: String? = null
+    var fotoService:FotosService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
+
+        fotoService = ApiConfig.getFotosService()
 
         txt_cpf_cliente.addTextChangedListener(Mask.mask("###.###.###-##", txt_cpf_cliente))
         txt_celular_cliente.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_cliente))
@@ -112,9 +132,10 @@ class CadastroClienteActivity : AppCompatActivity() {
 
                 val retornoCliente = cadastrarCliente.get() as Cliente
 
-                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
-
-                cadastrarFoto.execute()
+//                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
+//
+//                cadastrarFoto.execute()
+                uploadImage(retornoCliente)
 
                 Toast.makeText(this, cadastrarCliente.cliente.nome, Toast.LENGTH_SHORT).show()
 
@@ -132,53 +153,10 @@ class CadastroClienteActivity : AppCompatActivity() {
     }
 
 
-//    fun cadastrarCelular() {
-//
-//
-//
-//        val url = URL("http://10.107.144.10:8080/celular")
-//
-//        doAsync {
-//
-//            val jsCelular = JSONStringer()
-//
-//            jsCelular.`object`()
-//            jsCelular.key("celular").value(celular.celular)
-//            jsCelular.endObject()
-//
-//            val conexao = url.openConnection() as HttpURLConnection
-//
-//            conexao.setRequestProperty("Content-Type", "application/json")
-//            conexao.setRequestProperty("Accept", "application/json")
-//            conexao.requestMethod = "POST"
-//
-//            conexao.doInput = true
-//
-//            val output = PrintStream(conexao.outputStream)
-//            output.print(jsCelular)
-//
-//            conexao.connect()
-//
-//            val scanner = Scanner(conexao.inputStream)
-//            val resposta = scanner.nextLine()
-//
-//            val codCel = JSONObject(resposta).getInt("codCelular")
-//            val cel = JSONObject(resposta).getString("celular")
-//
-//            val retornoCelular = Celular(codCel, cel)
-//
-//            uiThread {
-//                cadastrarCliente(retornoCelular)
-//            }
-//
-//        }
-//
-//
-//    }
 
     fun abrirGaleria(){
         //definindo a ação de conteudo
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_PICK)
 
         //definindo filtro para imagens
         intent.type = "image/*"
@@ -195,7 +173,9 @@ class CadastroClienteActivity : AppCompatActivity() {
         if(requestCode == COD_IMAGE && resultCode == Activity.RESULT_OK){
             if(data != null){
                 //lendo a uri com a imagem
+                val selectedImage: Uri = data.data
                 val inputStream = contentResolver.openInputStream(data.data)
+
 
                 //transformando o resultado em bitmap
                 imageBitmap = BitmapFactory.decodeStream(inputStream)
@@ -203,57 +183,54 @@ class CadastroClienteActivity : AppCompatActivity() {
                 //exibir a imagem no aplicativo
                 img_cliente.setImageBitmap(imageBitmap)
 
+                imagePath = getRealPathFromUri(selectedImage)
 
+            }else{
+                Toast.makeText(this, "Não foi possivel selecinar a imagem", Toast.LENGTH_SHORT).show()
             }
+
         }
 
     }
 
-    fun cadastrarCliente(celular: Celular) {
+    fun uploadImage(cliente: Cliente){
+
+        val file = File(imagePath)
+        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
+        val call = fotoService!!.uploadImage(body)
+
+        call.enqueue(object : Callback<Foto>{
+
+            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
+                if(response!!.isSuccessful){
+                    Toast.makeText(this@CadastroClienteActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
+                Toast.makeText(this@CadastroClienteActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
+                Log.d("ERRO IMAGEM", t.message)
+            }
 
 
 
-//        Toast.makeText(this, "NOME: " + txtNome.text.toString(), Toast.LENGTH_LONG).show()
-
-
-//        ArrayAdapter.createFromResource(
-//                this,
-//                R.array.array_sexo,
-//                android.R.layout.simple_spinner_item
-//        ).also { adapter ->
-//            // Specify the layout to use when the list of choices appears
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            // Apply the adapter to the spinner
-//            spnSexo.adapter = adapter
-//        }
-//
-//        val sexoSelecionado = spnSexo.selectedItem
-//
-//
-
-//        if (senha){
-//
-//
-//
-//            val url = URL("http://10.107.144.10:8080/cliente")
-//
-//            doAsync {
-//
-//
-//
-//
-//                uiThread {
-//                    alert("Cadastrado com sucesso!")
-//                }
-//
-//            }
-//
-//        } else {
-//            Toast.makeText(this,"Senhas não coincidem", Toast.LENGTH_LONG).show()
-//        }
-
-
+        })
 
 
     }
+
+    fun getRealPathFromUri(uri:Uri):String{
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor = contentResolver.query(uri, filePathColumn, null, null, null)!!
+        cursor.moveToFirst()
+        val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+        val result = cursor.getString(columnIndex)
+        cursor.close()
+
+        return result
+
+    }
+
+
 }

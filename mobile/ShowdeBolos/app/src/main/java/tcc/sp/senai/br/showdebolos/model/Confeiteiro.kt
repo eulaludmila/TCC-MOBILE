@@ -1,5 +1,7 @@
 package tcc.sp.senai.br.showdebolos.model
 
+import java.io.Serializable
+
 data class Confeiteiro (val codConfeiteiro: Int,
                     val nome: String,
                     val sobrenome: String,
@@ -8,8 +10,8 @@ data class Confeiteiro (val codConfeiteiro: Int,
                     val email: String,
                     val senha: String,
                     val codCelular: Celular,
-                    val sexo: Char,
-                    val foto: String){
+                    val sexo: String,
+                    val foto: String) : Serializable{
 
 
 

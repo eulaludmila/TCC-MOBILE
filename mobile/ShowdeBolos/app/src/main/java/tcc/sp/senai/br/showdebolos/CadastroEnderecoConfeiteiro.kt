@@ -4,13 +4,13 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
-import br.senai.sp.estacionamento.tasks.CarregarEndereco
+import br.senai.sp.estacionamento.tasks.CarregarEnderecoTasks
 import kotlinx.android.synthetic.main.activity_cadastro_endereco_cliente.*
-import tcc.sp.senai.br.showdebolos.model.Endereco
+import tcc.sp.senai.br.showdebolos.model.*
+import tcc.sp.senai.br.showdebolos.tasks.CadastrarEnderecoTasks
 import java.util.concurrent.ExecutionException
 
-class CadastroEnderecoCliente : AppCompatActivity() {
+class CadastroEnderecoConfeiteiro : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +19,22 @@ class CadastroEnderecoCliente : AppCompatActivity() {
 
         txt_cep_cliente.addTextChangedListener(Mask.mask("#####-###", txt_cep_cliente))
 
-        val endereco = Endereco(txt_cep_cliente.text.toString(),txt_rua_cliente.text.toString(),txt_bairro_cliente.text.toString(),txt_cidade_cliente.text.toString(),txt_uf_cliente.text.toString())
+        val estado = Estado(0,txt_uf_cliente.text.toString())
 
+        val cidade = Cidade(0,txt_cidade_cliente.text.toString(), estado)
+
+        val endereco = Endereco(0, txt_cep_cliente.text.toString(),txt_rua_cliente.text.toString(),txt_bairro_cliente.text.toString(),cidade)
+
+        val intent = getIntent()
+        val confeiteiro: Confeiteiro = intent.getSerializableExtra("confeiteiro") as Confeiteiro
+
+        val enderecoConfeiteiro = EnderecoConfeiteiro(0, confeiteiro, endereco)
+
+
+        val cadastrarEndereco = CadastrarEnderecoTasks(endereco)
+        cadastrarEndereco.execute()
+
+        val retornoEndereco = cadastrarEndereco.get() as Endereco
 
         txt_cep_cliente.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -35,7 +49,7 @@ class CadastroEnderecoCliente : AppCompatActivity() {
                 if (txt_cep_cliente.length() == 9){
 
 
-                    val carregarEndereco = CarregarEndereco(endereco, this@CadastroEnderecoCliente)
+                    val carregarEndereco = CarregarEnderecoTasks(endereco, this@CadastroEnderecoConfeiteiro)
                     //Executando a função que traz o JSON do viacep
                     carregarEndereco.execute()
 
@@ -43,10 +57,10 @@ class CadastroEnderecoCliente : AppCompatActivity() {
 
                         val endereco = carregarEndereco.get() as Endereco
                         //Colocando os dados do JSON em suas respectivas caixas de texto
-                        txt_cidade_cliente.setText(endereco.cidade)
-                        txt_rua_cliente.setText(endereco.logradouro)
+                        txt_cidade_cliente.setText(endereco.codCidade.cidade)
+                        txt_rua_cliente.setText(endereco.endereco)
                         txt_bairro_cliente.setText(endereco.bairro)
-                        txt_uf_cliente.setText(endereco.uf)
+                        txt_uf_cliente.setText(endereco.codCidade.codEstado.uf)
 
 
                     }catch (e : ExecutionException){

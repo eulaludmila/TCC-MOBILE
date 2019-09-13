@@ -18,7 +18,7 @@ import java.net.URL
 import tcc.sp.senai.br.showdebolos.model.Endereco
 
 
-class CarregarEndereco(val endereco: Endereco, context: Context) : AsyncTask<Endereco, Endereco, Endereco>() {
+class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTask<Endereco, Endereco, Endereco>() {
     private var dados = ""
     private var progressDialog: ProgressDialog? = null
     val context = context

@@ -6,6 +6,5 @@
         android:icon="@drawable/ic_action_name"
         app:showAsAction="always"
         android:title="@string/confirmar">
-
     </item>
 </menu>

@@ -1,4 +1,4 @@
-package tcc.sp.senai.br.util
+package tcc.sp.senai.br.utils
 
 /***
  *

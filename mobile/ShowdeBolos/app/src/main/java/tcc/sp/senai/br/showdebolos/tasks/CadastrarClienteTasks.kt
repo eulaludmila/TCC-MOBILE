@@ -15,7 +15,7 @@ class CadastrarClienteTasks(val cliente: Cliente, val celular: Celular): AsyncTa
 
 
     override fun doInBackground(vararg params: Cliente?): Cliente {
-        val url = URL("http://10.107.144.10:8080/cliente")
+        val url = URL("http://10.107.144.21:8080/cliente")
 
         val jsCliente = JSONStringer()
 
