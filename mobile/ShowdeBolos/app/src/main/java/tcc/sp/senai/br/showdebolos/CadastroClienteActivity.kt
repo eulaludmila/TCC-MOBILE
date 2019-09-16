@@ -7,19 +7,32 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
-import tcc.sp.senai.br.util.Verificacao
+import tcc.sp.senai.br.utils.Verificacao
 import java.util.*
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.widget.*
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarClienteTasks
 import java.io.ByteArrayOutputStream
 import android.os.Build
+import android.provider.MediaStore
 import android.support.annotation.RequiresApi
-import tcc.sp.senai.br.showdebolos.tasks.CadastrarFotoClienteTasks
+import android.util.Log
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tcc.sp.senai.br.showdebolos.model.Foto
+import tcc.sp.senai.br.showdebolos.services.ApiConfig
+import tcc.sp.senai.br.showdebolos.services.FotosService
+import java.io.File
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -27,17 +40,22 @@ class CadastroClienteActivity : AppCompatActivity() {
     val COD_IMAGE = 101
     //forçando a varialvel a ser nula
     var imageBitmap: Bitmap? = null
+    var imagePath: String? = null
+    var fotoService:FotosService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
 
+        fotoService = ApiConfig.getFotosService()
+
         txt_cpf_cliente.addTextChangedListener(Mask.mask("###.###.###-##", txt_cpf_cliente))
         txt_celular_cliente.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_cliente))
         txt_dt_nascimento_cliente.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_cliente))
-        val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item
-                ,sexo )
+        val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros", "Não Informar")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,sexo )
+
+
 
         img_add_foto_cliente.setOnClickListener {
 
@@ -48,6 +66,8 @@ class CadastroClienteActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
 
         spn_sexo_cliente.adapter = adapter
+
+
 
 
 
@@ -90,36 +110,44 @@ class CadastroClienteActivity : AppCompatActivity() {
                 val imgClienteByte = baos.toByteArray()
                 val imgArray = Base64.getEncoder().encodeToString(imgClienteByte)
 
-                val cliente = Cliente(0,
-                        txtNome.text.toString(),
-                        txtSobrenome.text.toString(),
-                        txtCpf.text.toString(),
-                        "04/06/2001",
-                        txtEmail.text.toString(),
-                        txtSenha.text.toString(),
-                        celular,
-                        "F",
-                        "teste.png")
-
-//                val sexo = Verificacao.verificarSexo(sexoSelecionado.toString())
-                val senha = Verificacao.verificarSenha(txtSenha.text.toString(), txtConfirmarSenha.text.toString())
+                val sexoSelecionado = spnSexo.selectedItem.toString()
 
 
+                val sexo = Verificacao.verificarSexo(sexoSelecionado)
 
-                val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
+                Toast.makeText(this@CadastroClienteActivity, "sexo selecionado $sexoSelecionado", Toast.LENGTH_LONG).show()
 
-                cadastrarCliente.execute()
+                if(validar()){
+                    if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()) {
 
-                val retornoCliente = cadastrarCliente.get() as Cliente
+                        val cliente = Cliente(0,
+                                txtNome.text.toString(),
+                                txtSobrenome.text.toString(),
+                                txtCpf.text.toString(),
+                                txtDtNascimento.text.toString(),
+                                txtEmail.text.toString(),
+                                txtSenha.text.toString(),
+                                celular,
+                                sexo,
+                                "teste.png")
 
-                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
+                        val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
 
-                cadastrarFoto.execute()
+                        cadastrarCliente.execute()
 
-                Toast.makeText(this, cadastrarCliente.cliente.nome, Toast.LENGTH_SHORT).show()
+                        val retornoCliente = cadastrarCliente.get() as Cliente
 
-                //Toast.makeText(this, .toString(), Toast.LENGTH_LONG).show()
-                finish()
+                        uploadImage(retornoCliente)
+
+                        finish()
+
+                    }else{
+                        Toast.makeText(this@CadastroClienteActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+
+
             }
 
 
@@ -132,53 +160,10 @@ class CadastroClienteActivity : AppCompatActivity() {
     }
 
 
-//    fun cadastrarCelular() {
-//
-//
-//
-//        val url = URL("http://10.107.144.10:8080/celular")
-//
-//        doAsync {
-//
-//            val jsCelular = JSONStringer()
-//
-//            jsCelular.`object`()
-//            jsCelular.key("celular").value(celular.celular)
-//            jsCelular.endObject()
-//
-//            val conexao = url.openConnection() as HttpURLConnection
-//
-//            conexao.setRequestProperty("Content-Type", "application/json")
-//            conexao.setRequestProperty("Accept", "application/json")
-//            conexao.requestMethod = "POST"
-//
-//            conexao.doInput = true
-//
-//            val output = PrintStream(conexao.outputStream)
-//            output.print(jsCelular)
-//
-//            conexao.connect()
-//
-//            val scanner = Scanner(conexao.inputStream)
-//            val resposta = scanner.nextLine()
-//
-//            val codCel = JSONObject(resposta).getInt("codCelular")
-//            val cel = JSONObject(resposta).getString("celular")
-//
-//            val retornoCelular = Celular(codCel, cel)
-//
-//            uiThread {
-//                cadastrarCliente(retornoCelular)
-//            }
-//
-//        }
-//
-//
-//    }
 
     fun abrirGaleria(){
         //definindo a ação de conteudo
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_PICK)
 
         //definindo filtro para imagens
         intent.type = "image/*"
@@ -195,7 +180,9 @@ class CadastroClienteActivity : AppCompatActivity() {
         if(requestCode == COD_IMAGE && resultCode == Activity.RESULT_OK){
             if(data != null){
                 //lendo a uri com a imagem
+                val selectedImage: Uri = data.data
                 val inputStream = contentResolver.openInputStream(data.data)
+
 
                 //transformando o resultado em bitmap
                 imageBitmap = BitmapFactory.decodeStream(inputStream)
@@ -203,57 +190,132 @@ class CadastroClienteActivity : AppCompatActivity() {
                 //exibir a imagem no aplicativo
                 img_cliente.setImageBitmap(imageBitmap)
 
+                imagePath = getRealPathFromUri(selectedImage)
 
+            }else{
+                Toast.makeText(this, "Não foi possivel selecinar a imagem", Toast.LENGTH_SHORT).show()
             }
+
         }
 
     }
 
-    fun cadastrarCliente(celular: Celular) {
+    fun uploadImage(cliente: Cliente){
+
+        val file = File(imagePath)
+        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
+
+        val request =  MultipartBody.Builder().setType(MultipartBody.FORM)
+
+        request.addFormDataPart("foto", file.name, requestBody )
+        request.addFormDataPart("codCliente", null, RequestBody.create(MediaType.parse("text/plain"),"1") )
+        val multiPartBody = request.build()
+
+        val call = fotoService!!.uploadImage(multiPartBody)
+
+        call.enqueue(object : Callback<Foto>{
+
+            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
+                if(response!!.isSuccessful){
+                    Toast.makeText(this@CadastroClienteActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
+                Toast.makeText(this@CadastroClienteActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
+                Log.d("ERRO IMAGEM", t.message)
+            }
 
 
 
-//        Toast.makeText(this, "NOME: " + txtNome.text.toString(), Toast.LENGTH_LONG).show()
-
-
-//        ArrayAdapter.createFromResource(
-//                this,
-//                R.array.array_sexo,
-//                android.R.layout.simple_spinner_item
-//        ).also { adapter ->
-//            // Specify the layout to use when the list of choices appears
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            // Apply the adapter to the spinner
-//            spnSexo.adapter = adapter
-//        }
-//
-//        val sexoSelecionado = spnSexo.selectedItem
-//
-//
-
-//        if (senha){
-//
-//
-//
-//            val url = URL("http://10.107.144.10:8080/cliente")
-//
-//            doAsync {
-//
-//
-//
-//
-//                uiThread {
-//                    alert("Cadastrado com sucesso!")
-//                }
-//
-//            }
-//
-//        } else {
-//            Toast.makeText(this,"Senhas não coincidem", Toast.LENGTH_LONG).show()
-//        }
-
-
+        })
 
 
     }
+
+    fun getRealPathFromUri(uri:Uri):String{
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor = contentResolver.query(uri, filePathColumn, null, null, null)!!
+        cursor.moveToFirst()
+        val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+        val result = cursor.getString(columnIndex)
+        cursor.close()
+
+        return result
+
+    }
+
+    fun validar():Boolean{
+
+        var validado = true
+
+        if(txt_nome_cliente.text.toString().isEmpty()){
+            layout_txt_nome_cliente.isErrorEnabled = true
+            layout_txt_nome_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_nome_cliente.isErrorEnabled = false
+        }
+
+        if(txt_sobrenome_cliente.text.toString().isEmpty()){
+            layout_txt_sobrenome_cliente.isErrorEnabled = true
+            layout_txt_sobrenome_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_sobrenome_cliente.isErrorEnabled = false
+        }
+
+        if(txt_celular_cliente.text.toString().isEmpty()){
+            layout_txt_celular_cliente.isErrorEnabled = true
+            layout_txt_celular_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_celular_cliente.isErrorEnabled = false
+        }
+
+        if(txt_cpf_cliente.text.toString().isEmpty()){
+            layout_txt_cpf_cliente.isErrorEnabled = true
+            layout_txt_cpf_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_cpf_cliente.isErrorEnabled = false
+        }
+
+        if(txt_dt_nascimento_cliente.text.toString().isEmpty()){
+            layout_txt_dt_nascimento_cliente.isErrorEnabled = true
+            layout_txt_dt_nascimento_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_dt_nascimento_cliente.isErrorEnabled = false
+        }
+
+        if(txt_email_cliente.text.toString().isEmpty()){
+            layout_txt_email_cliente.isErrorEnabled = true
+            layout_txt_email_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_email_cliente.isErrorEnabled = false
+        }
+
+        if(txt_senha_cliente.text.toString().isEmpty()){
+            layout_txt_senha_cliente.isErrorEnabled = true
+            layout_txt_senha_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_senha_cliente.isErrorEnabled = false
+        }
+
+        if(txt_confirma_senha_cliente.text.toString().isEmpty()){
+            layout_txt_confirma_senha_cliente.isErrorEnabled = true
+            layout_txt_confirma_senha_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_confirma_senha_cliente.isErrorEnabled = false
+        }
+
+        return validado
+    }
+
+
 }

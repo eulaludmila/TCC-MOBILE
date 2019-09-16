@@ -18,7 +18,7 @@ import java.net.URL
 import tcc.sp.senai.br.showdebolos.model.Endereco
 
 
-class CarregarEndereco(val endereco: Endereco, context: Context) : AsyncTask<Endereco, Endereco, Endereco>() {
+class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTask<Endereco, Endereco, Endereco>() {
     private var dados = ""
     private var progressDialog: ProgressDialog? = null
     val context = context
@@ -56,9 +56,9 @@ class CarregarEndereco(val endereco: Endereco, context: Context) : AsyncTask<End
                 val jsEndereco = JSONObject(dados)
 
                 endereco.bairro = (jsEndereco.getString("bairro"))
-                endereco.logradouro = (jsEndereco.getString("logradouro"))
-                endereco.cidade = (jsEndereco.getString("localidade"))
-                endereco.uf = (jsEndereco.getString("uf"))
+                endereco.endereco = (jsEndereco.getString("logradouro"))
+                endereco.codCidade.cidade = (jsEndereco.getString("localidade"))
+                endereco.codCidade.codEstado.uf = (jsEndereco.getString("uf"))
 
 
             } catch (e: JSONException) {

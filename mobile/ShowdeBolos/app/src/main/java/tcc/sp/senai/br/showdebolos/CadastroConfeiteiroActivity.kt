@@ -1,28 +1,51 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.app.Activity
+import android.content.Intent
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.annotation.RequiresApi
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import org.json.JSONObject
-import org.json.JSONStringer
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.model.Celular
+
 import tcc.sp.senai.br.showdebolos.model.Confeiteiro
-import tcc.sp.senai.br.util.Verificacao
-import java.io.PrintStream
-import java.net.HttpURLConnection
-import java.net.URL
+import tcc.sp.senai.br.showdebolos.model.Foto
+import tcc.sp.senai.br.showdebolos.services.FotosService
+import tcc.sp.senai.br.utils.Verificacao
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.*
 
 class CadastroConfeiteiroActivity : AppCompatActivity() {
+
+    val COD_IMAGE = 101
+    //forçando a varialvel a ser nula
+    var imageBitmap: Bitmap? = null
+    var imagePath: String? = null
+    var fotoService: FotosService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +54,7 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
         txt_cpf_confeiteiro.addTextChangedListener(Mask.mask("###.###.###-##", txt_cpf_confeiteiro))
         txt_celular_confeiteiro.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_confeiteiro))
         txt_dt_nascimento_confeiteiro.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_confeiteiro))
+
 
         txt_celular_confeiteiro.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
@@ -53,16 +77,68 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
     }
 
     //hora que o menu é selecionado
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.getItemId()) {
             R.id.confirmar -> {
 
+                val txtNome = findViewById<TextView>(R.id.txt_nome_confeiteiro)
+                val txtSobrenome = findViewById<TextView>(R.id.txt_sobrenome_confeiteiro)
+                val txtCpf = findViewById<TextView>(R.id.txt_cpf_confeiteiro)
+                val txtDtNascimento = findViewById<TextView>(R.id.txt_dt_nascimento_confeiteiro)
+                val txtEmail = findViewById<TextView>(R.id.txt_email_confeiteiro)
+                val txtSenha = findViewById<TextView>(R.id.txt_senha_confeiteiro)
+                val spnSexo = findViewById<Spinner>(R.id.spn_sexo_confeiteiro)
+                val txtConfirmarSenha = findViewById<TextView>(R.id.txt_confirma_senha_confeiteiro)
+                val imgConfeiteiro = findViewById<ImageView>(R.id.img_confeiteiro)
 
-                cadastrarCelular()
+                val txtCelular = findViewById<TextView>(R.id.txt_celular_confeiteiro)
+
+                val celular = Celular(0, txtCelular.text.toString())
+
+                val bitmap = (imgConfeiteiro.drawable as BitmapDrawable).bitmap
+                val baos = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                val imgConfeiteiroByte = baos.toByteArray()
+                val imgArray = Base64.getEncoder().encodeToString(imgConfeiteiroByte)
+
+                val sexoSelecionado = spnSexo.selectedItem.toString()
+
+
+                val sexo = Verificacao.verificarSexo(sexoSelecionado)
+
+                if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()){
+                    val confeiteiro = Confeiteiro(0,
+                            txtNome.text.toString(),
+                            txtSobrenome.text.toString(),
+                            txtCpf.text.toString(),
+                            txtDtNascimento.text.toString(),
+                            txtEmail.text.toString(),
+                            txtSenha.text.toString(),
+                            celular,
+                            "teste.png",
+                            sexo)
+
+
+                    val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
+                    intent.putExtra("confeiteiro", confeiteiro)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this@CadastroConfeiteiroActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
+                }
+
+
+
+
+
+
+//                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
+//
+//                cadastrarFoto.execute()
+                // uploadImage(retornoConfeiteiro)
 
                 //Toast.makeText(this, .toString(), Toast.LENGTH_LONG).show()
-//                finish()
             }
 
 
@@ -74,147 +150,87 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun cadastrarCelular() {
+    fun abrirGaleria(){
+        //definindo a ação de conteudo
+        val intent = Intent(Intent.ACTION_PICK)
 
-        val txtCelular = findViewById<TextView>(R.id.txt_celular_confeiteiro)
+        //definindo filtro para imagens
+        intent.type = "image/*"
 
-        val celular = Celular(0, txtCelular.text.toString())
-
-        val url = URL("http://10.107.144.10:8080/celular")
-
-        doAsync {
-
-            val jsCelular = JSONStringer()
-
-            jsCelular.`object`()
-            jsCelular.key("celular").value(celular.celular)
-            jsCelular.endObject()
-
-            val conexao = url.openConnection() as HttpURLConnection
-
-            conexao.setRequestProperty("Content-Type", "application/json")
-            conexao.setRequestProperty("Accept", "application/json")
-            conexao.requestMethod = "POST"
-
-            conexao.doInput = true
-
-            val output = PrintStream(conexao.outputStream)
-            output.print(jsCelular)
-
-            conexao.connect()
-
-            val scanner = Scanner(conexao.inputStream)
-            val resposta = scanner.nextLine()
-
-            val codCel = JSONObject(resposta).getInt("codCelular")
-            val cel = JSONObject(resposta).getString("celular")
-
-            val retornoCelular = Celular(codCel, cel)
-
-            uiThread {
-                cadastrarConfeiteiro(retornoCelular)
-            }
-
-        }
+        //inicializando activity com resultado
+        startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), COD_IMAGE)
 
 
     }
 
-    fun cadastrarConfeiteiro(celular: Celular) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        val txtNome = findViewById<TextView>(R.id.txt_nome_confeiteiro)
-        val txtSobrenome = findViewById<TextView>(R.id.txt_sobrenome_confeiteiro)
-        val txtCpf = findViewById<TextView>(R.id.txt_cpf_confeiteiro)
-        val txtDtNascimento = findViewById<TextView>(R.id.txt_dt_nascimento_confeiteiro)
-        val txtEmail = findViewById<TextView>(R.id.txt_email_confeiteiro)
-        val txtSenha = findViewById<TextView>(R.id.txt_senha_confeiteiro)
-        val spnSexo = findViewById<Spinner>(R.id.spn_sexo_confeiteiro)
-        val txtConfirmarSenha = findViewById<TextView>(R.id.txt_confirma_senha_confeiteiro)
-
-        Toast.makeText(this, "NOME: " + txtNome.text.toString(), Toast.LENGTH_LONG).show()
+        if(requestCode == COD_IMAGE && resultCode == Activity.RESULT_OK){
+            if(data != null){
+                //lendo a uri com a imagem
+                val selectedImage: Uri = data.data
+                val inputStream = contentResolver.openInputStream(data.data)
 
 
-//        ArrayAdapter.createFromResource(
-//                this,
-//                R.array.array_sexo,
-//                android.R.layout.simple_spinner_item
-//        ).also { adapter ->
-//            // Specify the layout to use when the list of choices appears
-//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//            // Apply the adapter to the spinner
-//            spnSexo.adapter = adapter
-//        }
-//
-//        val sexoSelecionado = spnSexo.selectedItem
-//
-//        val sexo = Verificacao.verificarSexo(sexoSelecionado.toString())
-        val senha = Verificacao.verificarSenha(txtSenha.text.toString(), txtConfirmarSenha.text.toString())
+                //transformando o resultado em bitmap
+                imageBitmap = BitmapFactory.decodeStream(inputStream)
 
-        if (senha){
+                //exibir a imagem no aplicativo
+                img_cliente.setImageBitmap(imageBitmap)
 
-            val confeiteiro = Confeiteiro(0,
-                    txtNome.text.toString(),
-                    txtSobrenome.text.toString(),
-                    txtCpf.text.toString(),
-                    txtDtNascimento.text.toString(),
-                    txtEmail.text.toString(),
-                    txtSenha.text.toString(),
-                    celular,
-                    'F',
-                    "teste.jpg")
+                imagePath = getRealPathFromUri(selectedImage)
 
-            val url = URL("http://10.107.144.10:8080/confeiteiro")
-
-            doAsync {
-
-                val jsConfeiteiro = JSONStringer()
-
-                jsConfeiteiro.`object`()
-                jsConfeiteiro.key("nome").value(confeiteiro.nome)
-                jsConfeiteiro.key("sobrenome").value(confeiteiro.sobrenome)
-                jsConfeiteiro.key("cpf").value(confeiteiro.cpf)
-                jsConfeiteiro.key("dtNasc").value(confeiteiro.dtNasc)
-                jsConfeiteiro.key("email").value(confeiteiro.email)
-                jsConfeiteiro.key("senha").value(confeiteiro.senha)
-                jsConfeiteiro.key("celular")
-                        .`object`()
-                        .key("codCelular")
-                        .value(celular.codCelular)
-                        .endObject()
-                jsConfeiteiro.key("sexo").value("F")
-                jsConfeiteiro.key("foto").value("Teste")
-                jsConfeiteiro.endObject()
-
-                val conexao = url.openConnection() as HttpURLConnection
-
-                conexao.setRequestProperty("Content-Type", "application/json")
-                conexao.setRequestProperty("Accept", "application/json")
-                conexao.requestMethod = "POST"
-
-                conexao.doInput = true
-
-                val output = PrintStream(conexao.outputStream)
-                output.print(jsConfeiteiro)
-
-                conexao.connect()
-
-                val scanner = Scanner(conexao.inputStream)
-                val resposta = scanner.nextLine()
-
-
-                uiThread {
-                    alert("Cadastrado com sucesso!")
-                }
-
+            }else{
+                Toast.makeText(this, "Não foi possivel selecinar a imagem", Toast.LENGTH_SHORT).show()
             }
 
-        } else {
-            Toast.makeText(this,"Senhas não coincidem", Toast.LENGTH_LONG).show()
         }
 
+    }
 
+    fun uploadImage(confeiteiro: Confeiteiro){
+
+        val file = File(imagePath)
+        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
+//        val call = fotoService!!.uploadImage(body, 25)
+
+//        call.enqueue(object : Callback<Foto> {
+//
+//            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
+//                if(response!!.isSuccessful){
+//                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
+//                Toast.makeText(this@CadastroConfeiteiroActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
+//                Log.d("ERRO IMAGEM", t.message)
+//            }
+//
+//
+//
+//        })
 
 
     }
+
+    fun getRealPathFromUri(uri:Uri):String{
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor = contentResolver.query(uri, filePathColumn, null, null, null)!!
+        cursor.moveToFirst()
+        val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+        val result = cursor.getString(columnIndex)
+        cursor.close()
+
+        return result
+
+    }
+
+
+
+
+
 
 }
