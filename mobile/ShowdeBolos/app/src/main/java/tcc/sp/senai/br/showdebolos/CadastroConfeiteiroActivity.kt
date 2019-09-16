@@ -34,7 +34,6 @@ import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Confeiteiro
 import tcc.sp.senai.br.showdebolos.model.Foto
 import tcc.sp.senai.br.showdebolos.services.FotosService
-import tcc.sp.senai.br.showdebolos.tasks.CadastrarConfeiteiroTasks
 import tcc.sp.senai.br.utils.Verificacao
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -104,38 +103,40 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                 val imgConfeiteiroByte = baos.toByteArray()
                 val imgArray = Base64.getEncoder().encodeToString(imgConfeiteiroByte)
 
+                val sexoSelecionado = spnSexo.selectedItem.toString()
+
+
+                val sexo = Verificacao.verificarSexo(sexoSelecionado)
+
+                if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()){
+                    val confeiteiro = Confeiteiro(0,
+                            txtNome.text.toString(),
+                            txtSobrenome.text.toString(),
+                            txtCpf.text.toString(),
+                            txtDtNascimento.text.toString(),
+                            txtEmail.text.toString(),
+                            txtSenha.text.toString(),
+                            celular,
+                            "teste.png",
+                            sexo)
+
+
+                    val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
+                    intent.putExtra("confeiteiro", confeiteiro)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this@CadastroConfeiteiroActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
+                }
 
 
 
-//                val sexo = Verificacao.verificarSexo(sexoSelecionado.toString())
-                val senha = Verificacao.verificarSenha(txtSenha.text.toString(), txtConfirmarSenha.text.toString())
-
-                val confeiteiro = Confeiteiro(0,
-                        txtNome.text.toString(),
-                        txtSobrenome.text.toString(),
-                        txtCpf.text.toString(),
-                        "04/06/2001",
-                        txtEmail.text.toString(),
-                        txtSenha.text.toString(),
-                        celular,
-                        "F",
-                        "teste.png")
-
-                val cadastrarConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro)
-                cadastrarConfeiteiro.execute()
-
-                val retornoConfeiteiro = cadastrarConfeiteiro.get() as Confeiteiro
-
-                val intent = Intent(this, CadastroEnderecoConfeiteiro::class.java)
-                intent.putExtra("confeiteiro", retornoConfeiteiro.codConfeiteiro)
-                startActivity(intent)
 
 
 
 //                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
 //
 //                cadastrarFoto.execute()
-               // uploadImage(retornoConfeiteiro)
+                // uploadImage(retornoConfeiteiro)
 
                 //Toast.makeText(this, .toString(), Toast.LENGTH_LONG).show()
             }
@@ -193,24 +194,24 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
         val file = File(imagePath)
         val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
-        val call = fotoService!!.uploadImage(body)
+//        val call = fotoService!!.uploadImage(body, 25)
 
-        call.enqueue(object : Callback<Foto> {
-
-            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
-                if(response!!.isSuccessful){
-                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
-                Toast.makeText(this@CadastroConfeiteiroActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
-                Log.d("ERRO IMAGEM", t.message)
-            }
-
-
-
-        })
+//        call.enqueue(object : Callback<Foto> {
+//
+//            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
+//                if(response!!.isSuccessful){
+//                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
+//                Toast.makeText(this@CadastroConfeiteiroActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
+//                Log.d("ERRO IMAGEM", t.message)
+//            }
+//
+//
+//
+//        })
 
 
     }

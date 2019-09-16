@@ -12,5 +12,5 @@ interface FotosService {
 
     @Multipart
     @POST("cliente")
-    fun uploadImage(@Part image: MultipartBody.Part): Call<Foto>
+    fun uploadImage(@Part image: MultipartBody): Call<Foto>
 }

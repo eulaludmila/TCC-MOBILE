@@ -32,10 +32,7 @@ import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.model.Foto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
-import tcc.sp.senai.br.showdebolos.tasks.CadastrarFotoClienteTasks
 import java.io.File
-import java.net.URI
-import kotlin.math.log
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -55,9 +52,10 @@ class CadastroClienteActivity : AppCompatActivity() {
         txt_cpf_cliente.addTextChangedListener(Mask.mask("###.###.###-##", txt_cpf_cliente))
         txt_celular_cliente.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_cliente))
         txt_dt_nascimento_cliente.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_cliente))
-        val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item
-                ,sexo )
+        val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros", "Não Informar")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,sexo )
+
+
 
         img_add_foto_cliente.setOnClickListener {
 
@@ -68,6 +66,8 @@ class CadastroClienteActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
 
         spn_sexo_cliente.adapter = adapter
+
+
 
 
 
@@ -110,37 +110,44 @@ class CadastroClienteActivity : AppCompatActivity() {
                 val imgClienteByte = baos.toByteArray()
                 val imgArray = Base64.getEncoder().encodeToString(imgClienteByte)
 
-                val cliente = Cliente(0,
-                        txtNome.text.toString(),
-                        txtSobrenome.text.toString(),
-                        txtCpf.text.toString(),
-                        "04/06/2001",
-                        txtEmail.text.toString(),
-                        txtSenha.text.toString(),
-                        celular,
-                        "F",
-                        "teste.png")
-
-//                val sexo = Verificacao.verificarSexo(sexoSelecionado.toString())
-                val senha = Verificacao.verificarSenha(txtSenha.text.toString(), txtConfirmarSenha.text.toString())
+                val sexoSelecionado = spnSexo.selectedItem.toString()
 
 
+                val sexo = Verificacao.verificarSexo(sexoSelecionado)
 
-                val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
+                Toast.makeText(this@CadastroClienteActivity, "sexo selecionado $sexoSelecionado", Toast.LENGTH_LONG).show()
 
-                cadastrarCliente.execute()
+                if(validar()){
+                    if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()) {
 
-                val retornoCliente = cadastrarCliente.get() as Cliente
+                        val cliente = Cliente(0,
+                                txtNome.text.toString(),
+                                txtSobrenome.text.toString(),
+                                txtCpf.text.toString(),
+                                txtDtNascimento.text.toString(),
+                                txtEmail.text.toString(),
+                                txtSenha.text.toString(),
+                                celular,
+                                sexo,
+                                "teste.png")
 
-//                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
-//
-//                cadastrarFoto.execute()
-                uploadImage(retornoCliente)
+                        val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
 
-                Toast.makeText(this, cadastrarCliente.cliente.nome, Toast.LENGTH_SHORT).show()
+                        cadastrarCliente.execute()
 
-                //Toast.makeText(this, .toString(), Toast.LENGTH_LONG).show()
-                finish()
+                        val retornoCliente = cadastrarCliente.get() as Cliente
+
+                        uploadImage(retornoCliente)
+
+                        finish()
+
+                    }else{
+                        Toast.makeText(this@CadastroClienteActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+
+
             }
 
 
@@ -198,7 +205,14 @@ class CadastroClienteActivity : AppCompatActivity() {
         val file = File(imagePath)
         val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
-        val call = fotoService!!.uploadImage(body)
+
+        val request =  MultipartBody.Builder().setType(MultipartBody.FORM)
+
+        request.addFormDataPart("foto", file.name, requestBody )
+        request.addFormDataPart("codCliente", null, RequestBody.create(MediaType.parse("text/plain"),"1") )
+        val multiPartBody = request.build()
+
+        val call = fotoService!!.uploadImage(multiPartBody)
 
         call.enqueue(object : Callback<Foto>{
 
@@ -230,6 +244,77 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         return result
 
+    }
+
+    fun validar():Boolean{
+
+        var validado = true
+
+        if(txt_nome_cliente.text.toString().isEmpty()){
+            layout_txt_nome_cliente.isErrorEnabled = true
+            layout_txt_nome_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_nome_cliente.isErrorEnabled = false
+        }
+
+        if(txt_sobrenome_cliente.text.toString().isEmpty()){
+            layout_txt_sobrenome_cliente.isErrorEnabled = true
+            layout_txt_sobrenome_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_sobrenome_cliente.isErrorEnabled = false
+        }
+
+        if(txt_celular_cliente.text.toString().isEmpty()){
+            layout_txt_celular_cliente.isErrorEnabled = true
+            layout_txt_celular_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_celular_cliente.isErrorEnabled = false
+        }
+
+        if(txt_cpf_cliente.text.toString().isEmpty()){
+            layout_txt_cpf_cliente.isErrorEnabled = true
+            layout_txt_cpf_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_cpf_cliente.isErrorEnabled = false
+        }
+
+        if(txt_dt_nascimento_cliente.text.toString().isEmpty()){
+            layout_txt_dt_nascimento_cliente.isErrorEnabled = true
+            layout_txt_dt_nascimento_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_dt_nascimento_cliente.isErrorEnabled = false
+        }
+
+        if(txt_email_cliente.text.toString().isEmpty()){
+            layout_txt_email_cliente.isErrorEnabled = true
+            layout_txt_email_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_email_cliente.isErrorEnabled = false
+        }
+
+        if(txt_senha_cliente.text.toString().isEmpty()){
+            layout_txt_senha_cliente.isErrorEnabled = true
+            layout_txt_senha_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_senha_cliente.isErrorEnabled = false
+        }
+
+        if(txt_confirma_senha_cliente.text.toString().isEmpty()){
+            layout_txt_confirma_senha_cliente.isErrorEnabled = true
+            layout_txt_confirma_senha_cliente.error = resources.getText(0, "erro")
+            validado = false
+        }else{
+            layout_txt_confirma_senha_cliente.isErrorEnabled = false
+        }
+
+        return validado
     }
 
 

@@ -27,4 +27,7 @@
         <item name="android:textColor">@color/branco</item>
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="spinnerColor">
+        <item name="android:textColorHint">@color/branco</item>
+    </style>
 </resources>

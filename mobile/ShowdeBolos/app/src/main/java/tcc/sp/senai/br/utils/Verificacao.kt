@@ -1,5 +1,8 @@
 package tcc.sp.senai.br.utils
 
+import android.content.Context
+import android.widget.Toast
+
 /***
  *
  *  CLASSE QUE CONTEM OS MÉTODOS DE VERIFICAÇAO, COMO SEXO E SENHA CADASTRADA
@@ -22,13 +25,34 @@ class Verificacao {
          *  para cadastrar no banco
          *
          * */
-        fun verificarSexo(sexo:String):Char{
+        fun verificarSexo(sexo:String):String{
 
-            if(sexo == "Feminino"){
-                return 'F'
-            } else {
-                return 'M'
+            var retornoSexo: String? = null
+
+            when(sexo){
+                "Feminino" -> {
+                    retornoSexo = "F"
+                }
+
+                "Masculino" -> {
+                    retornoSexo = "M"
+                }
+
+                "Outros" -> {
+                    retornoSexo = "O"
+                }
+
+                "Não Informar" -> {
+                    retornoSexo = "N"
+                }
+
+                else ->{
+
+                }
+
             }
+
+            return retornoSexo!!
 
         }
 
@@ -40,11 +64,17 @@ class Verificacao {
          *  dizendo se são (true) ou não (false)  iguais
          *
          * */
-        fun verificarSenha(senha:String, confirmarSenha:String):Boolean{
+        fun verificarSenha(senha:String, confirmarSenha:String, context: Context):String{
 
-            val senhaVerificada = senha == confirmarSenha
+            var senhaCorreta: String? = null
 
-            return senhaVerificada
+            if(senha == confirmarSenha){
+                senhaCorreta =  senha
+            }else{
+            }
+
+            return senhaCorreta!!
+
         }
 
     }

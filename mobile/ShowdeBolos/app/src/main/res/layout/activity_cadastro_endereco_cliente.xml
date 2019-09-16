@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout3"
+            android:id="@+id/layout_txt_celular_cliente"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="252dp"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             app:hintTextAppearance="@style/HintTextStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
+            app:layout_constraintStart_toEndOf="@+id/layout_txt_celular_cliente"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
 
             <android.support.design.widget.TextInputEditText
@@ -109,7 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            app:layout_constraintTop_toBottomOf="@+id/layout_txt_celular_cliente">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/txt_cidade_cliente"
@@ -156,7 +156,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout9"
+            android:id="@+id/layout_txt_confirma_senha_cliente"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
+            app:layout_constraintTop_toBottomOf="@+id/layout_txt_confirma_senha_cliente">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/txt_numero_cliente"

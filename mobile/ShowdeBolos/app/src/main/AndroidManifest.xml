@@ -58,7 +58,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".CadastroEnderecoConfeiteiro"></activity>
+        <activity android:name=".CadastroEnderecoConfeiteiroActivity"></activity>
     </application>
 
 </manifest>

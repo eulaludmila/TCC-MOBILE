@@ -56,9 +56,9 @@ class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTas
                 val jsEndereco = JSONObject(dados)
 
                 endereco.bairro = (jsEndereco.getString("bairro"))
-                endereco.logradouro = (jsEndereco.getString("logradouro"))
-                endereco.cidade = (jsEndereco.getString("localidade"))
-                endereco.uf = (jsEndereco.getString("uf"))
+                endereco.endereco = (jsEndereco.getString("logradouro"))
+                endereco.codCidade.cidade = (jsEndereco.getString("localidade"))
+                endereco.codCidade.codEstado.uf = (jsEndereco.getString("uf"))
 
 
             } catch (e: JSONException) {

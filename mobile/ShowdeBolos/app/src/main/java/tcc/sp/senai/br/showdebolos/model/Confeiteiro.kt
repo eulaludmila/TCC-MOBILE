@@ -10,8 +10,8 @@ data class Confeiteiro (val codConfeiteiro: Int,
                     val email: String,
                     val senha: String,
                     val codCelular: Celular,
-                    val sexo: String,
-                    val foto: String) : Serializable{
+                    val foto: String,
+                    val sexo: String) : Serializable{
 
 
 

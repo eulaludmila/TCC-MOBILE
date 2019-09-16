@@ -3,31 +3,57 @@ package tcc.sp.senai.br.showdebolos.tasks
 import android.os.AsyncTask
 import org.json.JSONObject
 import org.json.JSONStringer
-import tcc.sp.senai.br.showdebolos.model.Cidade
-import tcc.sp.senai.br.showdebolos.model.Endereco
-import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
-import tcc.sp.senai.br.showdebolos.model.Estado
+import tcc.sp.senai.br.showdebolos.model.*
 import java.io.PrintStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
-class CadastrarEnderecoConfeiteiroTasks(val enderecoConfeiteiro: EnderecoConfeiteiro) : AsyncTask<Endereco, Endereco, Endereco>() {
+class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfeiteiro) : AsyncTask<Confeiteiro, Confeiteiro, Confeiteiro>() {
 
 
-    override fun doInBackground(vararg params:Endereco?):Endereco? {
+    override fun doInBackground(vararg params: Confeiteiro?): Confeiteiro? {
         val url = URL("http://10.107.144.21:8080/enderecoconfeiteiro")
 
-        val jsConfeiteiro = JSONStringer()
+        val jsEnderecoConfeiteiro = JSONStringer()
 
-        jsConfeiteiro.`object`()
-        jsConfeiteiro.key("").value(endereco.endereco)
-        jsConfeiteiro.key("numero").value(endereco.numero)
-        jsConfeiteiro.key("complemento").value(endereco.complemento)
-        jsConfeiteiro.key("cep").value(endereco.cep)
-        jsConfeiteiro.key("bairro").value(endereco.bairro)
-        jsConfeiteiro.key("cidade").value(endereco.codCidade)
-        jsConfeiteiro.endObject()
+        jsEnderecoConfeiteiro.`object`()
+        jsEnderecoConfeiteiro.key("confeiteiro")
+                .`object`()
+                .key("nome").value(enderecoConfeiteiro.codConfeiteiro.nome)
+                .key("sobrenome").value(enderecoConfeiteiro.codConfeiteiro.sobrenome)
+                .key("cpf").value(enderecoConfeiteiro.codConfeiteiro.cpf)
+                .key("dtNasc").value(enderecoConfeiteiro.codConfeiteiro.dtNasc)
+                .key("email").value(enderecoConfeiteiro.codConfeiteiro.email)
+                .key("senha").value(enderecoConfeiteiro.codConfeiteiro.senha)
+                .key("celular")
+                .`object`()
+                .key("celular")
+                .value(enderecoConfeiteiro.codConfeiteiro.codCelular.celular)
+                .endObject()
+                .key("foto").value("Teste")
+                .key("sexo").value("F")
+                .endObject()
+        jsEnderecoConfeiteiro.key("endereco")
+                .`object`()
+                .key("endereco").value(enderecoConfeiteiro.codEndereco.endereco)
+                .key("numero").value(enderecoConfeiteiro.codEndereco.numero)
+                .key("complemento").value(enderecoConfeiteiro.codEndereco.complemento)
+                .key("cep").value(enderecoConfeiteiro.codEndereco.cep)
+                .key("bairro").value(enderecoConfeiteiro.codEndereco.bairro)
+                .key("cidade")
+                .`object`()
+                .key("cidade")
+                .value(enderecoConfeiteiro.codEndereco.codCidade.cidade)
+                .key("estado")
+                .`object`()
+                .key("uf")
+                .value(enderecoConfeiteiro.codEndereco.codCidade.codEstado.uf)
+                .endObject()
+                .endObject()
+                .endObject()
+                .endObject()
+
 
         val conexao = url.openConnection() as HttpURLConnection
 
@@ -38,35 +64,34 @@ class CadastrarEnderecoConfeiteiroTasks(val enderecoConfeiteiro: EnderecoConfeit
         conexao.doInput = true
 
         val output = PrintStream(conexao.outputStream)
-        output.print(jsConfeiteiro)
+        output.print(jsEnderecoConfeiteiro)
 
         conexao.connect()
 
         val scanner = Scanner(conexao.inputStream)
         val resposta = scanner.nextLine()
 
-        val joEndereco = JSONObject(resposta)
+        val joConfeiteiro = JSONObject(resposta)
 
-        val joCidade = joEndereco.getJSONObject("cidade")
+        val joCelular = joConfeiteiro.getJSONObject("celular")
 
-        val joEstado = joCidade.getJSONObject("estado")
+        val celular = Celular(joCelular.getInt("codCelular"),
+                joCelular.getString("celular"))
 
-        val estado = Estado(joEstado.getInt("codEstado"), joEstado.getString("estado"))
-
-
-        val cidade = Cidade(joCidade.getInt("codCidade"), joCidade.getString("cidade"), estado)
-
-        val retornoEndereco = Endereco(JSONObject(resposta).getInt("codEndereco"),
-                JSONObject(resposta).getString("endereco"),
-                JSONObject(resposta).getString("numero"),
-                JSONObject(resposta).getString("complemento"),
-                JSONObject(resposta).getString("cep"),
-                JSONObject(resposta).getString("bairro"),
-                cidade)
-
+//        val retornoConfeiteiro = Confeiteiro(JSONObject(resposta).getInt("codConfeiteiro"),
+//                JSONObject(resposta).getString("nome"),
+//                JSONObject(resposta).getString("sobrenome"),
+//                JSONObject(resposta).getString("cpf"),
+//                JSONObject(resposta).getString("dtNasc"),
+//                JSONObject(resposta).getString("email"),
+//                JSONObject(resposta).getString("senha"),
+//                celular,
+//                JSONObject(resposta).getString("sexo"),
+//                JSONObject(resposta).getString("foto"))
 
 
-        return retornoEndereco
+
+        return null
     }
 
 
