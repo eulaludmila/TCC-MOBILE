@@ -33,6 +33,7 @@ import tcc.sp.senai.br.showdebolos.model.Foto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
 import java.io.File
+import kotlin.collections.HashMap
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -115,7 +116,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 
                 val sexo = Verificacao.verificarSexo(sexoSelecionado)
 
-                Toast.makeText(this@CadastroClienteActivity, "sexo selecionado $sexoSelecionado", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@CadastroClienteActivity, "sexo selecionado $sexoSelecionado", Toast.LENGTH_LONG).show()
 
                 if(validar()){
                     if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()) {
@@ -139,7 +140,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 
                         uploadImage(retornoCliente)
 
-                        finish()
+//                        finish()
 
                     }else{
                         Toast.makeText(this@CadastroClienteActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
@@ -202,27 +203,27 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     fun uploadImage(cliente: Cliente){
 
+
+
         val file = File(imagePath)
-        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
 
-        val request =  MultipartBody.Builder().setType(MultipartBody.FORM)
+        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val codBody = RequestBody.create(MediaType.parse("text/plain"), cliente.codCliente.toString())
+        val body = MultipartBody.Part.createFormData("foto", file.name, imageBody)
 
-        request.addFormDataPart("foto", file.name, requestBody )
-        request.addFormDataPart("codCliente", null, RequestBody.create(MediaType.parse("text/plain"),"1") )
-        val multiPartBody = request.build()
 
-        val call = fotoService!!.uploadImage(multiPartBody)
 
-        call.enqueue(object : Callback<Foto>{
+        val call = fotoService!!.uploadImageCliente(body, codBody)
 
-            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
+        call.enqueue(object : Callback<Cliente>{
+
+            override fun onResponse(call: Call<Cliente>?, response: Response<Cliente>?) {
                 if(response!!.isSuccessful){
                     Toast.makeText(this@CadastroClienteActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
-                }
+            }
             }
 
-            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
+            override fun onFailure(call: Call<Cliente>?, t: Throwable?) {
                 Toast.makeText(this@CadastroClienteActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
                 Log.d("ERRO IMAGEM", t.message)
             }

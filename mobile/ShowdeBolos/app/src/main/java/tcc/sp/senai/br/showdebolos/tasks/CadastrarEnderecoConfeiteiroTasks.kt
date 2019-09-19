@@ -13,45 +13,21 @@ class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfei
 
 
     override fun doInBackground(vararg params: Confeiteiro?): Confeiteiro? {
-        val url = URL("http://10.107.144.21:8080/enderecoconfeiteiro")
+        val url = URL("http://10.107.144.21:8080/enderecoconfeiteiro/mobile")
 
         val jsEnderecoConfeiteiro = JSONStringer()
 
         jsEnderecoConfeiteiro.`object`()
         jsEnderecoConfeiteiro.key("confeiteiro")
                 .`object`()
-                .key("nome").value(enderecoConfeiteiro.codConfeiteiro.nome)
-                .key("sobrenome").value(enderecoConfeiteiro.codConfeiteiro.sobrenome)
-                .key("cpf").value(enderecoConfeiteiro.codConfeiteiro.cpf)
-                .key("dtNasc").value(enderecoConfeiteiro.codConfeiteiro.dtNasc)
-                .key("email").value(enderecoConfeiteiro.codConfeiteiro.email)
-                .key("senha").value(enderecoConfeiteiro.codConfeiteiro.senha)
-                .key("celular")
-                .`object`()
-                .key("celular")
-                .value(enderecoConfeiteiro.codConfeiteiro.codCelular.celular)
-                .endObject()
-                .key("foto").value("Teste")
-                .key("sexo").value("F")
+                .key("codConfeiteiro").value(enderecoConfeiteiro.codConfeiteiro.codConfeiteiro)
+
                 .endObject()
         jsEnderecoConfeiteiro.key("endereco")
                 .`object`()
-                .key("endereco").value(enderecoConfeiteiro.codEndereco.endereco)
-                .key("numero").value(enderecoConfeiteiro.codEndereco.numero)
-                .key("complemento").value(enderecoConfeiteiro.codEndereco.complemento)
-                .key("cep").value(enderecoConfeiteiro.codEndereco.cep)
-                .key("bairro").value(enderecoConfeiteiro.codEndereco.bairro)
-                .key("cidade")
-                .`object`()
-                .key("cidade")
-                .value(enderecoConfeiteiro.codEndereco.codCidade.cidade)
-                .key("estado")
-                .`object`()
-                .key("uf")
-                .value(enderecoConfeiteiro.codEndereco.codCidade.codEstado.uf)
+                .key("codEndereco").value(enderecoConfeiteiro.codEndereco.codEndereco)
                 .endObject()
-                .endObject()
-                .endObject()
+
                 .endObject()
 
 
@@ -71,27 +47,33 @@ class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfei
         val scanner = Scanner(conexao.inputStream)
         val resposta = scanner.nextLine()
 
-        val joConfeiteiro = JSONObject(resposta)
+        val joEnderecoConfeiteiro = JSONObject(resposta)
+
+        val joConfeiteiro = joEnderecoConfeiteiro.getJSONObject("confeiteiro")
+
+
 
         val joCelular = joConfeiteiro.getJSONObject("celular")
 
         val celular = Celular(joCelular.getInt("codCelular"),
                 joCelular.getString("celular"))
 
-//        val retornoConfeiteiro = Confeiteiro(JSONObject(resposta).getInt("codConfeiteiro"),
-//                JSONObject(resposta).getString("nome"),
-//                JSONObject(resposta).getString("sobrenome"),
-//                JSONObject(resposta).getString("cpf"),
-//                JSONObject(resposta).getString("dtNasc"),
-//                JSONObject(resposta).getString("email"),
-//                JSONObject(resposta).getString("senha"),
-//                celular,
-//                JSONObject(resposta).getString("sexo"),
-//                JSONObject(resposta).getString("foto"))
+
+
+        val retornoConfeiteiro = Confeiteiro(joConfeiteiro.getInt("codConfeiteiro"),
+                joConfeiteiro.getString("nome"),
+                joConfeiteiro.getString("sobrenome"),
+                joConfeiteiro.getString("cpf"),
+                joConfeiteiro.getString("dtNasc"),
+                joConfeiteiro.getString("email"),
+                joConfeiteiro.getString("senha"),
+                celular,
+                joConfeiteiro.getString("sexo"),
+                joConfeiteiro.getString("foto"))
 
 
 
-        return null
+        return retornoConfeiteiro
     }
 
 

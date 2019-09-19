@@ -16,10 +16,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
 import okhttp3.MediaType
@@ -32,8 +29,11 @@ import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.model.Celular
 
 import tcc.sp.senai.br.showdebolos.model.Confeiteiro
+import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import tcc.sp.senai.br.showdebolos.model.Foto
+import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
+import tcc.sp.senai.br.showdebolos.tasks.CadastrarConfeiteiroTasks
 import tcc.sp.senai.br.utils.Verificacao
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -51,10 +51,24 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_confeiteiro)
 
+        fotoService = ApiConfig.getFotosService()
+
         txt_cpf_confeiteiro.addTextChangedListener(Mask.mask("###.###.###-##", txt_cpf_confeiteiro))
         txt_celular_confeiteiro.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_confeiteiro))
         txt_dt_nascimento_confeiteiro.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_confeiteiro))
 
+        val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros", "Não Informar")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,sexo )
+
+
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+
+        spn_sexo_confeiteiro.adapter = adapter
+
+
+        img_add_foto_confeiteiro.setOnClickListener{
+            abrirGaleria()
+        }
 
         txt_celular_confeiteiro.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
@@ -121,24 +135,22 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                             sexo)
 
 
+                    val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro)
+                    cadastroConfeiteiro.execute()
+
+                    val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
+
+                    uploadImage(retornoConfeiteiro)
+
                     val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
-                    intent.putExtra("confeiteiro", confeiteiro)
+                    intent.putExtra("confeiteiro", retornoConfeiteiro)
                     startActivity(intent)
+
+
                 }else{
                     Toast.makeText(this@CadastroConfeiteiroActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
                 }
 
-
-
-
-
-
-//                val cadastrarFoto = CadastrarFotoClienteTasks(retornoCliente.codCliente, imgArray)
-//
-//                cadastrarFoto.execute()
-                // uploadImage(retornoConfeiteiro)
-
-                //Toast.makeText(this, .toString(), Toast.LENGTH_LONG).show()
             }
 
 
@@ -177,7 +189,7 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                 imageBitmap = BitmapFactory.decodeStream(inputStream)
 
                 //exibir a imagem no aplicativo
-                img_cliente.setImageBitmap(imageBitmap)
+                img_confeiteiro.setImageBitmap(imageBitmap)
 
                 imagePath = getRealPathFromUri(selectedImage)
 
@@ -192,26 +204,31 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
     fun uploadImage(confeiteiro: Confeiteiro){
 
         val file = File(imagePath)
-        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        val body = MultipartBody.Part.createFormData("foto", file.name, requestBody)
-//        val call = fotoService!!.uploadImage(body, 25)
 
-//        call.enqueue(object : Callback<Foto> {
-//
-//            override fun onResponse(call: Call<Foto>?, response: Response<Foto>?) {
-//                if(response!!.isSuccessful){
-//                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Foto>?, t: Throwable?) {
-//                Toast.makeText(this@CadastroConfeiteiroActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
-//                Log.d("ERRO IMAGEM", t.message)
-//            }
-//
-//
-//
-//        })
+        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val codBody = RequestBody.create(MediaType.parse("text/plain"), confeiteiro.codConfeiteiro.toString())
+        val body = MultipartBody.Part.createFormData("foto", file.name, imageBody)
+
+
+
+        val call = fotoService!!.uploadImageConfeiteiro(body, codBody)
+
+        call.enqueue(object : Callback<Confeiteiro>{
+
+            override fun onResponse(call: Call<Confeiteiro>?, response: Response<Confeiteiro>?) {
+                if(response!!.isSuccessful){
+                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Confeiteiro>?, t: Throwable?) {
+                Toast.makeText(this@CadastroConfeiteiroActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
+                Log.d("ERRO IMAGEM", t.message)
+            }
+
+
+
+        })
 
 
     }
