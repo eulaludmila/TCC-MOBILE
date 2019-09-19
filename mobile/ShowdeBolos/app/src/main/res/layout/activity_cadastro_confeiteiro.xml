@@ -16,15 +16,15 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/img_add_foto_cliente2"
+            android:id="@+id/img_add_foto_confeiteiro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="188dp"
+            android:layout_marginTop="156dp"
             android:elevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintHorizontal_bias="0.69"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/add" />
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:hint="Nome:"
             android:padding="0dp"
             android:textColorHint="@color/branco"
@@ -301,8 +301,8 @@
 
         <ImageView
             android:id="@+id/img_confeiteiro"
-            android:layout_width="208dp"
-            android:layout_height="202dp"
+            android:layout_width="186dp"
+            android:layout_height="170dp"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
