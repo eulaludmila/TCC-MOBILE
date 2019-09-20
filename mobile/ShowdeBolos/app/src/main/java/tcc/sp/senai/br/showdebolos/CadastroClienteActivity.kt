@@ -1,5 +1,6 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +11,7 @@ import tcc.sp.senai.br.showdebolos.model.Cliente
 import tcc.sp.senai.br.utils.Verificacao
 import java.util.*
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -54,7 +56,7 @@ class CadastroClienteActivity : AppCompatActivity() {
         txt_celular_cliente.addTextChangedListener(Mask.mask("(##) #####-####", txt_celular_cliente))
         txt_dt_nascimento_cliente.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_cliente))
         val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros", "Não Informar")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,sexo )
+        val adapter = ArrayAdapter(this, R.layout.spinner_adapter,sexo )
 
 
 
@@ -119,7 +121,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 //                Toast.makeText(this@CadastroClienteActivity, "sexo selecionado $sexoSelecionado", Toast.LENGTH_LONG).show()
 
                 if(validar()){
-                    if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()) {
+                    if(txtSenha.text.toString() == txtConfirmarSenha.text.toString() && txtSenha.text.toString().length > 8 ) {
 
                         val cliente = Cliente(0,
                                 txtNome.text.toString(),
@@ -247,13 +249,18 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     fun validar():Boolean{
 
         var validado = true
 
         if(txt_nome_cliente.text.toString().isEmpty()){
             layout_txt_nome_cliente.isErrorEnabled = true
-            layout_txt_nome_cliente.error = resources.getText(0, "erro")
+            layout_txt_nome_cliente.error = resources.getText(0, "Digite o seu nome")
+            validado = false
+        }else if(txt_nome_cliente.length() < 3 ){
+            layout_txt_nome_cliente.isErrorEnabled = true
+            layout_txt_nome_cliente.error = resources.getText(0, "Nome deve conter pelo menos 3 caracteres")
             validado = false
         }else{
             layout_txt_nome_cliente.isErrorEnabled = false
@@ -261,7 +268,11 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if(txt_sobrenome_cliente.text.toString().isEmpty()){
             layout_txt_sobrenome_cliente.isErrorEnabled = true
-            layout_txt_sobrenome_cliente.error = resources.getText(0, "erro")
+            layout_txt_sobrenome_cliente.error = resources.getText(0,"Digite o seu sobrenome")
+            validado = false
+        }else if(txt_sobrenome_cliente.length() < 3 ){
+            layout_txt_sobrenome_cliente.isErrorEnabled = true
+            layout_txt_sobrenome_cliente.error = resources.getText(0, "Sobrenome deve conter pelo menos 3 caracteres")
             validado = false
         }else{
             layout_txt_sobrenome_cliente.isErrorEnabled = false
@@ -269,7 +280,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if(txt_celular_cliente.text.toString().isEmpty()){
             layout_txt_celular_cliente.isErrorEnabled = true
-            layout_txt_celular_cliente.error = resources.getText(0, "erro")
+            layout_txt_celular_cliente.error = resources.getText(0, "Digite o seu celular")
             validado = false
         }else{
             layout_txt_celular_cliente.isErrorEnabled = false
@@ -277,7 +288,11 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if(txt_cpf_cliente.text.toString().isEmpty()){
             layout_txt_cpf_cliente.isErrorEnabled = true
-            layout_txt_cpf_cliente.error = resources.getText(0, "erro")
+            layout_txt_cpf_cliente.error = resources.getText(0, "Digite o seu cpf")
+            validado = false
+        }else if(txt_cpf_cliente.length() < 14 ){
+            layout_txt_cpf_cliente.isErrorEnabled = true
+            layout_txt_cpf_cliente.error = resources.getText(0, "CPF deve estar no formato correto")
             validado = false
         }else{
             layout_txt_cpf_cliente.isErrorEnabled = false
@@ -285,15 +300,35 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if(txt_dt_nascimento_cliente.text.toString().isEmpty()){
             layout_txt_dt_nascimento_cliente.isErrorEnabled = true
-            layout_txt_dt_nascimento_cliente.error = resources.getText(0, "erro")
+            layout_txt_dt_nascimento_cliente.error = resources.getText(0, "Digite o seu nascimento")
+            validado = false
+        }else if(txt_dt_nascimento_cliente.length() < 10 ){
+            layout_txt_dt_nascimento_cliente.isErrorEnabled = true
+            layout_txt_dt_nascimento_cliente.error = resources.getText(0, "Data deve estar no formato correto")
             validado = false
         }else{
             layout_txt_dt_nascimento_cliente.isErrorEnabled = false
         }
 
+        if(Verificacao.verificarSexo(spn_sexo_cliente.selectedItem.toString()) == "SS"){
+            val builder = AlertDialog.Builder(this@CadastroClienteActivity)
+            builder.setTitle("ERRO")
+            builder.setIcon(R.drawable.ic_erro)
+            builder.setMessage("Selecione o sexo")
+            builder.setPositiveButton("OK"){dialog, which ->  }
+            builder.show()
+
+        }else{
+
+        }
+
         if(txt_email_cliente.text.toString().isEmpty()){
             layout_txt_email_cliente.isErrorEnabled = true
-            layout_txt_email_cliente.error = resources.getText(0, "erro")
+            layout_txt_email_cliente.error = resources.getText(0, "Digite o seu e-mail")
+            validado = false
+        }else if(txt_email_cliente.length() < 13 ){
+            layout_txt_email_cliente.isErrorEnabled = true
+            layout_txt_email_cliente.error = resources.getText(0, "E-mail deve estar no formato correto")
             validado = false
         }else{
             layout_txt_email_cliente.isErrorEnabled = false
@@ -301,7 +336,11 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if(txt_senha_cliente.text.toString().isEmpty()){
             layout_txt_senha_cliente.isErrorEnabled = true
-            layout_txt_senha_cliente.error = resources.getText(0, "erro")
+            layout_txt_senha_cliente.error = resources.getText(0, "Digite a sua senha")
+            validado = false
+        }else if(txt_senha_cliente.length() < 8 ){
+            layout_txt_senha_cliente.isErrorEnabled = true
+            layout_txt_senha_cliente.error = resources.getText(0, "Senha deve conter pelo menos 8 caracteres")
             validado = false
         }else{
             layout_txt_senha_cliente.isErrorEnabled = false
@@ -309,7 +348,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if(txt_confirma_senha_cliente.text.toString().isEmpty()){
             layout_txt_confirma_senha_cliente.isErrorEnabled = true
-            layout_txt_confirma_senha_cliente.error = resources.getText(0, "erro")
+            layout_txt_confirma_senha_cliente.error = resources.getText(0, "")
             validado = false
         }else{
             layout_txt_confirma_senha_cliente.isErrorEnabled = false
@@ -320,3 +359,4 @@ class CadastroClienteActivity : AppCompatActivity() {
 
 
 }
+

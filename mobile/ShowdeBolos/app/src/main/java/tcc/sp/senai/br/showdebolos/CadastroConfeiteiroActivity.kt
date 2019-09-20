@@ -1,6 +1,8 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -17,7 +19,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
+import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
 import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -58,7 +60,7 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
         txt_dt_nascimento_confeiteiro.addTextChangedListener(Mask.mask("##/##/####", txt_dt_nascimento_confeiteiro))
 
         val sexo = arrayOf("Selecione o Sexo","Masculino", "Feminino", "Outros", "Não Informar")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,sexo )
+        val adapter = ArrayAdapter(this, R.layout.spinner_adapter ,sexo )
 
 
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
@@ -122,35 +124,36 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
 
                 val sexo = Verificacao.verificarSexo(sexoSelecionado)
 
-                if(txtSenha.text.toString() == txtConfirmarSenha.text.toString()){
-                    val confeiteiro = Confeiteiro(0,
-                            txtNome.text.toString(),
-                            txtSobrenome.text.toString(),
-                            txtCpf.text.toString(),
-                            txtDtNascimento.text.toString(),
-                            txtEmail.text.toString(),
-                            txtSenha.text.toString(),
-                            celular,
-                            "teste.png",
-                            sexo)
+                if (validar()) {
+                    if (txtSenha.text.toString() == txtConfirmarSenha.text.toString() && txtSenha.length() > 8) {
+                        val confeiteiro = Confeiteiro(0,
+                                txtNome.text.toString(),
+                                txtSobrenome.text.toString(),
+                                txtCpf.text.toString(),
+                                txtDtNascimento.text.toString(),
+                                txtEmail.text.toString(),
+                                txtSenha.text.toString(),
+                                celular,
+                                "teste.png",
+                                sexo)
 
 
-                    val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro)
-                    cadastroConfeiteiro.execute()
+                        val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro)
+                        cadastroConfeiteiro.execute()
 
-                    val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
+                        val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
 
-                    uploadImage(retornoConfeiteiro)
+                        uploadImage(retornoConfeiteiro)
 
-                    val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
-                    intent.putExtra("confeiteiro", retornoConfeiteiro)
-                    startActivity(intent)
+                        val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
+                        intent.putExtra("confeiteiro", retornoConfeiteiro)
+                        startActivity(intent)
 
 
-                }else{
-                    Toast.makeText(this@CadastroConfeiteiroActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@CadastroConfeiteiroActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
+                    }
                 }
-
             }
 
 
@@ -243,6 +246,114 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
 
         return result
 
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun validar():Boolean{
+
+        var validado = true
+
+        if(txt_nome_confeiteiro.text.toString().isEmpty()){
+            layout_txt_nome_confeiteiro.isErrorEnabled = true
+            layout_txt_nome_confeiteiro.error = resources.getText(0, "Digite o seu nome")
+            validado = false
+        }else if(txt_nome_confeiteiro.length() < 3 ){
+            layout_txt_nome_confeiteiro.isErrorEnabled = true
+            layout_txt_nome_confeiteiro.error = resources.getText(0, "Nome deve conter pelo menos 3 caracteres")
+            validado = false
+        }else{
+            layout_txt_nome_confeiteiro.isErrorEnabled = false
+        }
+
+        if(txt_sobrenome_confeiteiro.text.toString().isEmpty()){
+            layout_txt_sobrenome_confeiteiro.isErrorEnabled = true
+            layout_txt_sobrenome_confeiteiro.error = resources.getText(0,"Digite o seu sobrenome")
+            validado = false
+        }else if(txt_sobrenome_confeiteiro.length() < 3 ){
+            layout_txt_sobrenome_confeiteiro.isErrorEnabled = true
+            layout_txt_sobrenome_confeiteiro.error = resources.getText(0, "Sobrenome deve conter pelo menos 3 caracteres")
+            validado = false
+        }else{
+            layout_txt_sobrenome_confeiteiro.isErrorEnabled = false
+        }
+
+        if(txt_celular_confeiteiro.text.toString().isEmpty()){
+            layout_txt_celular_confeiteiro.isErrorEnabled = true
+            layout_txt_celular_confeiteiro.error = resources.getText(0, "Digite o seu celular")
+            validado = false
+        }else{
+            layout_txt_celular_confeiteiro.isErrorEnabled = false
+        }
+
+        if(txt_cpf_confeiteiro.text.toString().isEmpty()){
+            layout_txt_cpf_confeiteiro.isErrorEnabled = true
+            layout_txt_cpf_confeiteiro.error = resources.getText(0, "Digite o seu cpf")
+            validado = false
+        }else if(txt_cpf_confeiteiro.length() < 14 ){
+            layout_txt_cpf_confeiteiro.isErrorEnabled = true
+            layout_txt_cpf_confeiteiro.error = resources.getText(0, "CPF deve estar no formato correto")
+            validado = false
+        }else{
+            layout_txt_cpf_confeiteiro.isErrorEnabled = false
+        }
+
+        if(txt_dt_nascimento_confeiteiro.text.toString().isEmpty()){
+            layout_txt_dt_nascimento_confeiteiro.isErrorEnabled = true
+            layout_txt_dt_nascimento_confeiteiro.error = resources.getText(0, "Digite o seu nascimento")
+            validado = false
+        }else if(txt_dt_nascimento_confeiteiro.length() < 10 ){
+            layout_txt_dt_nascimento_confeiteiro.isErrorEnabled = true
+            layout_txt_dt_nascimento_confeiteiro.error = resources.getText(0, "Data deve estar no formato correto")
+            validado = false
+        }else{
+            layout_txt_dt_nascimento_confeiteiro.isErrorEnabled = false
+        }
+
+        if(Verificacao.verificarSexo(spn_sexo_confeiteiro.selectedItem.toString()) == "SS"){
+            val builder = AlertDialog.Builder(this@CadastroConfeiteiroActivity)
+            builder.setTitle("ERRO")
+            builder.setIcon(R.drawable.ic_erro)
+            builder.setMessage("Selecione o sexo")
+            builder.setPositiveButton("OK"){dialog, which ->  }
+            builder.show()
+
+        }else{
+
+        }
+
+        if(txt_email_confeiteiro.text.toString().isEmpty()){
+            layout_txt_email_confeiteiro.isErrorEnabled = true
+            layout_txt_email_confeiteiro.error = resources.getText(0, "Digite o seu e-mail")
+            validado = false
+        }else if(txt_email_confeiteiro.length() < 13 ){
+            layout_txt_email_confeiteiro.isErrorEnabled = true
+            layout_txt_email_confeiteiro.error = resources.getText(0, "E-mail deve estar no formato correto")
+            validado = false
+        }else{
+            layout_txt_email_confeiteiro.isErrorEnabled = false
+        }
+
+        if(txt_senha_confeiteiro.text.toString().isEmpty()){
+            layout_txt_senha_confeiteiro.isErrorEnabled = true
+            layout_txt_senha_confeiteiro.error = resources.getText(0, "Digite a sua senha")
+            validado = false
+        }else if(txt_senha_confeiteiro.length() < 8 ){
+            layout_txt_senha_confeiteiro.isErrorEnabled = true
+            layout_txt_senha_confeiteiro.error = resources.getText(0, "Senha deve conter pelo menos 8 caracteres")
+            validado = false
+        }else{
+            layout_txt_senha_confeiteiro.isErrorEnabled = false
+        }
+
+        if(txt_confirma_senha_confeiteiro.text.toString().isEmpty()){
+            layout_txt_confirma_senha_confeiteiro.isErrorEnabled = true
+            layout_txt_confirma_senha_confeiteiro.error = resources.getText(0, "")
+            validado = false
+        }else{
+            layout_txt_confirma_senha_confeiteiro.isErrorEnabled = false
+        }
+
+        return validado
     }
 
 

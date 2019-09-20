@@ -46,6 +46,10 @@ class Verificacao {
                     retornoSexo = "N"
                 }
 
+                "Selecione o Sexo" -> {
+                    retornoSexo = "SS"
+                }
+
                 else ->{
 
                 }

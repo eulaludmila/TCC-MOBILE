@@ -20,17 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="156dp"
             android:elevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.69"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/add" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/layout_txt_nome_confeiteiro"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_confeiteiro">
+            app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/txt_nome_confeiteiro"
@@ -79,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/layout_txt_nome_confeiteiro">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/txt_sobrenome_confeiteiro"
@@ -298,16 +297,28 @@
             </android.support.design.widget.TextInputEditText>
         </android.support.design.widget.TextInputLayout>
 
-
-        <ImageView
-            android:id="@+id/img_confeiteiro"
-            android:layout_width="186dp"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="170dp"
             android:layout_height="170dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
+            app:cardCornerRadius="180dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardElevation="-180dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/add_foto" />
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/img_confeiteiro"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/add_foto" />
+        </android.support.v7.widget.CardView>
+
+
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
