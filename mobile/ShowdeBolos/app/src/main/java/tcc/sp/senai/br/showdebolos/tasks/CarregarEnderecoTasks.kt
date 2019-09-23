@@ -2,8 +2,10 @@ package br.senai.sp.estacionamento.tasks
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.opengl.Visibility
 import android.os.AsyncTask
 import android.text.TextWatcher
+import android.widget.ProgressBar
 
 import org.json.JSONException
 import org.json.JSONObject
@@ -18,9 +20,10 @@ import java.net.URL
 import tcc.sp.senai.br.showdebolos.model.Endereco
 
 
+@Suppress("DEPRECATION")
 class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTask<Endereco, Endereco, Endereco>() {
     private var dados = ""
-    private var progressDialog: ProgressDialog? = null
+    private var progressBar : ProgressBar? = null
     val context = context
 
     override fun doInBackground(vararg params: Endereco?): Endereco? {
@@ -77,15 +80,13 @@ class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTas
 
     override fun onPreExecute() {
         super.onPreExecute()
-        progressDialog = ProgressDialog(context)
-        progressDialog!!.setTitle("Carregando dados")
-        progressDialog!!.setMessage("Aguarde...")
-        progressDialog!!.show()
+        progressBar = ProgressBar(context)
+        progressBar!!.visibility
     }
 
     override fun onPostExecute(result: Endereco?) {
         super.onPostExecute(result)
 
-        progressDialog!!.dismiss()
+        progressBar!!.visibility
     }
 }
