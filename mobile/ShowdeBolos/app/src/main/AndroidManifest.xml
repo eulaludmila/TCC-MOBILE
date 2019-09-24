@@ -3,7 +3,8 @@
     package="tcc.sp.senai.br.showdebolos">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".MyApp"
@@ -25,10 +26,10 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/noBar"></activity>
+            android:theme="@style/noBar" />
         <activity
             android:name=".CircularReveal"
-            android:theme="@style/noBar"></activity>
+            android:theme="@style/noBar" />
         <activity android:name=".LoginConfeiteiroActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -58,7 +59,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".CadastroEnderecoConfeiteiroActivity"></activity>
+        <activity android:name=".CadastroEnderecoConfeiteiroActivity" />
+        <activity android:name=".PerfilConfeiteiroActivity"></activity>
     </application>
 
 </manifest>

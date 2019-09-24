@@ -23,6 +23,7 @@ import android.widget.*
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarClienteTasks
 import java.io.ByteArrayOutputStream
 import android.os.Build
+import android.os.Handler
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.util.Log
@@ -184,15 +185,20 @@ class CadastroClienteActivity : AppCompatActivity() {
                                 sexo,
                                 "teste.png")
 
-                        val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
+                        Handler().postDelayed({
+                            val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
 
-                        cadastrarCliente.execute()
+                            cadastrarCliente.execute()
 
-                        val retornoCliente = cadastrarCliente.get() as Cliente
+                            val retornoCliente = cadastrarCliente.get() as Cliente
 
-                        uploadImage(retornoCliente)
+                            uploadImage(retornoCliente)
 
-//                        finish()
+                        },100)
+
+
+
+
 
                     }else{
                         Toast.makeText(this@CadastroClienteActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()

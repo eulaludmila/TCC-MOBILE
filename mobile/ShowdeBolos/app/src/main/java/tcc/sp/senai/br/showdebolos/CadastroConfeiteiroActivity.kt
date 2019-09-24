@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.util.Log
@@ -138,16 +139,24 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                                 sexo)
 
 
-                        val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro)
-                        cadastroConfeiteiro.execute()
+                        carregando.setVisibility(View.VISIBLE)
 
-                        val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
+                        Handler().postDelayed({
 
-                        uploadImage(retornoConfeiteiro)
+                            val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro, carregando)
+                            cadastroConfeiteiro.execute()
 
-                        val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
-                        intent.putExtra("confeiteiro", retornoConfeiteiro)
-                        startActivity(intent)
+                            val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
+
+                            uploadImage(retornoConfeiteiro)
+
+                            val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
+                            intent.putExtra("confeiteiro", retornoConfeiteiro)
+                            startActivity(intent)
+
+                        },100)
+
+
 
 
                     } else {

@@ -1,325 +1,369 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".CadastroConfeiteiroActivity"
-    android:background="@drawable/background_gradient"
-    android:fillViewport="true"
-    >
-
-
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        tools:context=".CadastroConfeiteiroActivity"
+        android:background="@drawable/background_gradient"
+        android:fillViewport="true"
+        >
 
-        <ImageView
-            android:id="@+id/img_add_foto_confeiteiro"
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_add_foto_confeiteiro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="156dp"
+                android:elevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/add" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_nome_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:hint="Nome:"
+                android:padding="0dp"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_nome_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawablePadding="4dp"
+                    android:elevation="10dp"
+                    android:inputType="text"
+                    android:padding="0dp"
+                    android:textColor="@color/branco">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_sobrenome_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Sobrenome:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_nome_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_sobrenome_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="text"
+                    android:textColor="@color/branco"
+                    android:visibility="visible">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_celular_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Celular:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_sobrenome_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_celular_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/branco"
+                    android:visibility="visible">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_cpf_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="CPF:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_celular_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_cpf_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/branco"
+                    android:visibility="visible">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_dt_nascimento_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Data de Nascimento:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_cpf_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_dt_nascimento_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/branco"
+                    android:visibility="visible">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Spinner
+                android:id="@+id/spn_sexo_confeiteiro"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner_bg"
+
+                android:hint="Sexo:"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_dt_nascimento_confeiteiro">
+
+            </Spinner>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_email_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="E-mail:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_sexo_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_email_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/branco"
+                    android:visibility="visible">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_senha_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Senha:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_email_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_senha_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/branco"
+                    android:visibility="visible">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_txt_confirma_senha_confeiteiro"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Confirme a senha:"
+                android:textColorHint="@color/branco"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/branco"
+                app:boxStrokeWidth="5px"
+                app:hintTextAppearance="@style/HintTextStyle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_txt_senha_confeiteiro">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/txt_confirma_senha_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:elevation="10dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/branco">
+
+                </android.support.design.widget.TextInputEditText>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="85dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_confeiteiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/add_foto" />
+            </android.support.v7.widget.CardView>
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/carregando"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_bg"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="156dp"
-            android:elevation="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/add" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_nome_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:hint="Nome:"
-            android:padding="0dp"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView4">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_nome_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:drawablePadding="4dp"
-                android:elevation="10dp"
-                android:inputType="text"
-                android:padding="0dp"
-                android:textColor="@color/branco">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_sobrenome_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="Sobrenome:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_nome_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_sobrenome_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="text"
-                android:textColor="@color/branco"
-                android:visibility="visible">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_celular_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="Celular:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_sobrenome_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_celular_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="number"
-                android:textColor="@color/branco"
-                android:visibility="visible">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_cpf_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="CPF:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_celular_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_cpf_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="number"
-                android:textColor="@color/branco"
-                android:visibility="visible">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_dt_nascimento_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="Data de Nascimento:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_cpf_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_dt_nascimento_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="number"
-                android:textColor="@color/branco"
-                android:visibility="visible">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-
-        <Spinner
-            android:id="@+id/spn_sexo_confeiteiro"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/spinner_bg"
-
-            android:hint="Sexo:"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_dt_nascimento_confeiteiro">
-
-        </Spinner>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_email_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="E-mail:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_sexo_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_email_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/branco"
-                android:visibility="visible">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_senha_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="Senha:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_email_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_senha_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="textPassword"
-                android:textColor="@color/branco"
-                android:visibility="visible">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_txt_confirma_senha_confeiteiro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="Confirme a senha:"
-            android:textColorHint="@color/branco"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/branco"
-            app:boxStrokeWidth="5px"
-            app:hintTextAppearance="@style/HintTextStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_txt_senha_confeiteiro">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/txt_confirma_senha_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:elevation="10dp"
-                android:inputType="textPassword"
-                android:textColor="@color/branco">
-
-            </android.support.design.widget.TextInputEditText>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView4"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="85dp"
-            app:cardElevation="0dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/allerta"
+            android:text="Aguarde..."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/img_confeiteiro"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/add_foto" />
-        </android.support.v7.widget.CardView>
-
-
-
+            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+</android.support.constraint.ConstraintLayout>

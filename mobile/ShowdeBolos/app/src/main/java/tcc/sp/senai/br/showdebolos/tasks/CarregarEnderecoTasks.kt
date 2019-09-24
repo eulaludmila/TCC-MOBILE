@@ -4,7 +4,9 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.opengl.Visibility
 import android.os.AsyncTask
+import android.support.constraint.ConstraintLayout
 import android.text.TextWatcher
+import android.view.View
 import android.widget.ProgressBar
 
 import org.json.JSONException
@@ -21,9 +23,8 @@ import tcc.sp.senai.br.showdebolos.model.Endereco
 
 
 @Suppress("DEPRECATION")
-class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTask<Endereco, Endereco, Endereco>() {
+class CarregarEnderecoTasks(val endereco: Endereco, context: Context, var carregando:ConstraintLayout) : AsyncTask<Endereco, Endereco, Endereco>() {
     private var dados = ""
-    private var progressBar : ProgressBar? = null
     val context = context
 
     override fun doInBackground(vararg params: Endereco?): Endereco? {
@@ -80,13 +81,16 @@ class CarregarEnderecoTasks(val endereco: Endereco, context: Context) : AsyncTas
 
     override fun onPreExecute() {
         super.onPreExecute()
-        progressBar = ProgressBar(context)
-        progressBar!!.visibility
+    }
+
+    override fun onProgressUpdate(vararg values: Endereco?) {
+        super.onProgressUpdate(*values)
     }
 
     override fun onPostExecute(result: Endereco?) {
         super.onPostExecute(result)
 
-        progressBar!!.visibility
+        carregando!!.setVisibility(View.INVISIBLE)
+
     }
 }

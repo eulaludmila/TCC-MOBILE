@@ -6,6 +6,8 @@
     <string name="cadastro_cliente">Cadastro de Cliente</string>
     <string name="confirmar">Confirmar</string>
     <string name="cadastro_confeiteiro">Cadastro de Confeiteiro</string>
+    <string name="nao">Sair</string>
+    <string name="sim">Continuar</string>
     <string-array name="array_sexo">
         <item>Masculino</item>
         <item>Feminino</item>
