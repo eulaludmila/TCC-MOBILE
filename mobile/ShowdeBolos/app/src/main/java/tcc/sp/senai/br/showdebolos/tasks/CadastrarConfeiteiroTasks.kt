@@ -1,18 +1,21 @@
 package tcc.sp.senai.br.showdebolos.tasks
 
 import android.os.AsyncTask
+import android.support.constraint.ConstraintLayout
+import android.view.View
 import android.widget.Toast
 import org.json.JSONObject
 import org.json.JSONStringer
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
 import tcc.sp.senai.br.showdebolos.model.Confeiteiro
+import tcc.sp.senai.br.showdebolos.model.Endereco
 import java.io.PrintStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
-class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro): AsyncTask<Confeiteiro, Confeiteiro, Confeiteiro>() {
+class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro, var carregando: ConstraintLayout): AsyncTask<Confeiteiro, Confeiteiro, Confeiteiro>() {
 
 
     override fun doInBackground(vararg params: Confeiteiro?): Confeiteiro? {
@@ -73,6 +76,13 @@ class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro): AsyncTask<Confeit
 
 
         return retornoConfeiteiro
+    }
+
+    override fun onPostExecute(result: Confeiteiro?) {
+        super.onPostExecute(result)
+
+        carregando!!.setVisibility(View.INVISIBLE)
+
     }
 
 

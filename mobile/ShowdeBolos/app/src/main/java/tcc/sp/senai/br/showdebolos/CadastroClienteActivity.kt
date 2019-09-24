@@ -1,6 +1,7 @@
 package tcc.sp.senai.br.showdebolos
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -22,6 +23,7 @@ import android.widget.*
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarClienteTasks
 import java.io.ByteArrayOutputStream
 import android.os.Build
+import android.os.Handler
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.util.Log
@@ -31,11 +33,10 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tcc.sp.senai.br.showdebolos.model.Foto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
+import tcc.sp.senai.br.showdebolos.tasks.VerificarEmailCpfTasks
 import java.io.File
-import kotlin.collections.HashMap
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -46,6 +47,8 @@ class CadastroClienteActivity : AppCompatActivity() {
     var imagePath: String? = null
     var fotoService:FotosService? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    @TargetApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
@@ -65,6 +68,54 @@ class CadastroClienteActivity : AppCompatActivity() {
             abrirGaleria()
 
         }
+
+        txt_email_cliente.setOnFocusChangeListener { v, hasFocus ->
+
+            if(hasFocus){
+
+            }else{
+                if(txt_email_cliente.length() > 13){
+                    val verificarEmailTasks = VerificarEmailCpfTasks(txt_email_cliente.text.toString(),"cliente","email")
+
+                    verificarEmailTasks.execute()
+
+                    val retorno:String = verificarEmailTasks.get()
+
+                    if(retorno == "1"){
+                        val builder = AlertDialog.Builder(this@CadastroClienteActivity)
+                        builder.setTitle("ERRO")
+                        builder.setIcon(R.drawable.ic_erro)
+                        builder.setMessage("Este e-mail já esta cadastrado")
+                        builder.setPositiveButton("OK"){dialog, which ->  }
+                        builder.show()
+                        txt_email_cliente.setText("")
+                        txt_email_cliente.requestFocus()
+                    }
+                }
+            }
+
+        }
+
+        if(txt_cpf_cliente.length() == 14){
+
+            val verificarEmailCpfTasks = VerificarEmailCpfTasks(txt_cpf_cliente.text.toString(),"cliente","cpf")
+
+            verificarEmailCpfTasks.execute()
+
+            val retorno:String = verificarEmailCpfTasks.get()
+
+            if(retorno == "1"){
+                val builder = AlertDialog.Builder(this@CadastroClienteActivity)
+                builder.setTitle("ERRO")
+                builder.setIcon(R.drawable.ic_erro)
+                builder.setMessage("Este cpf já esta cadastrado")
+                builder.setPositiveButton("OK"){dialog, which ->  }
+                builder.show()
+                txt_cpf_cliente.setText("")
+            }
+
+        }
+
 
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
 
@@ -134,15 +185,20 @@ class CadastroClienteActivity : AppCompatActivity() {
                                 sexo,
                                 "teste.png")
 
-                        val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
+                        Handler().postDelayed({
+                            val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
 
-                        cadastrarCliente.execute()
+                            cadastrarCliente.execute()
 
-                        val retornoCliente = cadastrarCliente.get() as Cliente
+                            val retornoCliente = cadastrarCliente.get() as Cliente
 
-                        uploadImage(retornoCliente)
+                            uploadImage(retornoCliente)
 
-//                        finish()
+                        },100)
+
+
+
+
 
                     }else{
                         Toast.makeText(this@CadastroClienteActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
@@ -249,7 +305,8 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("ResourceAsColor")
+
+        @SuppressLint("ResourceAsColor")
     fun validar():Boolean{
 
         var validado = true
