@@ -17,7 +17,7 @@ class VerificarEmailCpfTasks(private val valor:String, val usuario:String, val t
     private var dados = ""
 
     override fun doInBackground(vararg params: String?): String? {
-        val url = URL("http://10.107.144.21:8080/$usuario/$tipo/$valor")
+        val url = URL("http://54.242.6.253:8080/$usuario/$tipo/$valor")
 
         val conexao = url.openConnection() as HttpURLConnection
 

@@ -138,24 +138,28 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                                 "teste.png",
                                 sexo)
 
+                        if(imagePath == null){
+                            Toast.makeText(this, "Selecione um arquivo de imagem", Toast.LENGTH_LONG);
+                        }else{
 
-                        carregando.setVisibility(View.VISIBLE)
+                            carregando.setVisibility(View.VISIBLE)
 
-                        Handler().postDelayed({
+                            Handler().postDelayed({
 
-                            val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro, carregando)
-                            cadastroConfeiteiro.execute()
+                                val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro, carregando)
+                                cadastroConfeiteiro.execute()
 
-                            val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
+                                val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
 
-                            uploadImage(retornoConfeiteiro)
+                                uploadImage(retornoConfeiteiro)
 
-                            val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
-                            intent.putExtra("confeiteiro", retornoConfeiteiro)
-                            startActivity(intent)
+                                val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
+                                intent.putExtra("confeiteiro", retornoConfeiteiro)
+                                startActivity(intent)
 
-                        },100)
+                            },100)
 
+                        }
 
 
 
@@ -216,8 +220,11 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
     fun uploadImage(confeiteiro: Confeiteiro){
 
         val file = File(imagePath)
-
-        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val bitmap: Bitmap = BitmapFactory.decodeFile(file.path)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30,stream)
+        val image  = stream.toByteArray()
+        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), image)
         val codBody = RequestBody.create(MediaType.parse("text/plain"), confeiteiro.codConfeiteiro.toString())
         val body = MultipartBody.Part.createFormData("foto", file.name, imageBody)
 
@@ -229,7 +236,7 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<Confeiteiro>?, response: Response<Confeiteiro>?) {
                 if(response!!.isSuccessful){
-                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
                 }
             }
 

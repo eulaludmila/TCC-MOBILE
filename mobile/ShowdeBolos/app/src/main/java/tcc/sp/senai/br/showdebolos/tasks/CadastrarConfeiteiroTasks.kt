@@ -19,7 +19,7 @@ class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro, var carregando: Co
 
 
     override fun doInBackground(vararg params: Confeiteiro?): Confeiteiro? {
-        val url = URL("http://10.107.144.21:8080/confeiteiro")
+        val url = URL("http://54.242.6.253:8080/confeiteiro")
 
         val jsCliente = JSONStringer()
 

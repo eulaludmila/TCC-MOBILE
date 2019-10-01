@@ -13,7 +13,7 @@ class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfei
 
 
     override fun doInBackground(vararg params: Confeiteiro?): Confeiteiro? {
-        val url = URL("http://10.107.144.21:8080/enderecoconfeiteiro/mobile")
+        val url = URL("http://54.242.6.253:8080/enderecoconfeiteiro/mobile")
 
         val jsEnderecoConfeiteiro = JSONStringer()
 
