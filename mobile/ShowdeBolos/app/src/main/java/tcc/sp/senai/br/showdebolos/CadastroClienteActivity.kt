@@ -21,7 +21,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.widget.*
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarClienteTasks
-import java.io.ByteArrayOutputStream
 import android.os.Build
 import android.os.Handler
 import android.provider.MediaStore
@@ -36,12 +35,13 @@ import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
 import tcc.sp.senai.br.showdebolos.tasks.VerificarEmailCpfTasks
-import java.io.File
+import java.io.*
 
 
 class CadastroClienteActivity : AppCompatActivity() {
 
     val COD_IMAGE = 101
+    var inputStream: InputStream? = null
     //forçando a varialvel a ser nula
     var imageBitmap: Bitmap? = null
     var imagePath: String? = null
@@ -89,7 +89,8 @@ class CadastroClienteActivity : AppCompatActivity() {
                         builder.setPositiveButton("OK"){dialog, which ->  }
                         builder.show()
                         txt_email_cliente.setText("")
-                        txt_email_cliente.requestFocus()
+                    }else{
+
                     }
                 }
             }
@@ -185,17 +186,22 @@ class CadastroClienteActivity : AppCompatActivity() {
                                 sexo,
                                 "teste.png")
 
-                        Handler().postDelayed({
-                            val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
+                        if(imagePath == null){
+                            Toast.makeText(this, "Selecione um arquivo de imagem", Toast.LENGTH_LONG).show()
+                        }else{
 
-                            cadastrarCliente.execute()
+                            Handler().postDelayed({
+                                val cadastrarCliente = CadastrarClienteTasks(cliente, celular)
 
-                            val retornoCliente = cadastrarCliente.get() as Cliente
+                                cadastrarCliente.execute()
 
-                            uploadImage(retornoCliente)
+                                val retornoCliente = cadastrarCliente.get() as Cliente
 
-                        },100)
+                                uploadImage(retornoCliente)
 
+                            },100)
+
+                        }
 
 
 
@@ -259,17 +265,21 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     }
 
+
+
     fun uploadImage(cliente: Cliente){
 
 
 
         val file = File(imagePath)
+        val bitmap: Bitmap = BitmapFactory.decodeFile(file.path)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30,stream)
+        val image  = stream.toByteArray()
+        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), image)
 
-        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val codBody = RequestBody.create(MediaType.parse("text/plain"), cliente.codCliente.toString())
         val body = MultipartBody.Part.createFormData("foto", file.name, imageBody)
-
-
 
         val call = fotoService!!.uploadImageCliente(body, codBody)
 
@@ -277,7 +287,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<Cliente>?, response: Response<Cliente>?) {
                 if(response!!.isSuccessful){
-                    Toast.makeText(this@CadastroClienteActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this@CadastroClienteActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
             }
             }
 
