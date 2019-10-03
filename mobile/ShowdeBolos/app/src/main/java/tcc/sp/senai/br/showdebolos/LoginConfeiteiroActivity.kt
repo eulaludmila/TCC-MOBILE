@@ -23,6 +23,11 @@ class LoginConfeiteiroActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
+        btn_entrar_confeiteiro.setOnClickListener {
+            val intent = Intent(this, PerfilConfeiteiroActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 
