@@ -91,19 +91,23 @@ class MainActivity : AppCompatActivity() {
         } else {
             val animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
             main_activity.startAnimation(animation)
+            isConnect(this)
             app.isOk = true
         }
 
-        isConnect(this)
 
         btn_confeiteiro.setOnClickListener {
             val intent = Intent (this, LoginConfeiteiroActivity::class.java)
            startActivity(intent)
-         }
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+        }
 
         btn_cliente.setOnClickListener {
             val intent = Intent(this, LoginClienteActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
         }
 
 
