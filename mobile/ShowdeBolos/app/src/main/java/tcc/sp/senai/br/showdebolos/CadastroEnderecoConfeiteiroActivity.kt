@@ -139,6 +139,7 @@ class CadastroEnderecoConfeiteiroActivity : AppCompatActivity() {
 
                 val cadastroEnderecoConfeiteiro = CadastrarEnderecoConfeiteiroTasks(enderecoConfeiteiro)
                 cadastroEnderecoConfeiteiro.execute()
+                finish();
 
             }
 

@@ -62,7 +62,6 @@ class CadastroClienteActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, R.layout.spinner_adapter,sexo )
 
 
-
         img_add_foto_cliente.setOnClickListener {
 
             abrirGaleria()
@@ -121,10 +120,6 @@ class CadastroClienteActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
 
         spn_sexo_cliente.adapter = adapter
-
-
-
-
 
     }
 
@@ -203,15 +198,10 @@ class CadastroClienteActivity : AppCompatActivity() {
 
                         }
 
-
-
-
                     }else{
                         Toast.makeText(this@CadastroClienteActivity, "As senhas não coincidem", Toast.LENGTH_LONG).show()
                     }
                 }
-
-
 
             }
 
@@ -268,8 +258,6 @@ class CadastroClienteActivity : AppCompatActivity() {
 
 
     fun uploadImage(cliente: Cliente){
-
-
 
         val file = File(imagePath)
         val bitmap: Bitmap = BitmapFactory.decodeFile(file.path)
