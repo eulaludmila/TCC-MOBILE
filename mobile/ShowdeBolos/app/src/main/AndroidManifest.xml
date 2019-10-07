@@ -19,6 +19,9 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+
+        </activity>
+        <activity android:name=".MainActivityFragment" android:theme="@style/noBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +30,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/noBar" />
+            >
+        </activity>
         <activity
             android:name=".CircularReveal"
             android:theme="@style/noBar" />
