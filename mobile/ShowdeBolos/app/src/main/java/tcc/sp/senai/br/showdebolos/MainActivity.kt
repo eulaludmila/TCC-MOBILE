@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
     fun alertaInternet (valor: String){
 
         val alertDialog = AlertDialog.Builder(this)
