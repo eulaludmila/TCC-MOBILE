@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.squareup.picasso.Picasso
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import java.io.IOException
@@ -44,7 +45,10 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
 
         holder.nomeConfeiteiro.text = confeiteiros.get(position).nome
 
-        var url = confeiteiros.get(position).foto
+
+        var url = confeiteiros[position].foto
+        Picasso.with(holder!!.foto.context).cancelRequest(holder!!.foto)
+        Picasso.with(holder!!.foto.context).load("http://54.242.6.253$url").into(holder!!.foto)
 
         try{
             val carregarImgTasks = CarregarImgTasks(url)
@@ -67,7 +71,7 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
         override fun doInBackground(vararg p0: URL?): Drawable? {
 
             var url = URL("http://54.242.6.253$caminho")
-            var content: InputStream? = null
+            var content: InputStream?
 
             try{
                 content = url.getContent() as InputStream?
@@ -83,9 +87,15 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
 
         }
 
+        override fun onPreExecute() {
+            super.onPreExecute()
+            holder!!.progressBar.setVisibility(View.VISIBLE)
+
+        }
+
         override fun onPostExecute(result: Drawable?) {
             super.onPostExecute(result)
-            holder!!.foto.setImageDrawable(result)
+//            holder!!.foto.setImageDrawable(result)
             holder!!.progressBar.setVisibility(View.INVISIBLE)
 
         }
@@ -94,9 +104,9 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
-        val nomeConfeiteiro: TextView = itemView.findViewById(R.id.txt_confeiteiro_home)
-        val avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_confeiteiro_home)
-        val progressBar: ProgressBar = itemView.findViewById(R.id.progressImg)
-        val foto: ImageView = itemView.findViewById(R.id.image_confeiteiro_home)
+        var nomeConfeiteiro: TextView = itemView.findViewById(R.id.txt_confeiteiro_home)
+        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_confeiteiro_home)
+        var progressBar: ProgressBar = itemView.findViewById(R.id.progressImg)
+        var foto: ImageView = itemView.findViewById(R.id.image_confeiteiro_home)
     }
 }
