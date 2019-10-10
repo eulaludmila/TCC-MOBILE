@@ -12,6 +12,13 @@
         android:title="Andamento"
         android:icon="@drawable/ic_andamento">
     </item>
+
+    <item
+        android:id="@+id/carrinho"
+        android:title="Andamento"
+        android:icon="@drawable/ic_carrinho">
+    </item>
+
     <item
         android:id="@+id/pagamento"
         android:title="Pagamento"
