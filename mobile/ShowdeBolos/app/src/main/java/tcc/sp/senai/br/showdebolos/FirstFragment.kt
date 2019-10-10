@@ -24,54 +24,77 @@ import tcc.sp.senai.br.showdebolos.model.Confeiteiro
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import tcc.sp.senai.br.showdebolos.model.Produto
 import android.support.v4.app.ActivityCompat.finishAffinity
+import android.support.v7.app.AlertDialog
+
 import android.view.MenuItem
+import org.jetbrains.anko.doFromSdk
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tcc.sp.senai.br.showdebolos.R.id.recyclerViewConfeiteiro
+import tcc.sp.senai.br.showdebolos.services.ApiConfig
+import tcc.sp.senai.br.showdebolos.services.RetrofitClient
 
 
 class FirstFragment : Fragment() {
-
-
-    var confeiteiro: ArrayList<String> = ArrayList()
-    lateinit var clickBotao: ClickBotao
+    var confeiteiros: List<ConfeiteiroDTO> = ArrayList()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            // Inflate the layout for this fragment
-            val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
-            val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
-            val seta32 = view.findViewById(R.id.seta32) as ImageView
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
+        val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
+        recyclerViewConfeiteiro.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewConfeiteiro.adapter = ConfeiteiroHomeAdapter(confeiteiros, requireContext(), object:ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener{
+            override fun onClickConfeiteiro(view: View, index: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
 
 
-            seta32.setOnClickListener {
+        val call = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
 
-                clickBotao.clickBotao()
 
+
+        call.enqueue(object : Callback<List<ConfeiteiroDTO>>{
+
+            override fun onResponse(call: Call<List<ConfeiteiroDTO>>, response: Response<List<ConfeiteiroDTO>>) {
+//
+              CarregarConfeiteiroHome(confeiteiros = response.body()!!)
+                Log.i("Retrofit222", "fgfgfgf")
             }
 
-            confeiteiro.add("Eulaaa")
-            confeiteiro.add("Eulaaa")
-            confeiteiro.add("Eulaaa")
-            confeiteiro.add("Eulaaa")
-            confeiteiro.add("Kailanyyy")
-            confeiteiro.add("Kailanyyy")
-            confeiteiro.add("Kailanyyy")
-            confeiteiro.add("Kailanyyy")
+            override fun onFailure(call: Call<List<ConfeiteiroDTO>>?, t: Throwable?) {
+                Log.i("Retrofit", t?.message)
+            }
 
-            /*recyclerViewConfeiteiro.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-            recyclerViewConfeiteiro.adapter = ConfeiteiroHomeAdapter(confeiteiro, requireContext())*/
-            return view
+    })
+
+
+        return view
 
 
     }
 
-    override fun onResume() {
-        super.onResume()
 
-        recyclerViewConfeiteiro.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-        recyclerViewConfeiteiro.adapter = ConfeiteiroHomeAdapter(confeiteiro, requireContext())
+    fun CarregarConfeiteiroHome(confeiteiros: List<ConfeiteiroDTO> ){
+
+        this.confeiteiros = confeiteiros
+
+        val confeiteiroHomeAdapter = ConfeiteiroHomeAdapter(confeiteiros, context ,object : ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener{
+            override fun onClickConfeiteiro(view: View, index: Int) {
+                val c = confeiteiros.get(index)
+                AlertDialog.Builder(context!!)
+                        .setTitle(c.nome)
+                        .setMessage(c.sobrenome)
+                        .show()
+            }
+
+        })
+
+        recyclerViewConfeiteiro.adapter = confeiteiroHomeAdapter
+
     }
 
-    interface ClickBotao{
-        fun clickBotao()
-    }
 
 }

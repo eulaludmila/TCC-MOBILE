@@ -34,4 +34,18 @@
         <item name="android:textColor">#ff5555</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="BottomNavigationTheme" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="colorPrimary">@color/branco</item>
+        <item name="android:textColorSecondary">@color/cinza_claro</item>
+        <item name="android:textSize">2sp</item>
+    </style>
+
+    <style name="sacola" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:shadowColor">@color/colorPrimaryDark</item>
+        <item name="android:background">@drawable/botao_adicionar_produto</item>
+    </style>
+    <style name="ToolbarTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:homeAsUpIndicator">@drawable/toolbar_voltar</item>
+    </style>
 </resources>

@@ -23,7 +23,7 @@ class SecondFragment : Fragment() {
 //            (activity as AppCompatActivity).title
 //        }
 
-        
+
         toolbar.setNavigationOnClickListener {
 
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="110dp"
+
+    android:layout_height="wrap_content"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image_categoria_home"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:elevation="10dp"
+                android:src="@drawable/logo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/txt_confeiteiro_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/allerta"
+                android:text="Bolo"
+                android:textSize="12sp"
+
+                android:elevation="10dp"
+                android:layout_below="@id/image_categoria_home"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                />
+
+            <ProgressBar
+                android:id="@+id/progressImg"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_marginRight="6dp"
+                android:gravity="center|center_vertical"
+                android:visibility="invisible" />
+
+
+        </RelativeLayout>
+
+
+
+</RelativeLayout>

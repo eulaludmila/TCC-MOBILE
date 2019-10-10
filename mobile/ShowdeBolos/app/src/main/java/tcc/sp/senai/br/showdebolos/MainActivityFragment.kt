@@ -8,11 +8,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 
 
-class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
-
-    override fun clickBotao() {
-        replaceFragment(SecondFragment())
-    }
+class MainActivityFragment : AppCompatActivity()  {
 
     var confeiteiro: ArrayList<String> = ArrayList()
 
@@ -20,7 +16,8 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
 
-        openFirst()
+
+        replaceFragment(FirstFragment())
 
         /*val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiroHome = view.findViewById(R.id.recyclerViewConfeiteiroHome) as RecyclerView*/
@@ -41,42 +38,36 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
             when(menuItem.itemId){
                 R.id.home2 -> {
 
-                    openFirst()
+                    replaceFragment(FirstFragment())
                     return@setOnNavigationItemSelectedListener true
 
 //                }R.id.sacola -> {
-//                replaceFragment(SecondFragment())
+//
 //
 //                return@setOnNavigationItemSelectedListener true
 
                 }R.id.andamento -> {
-                    replaceFragment(SecondFragment())
+                replaceFragment(SecondFragment())
 
-                    return@setOnNavigationItemSelectedListener true
+                return@setOnNavigationItemSelectedListener true
 
-                }R.id.pagamento -> {
+            }R.id.pagamento -> {
 
-                    replaceFragment(SecondFragment())
+                replaceFragment(SecondFragment())
 
-                    return@setOnNavigationItemSelectedListener true
+                return@setOnNavigationItemSelectedListener true
 
-                }else ->{
-                    return@setOnNavigationItemSelectedListener false}
+            }else ->{
+                return@setOnNavigationItemSelectedListener false}
 
 
-                }
+            }
 
         }
 
 
     }
 
-    fun openFirst(){
-        var f = FirstFragment()
-        f.clickBotao = this
-
-        replaceFragment(f)
-    }
 
 
     fun replaceFragment(fragment: Fragment){

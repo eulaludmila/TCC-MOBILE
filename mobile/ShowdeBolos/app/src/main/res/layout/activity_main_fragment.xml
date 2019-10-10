@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_fragment"
+
     >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/layout_fragment">
+
+    </ScrollView>
 
 
 
@@ -13,11 +20,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
-        app:itemIconTint="@color/branco"
-        app:itemTextColor="@color/branco"
+        style="@style/BottomNavigationTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        android:id="@+id/bottomNavigation">
+        android:id="@+id/bottomNavigation"
+        >
 
     </android.support.design.widget.BottomNavigationView>
 </android.support.constraint.ConstraintLayout>
