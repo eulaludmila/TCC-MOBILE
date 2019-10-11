@@ -1,5 +1,6 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,16 +9,23 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 
 
-class MainActivityFragment : AppCompatActivity()  {
+class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
     var confeiteiro: ArrayList<String> = ArrayList()
+
+
+    override fun clickBotao(){
+        val intent = Intent(this, VisualizarProdutoActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
 
 
-        replaceFragment(FirstFragment())
+        openFirst()
 
         /*val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiroHome = view.findViewById(R.id.recyclerViewConfeiteiroHome) as RecyclerView*/
@@ -38,7 +46,8 @@ class MainActivityFragment : AppCompatActivity()  {
             when(menuItem.itemId){
                 R.id.home2 -> {
 
-                    replaceFragment(FirstFragment())
+                    openFirst()
+
                     return@setOnNavigationItemSelectedListener true
 
 //                }R.id.sacola -> {
@@ -69,6 +78,12 @@ class MainActivityFragment : AppCompatActivity()  {
     }
 
 
+    fun openFirst(){
+        var f = FirstFragment()
+        f.clickBotao = this
+
+        replaceFragment(f)
+    }
 
     fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()

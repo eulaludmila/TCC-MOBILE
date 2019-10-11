@@ -10,11 +10,12 @@ import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import tcc.sp.senai.br.showdebolos.R
+import tcc.sp.senai.br.showdebolos.model.Categoria
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 
 
-class CategoriaHomeAdapter (private val confeiteiros:List<String>,
-                            private val context: Context) : RecyclerView.Adapter<CategoriaHomeAdapter.ViewHolder>() {
+class CategoriaHomeAdapter (private val categorias:List<Categoria>,
+                            private val context: Context, val categoriaOnlickListener: CategoriaOnlickListener) : RecyclerView.Adapter<CategoriaHomeAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -25,22 +26,19 @@ class CategoriaHomeAdapter (private val confeiteiros:List<String>,
 
     }
 
-    override fun getItemCount(): Int {
-
-        return if (confeiteiros != null) confeiteiros.size else 0
-    }
+    override fun getItemCount() = if (categorias != null) categorias.size else 0
 
     //Interface para expor os eventos do adapter
-    interface CarroOnlickListener {
+    interface CategoriaOnlickListener {
 
-        fun onClickCarro(view: View, index: Int)
+        fun onClickCategoria(view: View, index: Int)
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
-        //holder.avaliacao.setProgress(confeiteiros.get(position).avaliacao)
+        holder.nome.text = categorias[position].categoria
 
     }
 
@@ -50,5 +48,6 @@ class CategoriaHomeAdapter (private val confeiteiros:List<String>,
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         val foto: ImageView = itemView.findViewById(R.id.image_categoria_home)
+        val nome: TextView = itemView.findViewById(R.id.txt_categoria_home)
     }
 }
