@@ -19,10 +19,6 @@ import kotlinx.android.synthetic.main.activity_first_fragment.*
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 import org.jetbrains.anko.find
 import tcc.sp.senai.br.adapter.ConfeiteiroHomeAdapter
-import tcc.sp.senai.br.showdebolos.model.Celular
-import tcc.sp.senai.br.showdebolos.model.Confeiteiro
-import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
-import tcc.sp.senai.br.showdebolos.model.Produto
 import android.support.v4.app.ActivityCompat.finishAffinity
 import android.support.v7.app.AlertDialog
 
@@ -31,14 +27,17 @@ import org.jetbrains.anko.doFromSdk
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tcc.sp.senai.br.adapter.CategoriaHomeAdapter
 import tcc.sp.senai.br.showdebolos.R.id.recyclerViewConfeiteiro
+import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.RetrofitClient
 
 
-class FirstFragment : Fragment() {
+class  FirstFragment : Fragment() {
     var confeiteiros: List<ConfeiteiroDTO> = ArrayList()
-
+    var categorias: List<Categoria> = ArrayList()
+    lateinit var clickBotao: ClickBotao
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -51,12 +50,19 @@ class FirstFragment : Fragment() {
             }
         })
 
+        val recyclerViewCategoria = view.findViewById(R.id.recyclerViewCategorias) as RecyclerView
+        recyclerViewCategoria.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewCategoria.adapter = CategoriaHomeAdapter(categorias, requireContext(), object: CategoriaHomeAdapter.CategoriaOnlickListener{
+            override fun onClickCategoria(view: View, index: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
 
-        val call = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
+        })
 
 
+        val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
 
-        call.enqueue(object : Callback<List<ConfeiteiroDTO>>{
+        callConfeiteiro.enqueue(object : Callback<List<ConfeiteiroDTO>>{
 
             override fun onResponse(call: Call<List<ConfeiteiroDTO>>, response: Response<List<ConfeiteiroDTO>>) {
 //
@@ -68,7 +74,23 @@ class FirstFragment : Fragment() {
                 Log.i("Retrofit", t?.message)
             }
 
-    })
+        })
+
+        val callCategoria = ApiConfig.getCategoriaService()!!.buscarCategoria()
+
+        callCategoria.enqueue(object : Callback<List<Categoria>>{
+
+            override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
+//
+                CarregarCategoriaHome(categorias = response.body()!!)
+                Log.i("Retrofit222", "fgfgfgf")
+            }
+
+            override fun onFailure(call: Call<List<Categoria>>?, t: Throwable?) {
+                Log.i("Retrofit", t?.message)
+            }
+
+        })
 
 
         return view
@@ -96,5 +118,26 @@ class FirstFragment : Fragment() {
 
     }
 
+    fun CarregarCategoriaHome(categorias: List<Categoria> ){
+
+        this.categorias = categorias
+
+        val categoriaHomeAdapter = CategoriaHomeAdapter(categorias, context!! ,object : CategoriaHomeAdapter.CategoriaOnlickListener{
+            override fun onClickCategoria(view: View, index: Int) {
+                val c = categorias.get(index)
+                AlertDialog.Builder(context!!)
+                        .setTitle(c.categoria)
+                        .show()
+            }
+
+        })
+
+        recyclerViewConfeiteiro.adapter = categoriaHomeAdapter
+
+    }
+
+    interface ClickBotao{
+        fun clickBotao()
+    }
 
 }
