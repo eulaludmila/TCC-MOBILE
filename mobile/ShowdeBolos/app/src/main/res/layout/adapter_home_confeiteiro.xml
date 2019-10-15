@@ -24,7 +24,7 @@
 
             <ProgressBar
                 android:id="@+id/progressImg"
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                style="style/Widget.DeviceDefault.Light.ProgressBar.Large"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
@@ -42,7 +42,8 @@
                 android:text="Bolo"
                 android:textSize="17sp"
                 android:elevation="10dp"
-                android:maxLength="12"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_below="@id/image_confeiteiro_home"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="8dp"/>
@@ -56,7 +57,9 @@
                 android:textSize="18sp"
                 android:numStars="5"
                 android:stepSize="0.5"
-                style="?android:attr/ratingBarStyleSmall"
+                android:max="10"
+                android:progressTint="@color/amarelo"
+                style="?attr/ratingBarStyleSmall"
                 android:layout_below="@id/txt_confeiteiro_home"
                 android:layout_centerHorizontal="true"
                 />

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,14 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.nomeConfeiteiro.text = confeiteiros.get(position).nome
+
+        holder.avaliacao.progress = confeiteiros.get(position).avaliacao.toInt()
+
+        //colocando o listener da lista na lista(eu criei o próprio listener)
+        holder.itemView.setOnClickListener{
+
+            Toast.makeText(context,"sdfks", Toast.LENGTH_SHORT).show();
+        }
 
 
         var url = confeiteiros[position].foto

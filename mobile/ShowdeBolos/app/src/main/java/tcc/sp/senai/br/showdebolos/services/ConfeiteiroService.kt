@@ -7,6 +7,6 @@ import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 
 interface ConfeiteiroService {
 
-    @GET("confeiteiroDTO")
+    @GET("confeiteiroDTO/avaliacao")
     fun buscarConfeiteiros(): Call<List<ConfeiteiroDTO>>
 }

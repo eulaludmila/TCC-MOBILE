@@ -10,18 +10,18 @@ import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 
-class SecondFragment : Fragment() {
+class CarrinhoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.activity_second_fragment, container, false)
+        val view = inflater.inflate(R.layout.activity_carrinho_fragment, container, false)
         val toolbar = view.findViewById(R.id.toolbar) as android.support.v7.widget.Toolbar
         val txt = view.findViewById(R.id.txt) as TextView
-//        if(activity is AppCompatActivity){
-//            (activity as AppCompatActivity).setSupportActionBar(toolbar)
-//            (activity as AppCompatActivity).getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-//            (activity as AppCompatActivity).title
-//        }
+        if(activity is AppCompatActivity){
+            (activity as AppCompatActivity).setSupportActionBar(toolbar)
+            toolbar.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            (activity as AppCompatActivity).title = "Carrinho"
+        }
 
 
         toolbar.setNavigationOnClickListener {

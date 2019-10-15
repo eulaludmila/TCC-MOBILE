@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VisualizarProdutoActivity"
-    android:background="@color/branco">
+    android:background="@color/branco"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/ToolbarTheme">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -26,7 +28,7 @@
             <ImageView
                 android:id="@+id/expandedImage"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="170dp"
                 android:scaleType="centerCrop"
 
                 app:layout_collapseMode="parallax"
@@ -37,267 +39,206 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.AppCompat.Light" />
+                app:popupTheme="@style/ToolbarTheme" >
+
+
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/branco"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginBottom="70dp"
-        android:background="@color/branco">
+        android:paddingBottom="80dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
+            android:layout_height="match_parent"
             android:orientation="vertical"
-           >
-
+            android:paddingTop="15dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bolo de Chocolate"
-                android:textSize="30sp"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
-                android:paddingTop="10dp"/>
-            <TextView
-                android:layout_width="match_parent"
+                android:textSize="30sp" />
+
+            <RatingBar
+                android:id="@+id/rt_visualizar_produto"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="R$25,00"
-                android:textSize="20sp"
-                android:textColor="@android:color/holo_green_dark"
-                android:textAlignment="center"
-                android:layout_margin="10dp"
-                />
+                style="?attr/ratingBarStyleSmall"
+                android:stepSize="1"
+                android:numStars="5"
+                android:max="10"
+                android:progressTint="#f4d617"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"/>
 
-
-
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="4dp"
-                android:background="@drawable/borda_layout"
-                android:layout_margin="15dp">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/layout_titulo_detalhes">
-                        <ImageView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:background="@drawable/ic_descricao"/>
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Descrição do Produto"
-                            android:textSize="18sp"
-                            android:textColor="@color/preto"
-                            android:layout_gravity="center_vertical"/>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:layout_below="@+id/layout_titulo_detalhes"
-                        android:padding="10dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
-Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.
-"
-                            android:textSize="16sp"/>
-                    </LinearLayout>
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-
-            />
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="810dp"
-                app:cardCornerRadius="4dp"
-                android:background="@drawable/borda_layout"
-                android:layout_margin="15dp">
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="20dp"
+                    android:textSize="18sp"
+                    android:text="Bolo de Chocolate produzido com uma farinha de trigo especial em que não pé utulizado leite.
 
-                    <LinearLayout
+Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio de leite ninho."/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R$15,00 cada"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="20dp"
+                android:background="@drawable/borda_layout"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@drawable/bolo" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/borda_layout"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="15dp"
-                        android:layout_margin="10dp"
-                        >
-                        <TextView
+                        android:text="Eula Ludmila"
+                        android:textAlignment="center"
+                        android:textColor="@color/preto"
+                        android:textSize="23sp" />
 
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Profissional"
-                            android:textSize="20sp"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textAlignment="center"
-
-                            />
-                    </LinearLayout>
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/layout_img_profissional_produto">
-
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/bolo"
-                                android:id="@+id/img_confeiteiro_produto"/>
+                        android:layout_height="wrap_content"
+                        android:text="Itapevi - SP"
+                        android:textAlignment="center"
+                        android:textColor="@color/preto"
+                        android:textSize="20sp" />
 
 
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_gravity="center_vertical">
+                    <RatingBar
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:progressBackgroundTint="#FFFFD322"
+                        android:rating="5"
+                        android:layout_gravity="center_horizontal"/>
 
-                            <TextView
-
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Eula Ludmila"
-                                android:textSize="18sp"
-                                android:textColor="@color/preto"
-                                android:textAlignment="center"
-                                android:layout_marginBottom="10dp"/>
-
-                            <RatingBar
-                                style="@style/Widget.AppCompat.RatingBar.Small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:numStars="5"
-                                android:rating="5"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="10dp"
-                                />
-
-                            <TextView
-
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Itapevi - SP"
-                                android:textSize="15sp"
-                                android:textColor="@color/preto"
-                                android:textAlignment="center"/>
-
-                            />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="@color/branco"
-                            android:layout_gravity="center_vertical">
-
-                            <ImageView
-
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:background="@drawable/ic_seta"
-                                android:layout_gravity="right"
-                                android:layout_centerVertical="true"/>
-
-                            />
-                        </LinearLayout>
-                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/ic_seta"
+                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
 
 
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
 
-            <android.support.v7.widget.CardView
-                android:layout_width="300dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="20dp"
+                android:background="@drawable/borda_layout"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="4dp"
-                android:background="@drawable/borda_layout"
-                android:layout_margin="15dp">
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical">
 
-                    <LinearLayout
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:text="Categoria"
+                        android:textAlignment="center"
+                        android:textColor="@color/preto"
+                        android:textSize="23sp" />
 
-                        >
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/layout_img_categoria_produto"
-                            >
-                            <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@drawable/bolo"
-                                android:id="@+id/img_categoria_produto"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Doce"
+                        android:textAlignment="center"
+                        android:textColor="@color/preto"
+                        android:textSize="20sp" />
 
 
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:background="@color/branco"
-                            android:layout_gravity="center_vertical">
+                </LinearLayout>
 
-                            <TextView
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolo" />
 
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Doce"
-                                android:textSize="25sp"
-                                android:textColor="@color/preto"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"/>
 
-                                />
-                        </LinearLayout>
-                    </LinearLayout>
 
-            </android.support.v7.widget.CardView>
 
+            </LinearLayout>
         </LinearLayout>
-
 
 
 
@@ -311,12 +252,34 @@ Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac tu
         android:paddingTop="10dp"
         >
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/borda_redonda"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--&gt;-->
+
+            <!--<Button-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Adicionar"-->
+                <!--style="@style/sacola"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+
+                <!--/>-->
+
+        <!--</LinearLayout>-->
+
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Adicionar"
+            android:text="Adicionar ao Carrinho"
             style="@style/sacola"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"

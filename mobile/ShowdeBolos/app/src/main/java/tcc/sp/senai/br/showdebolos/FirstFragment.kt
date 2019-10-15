@@ -23,6 +23,8 @@ import android.support.v4.app.ActivityCompat.finishAffinity
 import android.support.v7.app.AlertDialog
 
 import android.view.MenuItem
+import android.widget.TextView
+import android.widget.Toast
 import org.jetbrains.anko.doFromSdk
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,20 +46,31 @@ class  FirstFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
         recyclerViewConfeiteiro.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-        recyclerViewConfeiteiro.adapter = ConfeiteiroHomeAdapter(confeiteiros, requireContext(), object:ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener{
-            override fun onClickConfeiteiro(view: View, index: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        })
+//        recyclerViewConfeiteiro.adapter = ConfeiteiroHomeAdapter(confeiteiros, requireContext(), object:ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener{
+//            override fun onClickConfeiteiro(view: View, index: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//        })
 
         val recyclerViewCategoria = view.findViewById(R.id.recyclerViewCategorias) as RecyclerView
         recyclerViewCategoria.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        recyclerViewCategoria.adapter = CategoriaHomeAdapter(categorias, requireContext(), object: CategoriaHomeAdapter.CategoriaOnlickListener{
-            override fun onClickCategoria(view: View, index: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+//        recyclerViewCategoria.adapter = CategoriaHomeAdapter(categorias, requireContext(), object: CategoriaHomeAdapter.CategoriaOnlickListener{
+//            override fun onClickCategoria(view: View, index: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//
+//                Toast.makeText(context,"clickcategoriua",Toast.LENGTH_SHORT)
+//            }
 
-        })
+//        })
+
+        val txt_ver_mais = view.findViewById<TextView>(R.id.txt_ver_mais)
+
+        txt_ver_mais.setOnClickListener {
+
+            val intent = Intent(context, VisualizarProdutoActivity::class.java)
+            startActivity(intent)
+
+        }
 
 
         val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
@@ -132,7 +145,7 @@ class  FirstFragment : Fragment() {
 
         })
 
-        recyclerViewConfeiteiro.adapter = categoriaHomeAdapter
+        recyclerViewCategorias.adapter = categoriaHomeAdapter
 
     }
 

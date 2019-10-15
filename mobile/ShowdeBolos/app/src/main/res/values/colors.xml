@@ -10,6 +10,7 @@
     <color name="branco">#fff</color>
     <color name="preto">#000</color>
     <color name="cinza_claro">#e6e6e6</color>
+    <color name="amarelo">#f4d617</color>
     <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
 </resources>
 
