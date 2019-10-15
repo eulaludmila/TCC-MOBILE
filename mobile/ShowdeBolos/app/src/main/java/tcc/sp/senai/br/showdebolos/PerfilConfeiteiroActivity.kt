@@ -24,8 +24,8 @@ class PerfilConfeiteiroActivity : AppCompatActivity() {
 
         val retornoProduto = carregarProdutos.get()
 
-        recycler_view.layoutManager = LinearLayoutManager(this, OrientationHelper.HORIZONTAL, false)
-        recycler_view.adapter = ProdutosAdapter(retornoProduto)
+//        recycler_view.layoutManager = LinearLayoutManager(this, OrientationHelper.HORIZONTAL, false)
+//        recycler_view.adapter = ProdutosAdapter(retornoProduto)
 
     }
 }

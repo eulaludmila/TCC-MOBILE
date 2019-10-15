@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 
@@ -13,16 +14,17 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
     var confeiteiro: ArrayList<String> = ArrayList()
 
-
     override fun clickBotao(){
         val intent = Intent(this, VisualizarProdutoActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
+
 
 
         openFirst()
@@ -44,25 +46,25 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
             val view: View
 
             when(menuItem.itemId){
-                R.id.home2 -> {
+                R.id.inicio -> {
 
                     openFirst()
 
                     return@setOnNavigationItemSelectedListener true
 
-//                }R.id.sacola -> {
-//
-//
-//                return@setOnNavigationItemSelectedListener true
+                }R.id.carrinho -> {
+                replaceFragment(CarrinhoFragment())
+
+                return@setOnNavigationItemSelectedListener true
 
                 }R.id.andamento -> {
-                replaceFragment(SecondFragment())
+                replaceFragment(AndamentoFragment())
 
                 return@setOnNavigationItemSelectedListener true
 
             }R.id.pagamento -> {
 
-                replaceFragment(SecondFragment())
+                replaceFragment(PagamentoFragment())
 
                 return@setOnNavigationItemSelectedListener true
 
@@ -93,8 +95,8 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
     }
 
     override fun onBackPressed() {
-        if (bottomNavigation.getSelectedItemId() !== R.id.home2) {
-            bottomNavigation.setSelectedItemId(R.id.home2)
+        if (bottomNavigation.getSelectedItemId() !== R.id.inicio) {
+            bottomNavigation.setSelectedItemId(R.id.inicio)
         } else {
             super.onBackPressed()
         }
