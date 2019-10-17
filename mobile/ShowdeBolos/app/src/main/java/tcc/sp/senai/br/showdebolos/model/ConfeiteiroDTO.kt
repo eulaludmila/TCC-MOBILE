@@ -6,7 +6,7 @@ data class ConfeiteiroDTO (val codConfeiteiro: Int,
                         val nome: String,
                         val sobrenome: String,
                         val dtNasc: String,
-                        val codCelular: Celular,
+                        val celular: Celular,
                         val foto: String,
                         val sexo: String,
                            val avaliacao:Double) : Serializable {

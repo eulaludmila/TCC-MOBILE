@@ -23,15 +23,14 @@ class AndamentoFragment : Fragment() {
             (activity as AppCompatActivity).title = "Em andamento"
         }
 
-
         toolbar.setNavigationOnClickListener {
-
 
             val fragmentManager: FragmentManager = activity!!.supportFragmentManager
 
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-            fragmentTransaction.replace(R.id.layout_fragment, FirstFragment()).commit() }
+            fragmentTransaction.replace(R.id.layout_fragment, FirstFragment()).commit()
+        }
 
         return view
     }

@@ -1,7 +1,11 @@
 package tcc.sp.senai.br.adapter
 
 import android.content.Context
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +13,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
+import tcc.sp.senai.br.showdebolos.FirstFragment
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.Categoria
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
@@ -40,6 +45,14 @@ class CategoriaHomeAdapter (private val categorias:List<Categoria>,
 
         holder.nome.text = categorias[position].categoria
 
+        holder.itemView.setOnClickListener {
+
+
+
+        }
+
+
+
     }
 
 
@@ -49,5 +62,6 @@ class CategoriaHomeAdapter (private val categorias:List<Categoria>,
 
         val foto: ImageView = itemView.findViewById(R.id.image_categoria_home)
         val nome: TextView = itemView.findViewById(R.id.txt_categoria_home)
+
     }
 }
