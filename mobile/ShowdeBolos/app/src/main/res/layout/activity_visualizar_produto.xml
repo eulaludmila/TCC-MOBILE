@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:scaleType="centerCrop"
-
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
@@ -64,6 +63,7 @@
             android:paddingTop="15dp">
 
             <TextView
+                android:id="@+id/txt_nome_produto_visualizar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bolo de Chocolate"
@@ -88,6 +88,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/txt_descricao_produto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -107,6 +108,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
 
 
                 <TextView
+                    android:id="@+id/txt_preco_produto_visualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="R$15,00 cada"
@@ -131,12 +133,14 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:id="@+id/img_confeiteiro_visualizar"
+                        android:scaleType="fitXY"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="@drawable/bolo" />
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -147,6 +151,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
 
 
                     <TextView
+                        android:id="@+id/txt_nome_confeiteiro_visualizar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Eula Ludmila"
@@ -217,6 +222,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                         android:textSize="23sp" />
 
                     <TextView
+                        android:id="@+id/txt_nome_categoria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Doce"
@@ -229,6 +235,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/img_categoria"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -253,24 +260,24 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
         >
 
         <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/borda_redonda"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--&gt;-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/borda_redonda"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--&gt;-->
 
-            <!--<Button-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Adicionar"-->
-                <!--style="@style/sacola"-->
-                <!--android:layout_marginRight="15dp"-->
-                <!--android:layout_marginLeft="15dp"-->
+        <!--<Button-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Adicionar"-->
+        <!--style="@style/sacola"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_marginLeft="15dp"-->
 
-                <!--/>-->
+        <!--/>-->
 
         <!--</LinearLayout>-->
 

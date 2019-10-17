@@ -90,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
+
                     android:fontFamily="@font/allerta"
                     android:progressTint="@color/amarelo"
                     android:numStars="5"
@@ -102,13 +103,12 @@
                     android:id="@+id/txt_produto_preco_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
                     android:fontFamily="@font/allerta"
                     android:text="R$25,00"
-                    android:textSize="15sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="center"
 
-                    android:layout_marginBottom="8dp"/>
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

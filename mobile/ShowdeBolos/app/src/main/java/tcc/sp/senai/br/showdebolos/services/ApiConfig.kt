@@ -21,6 +21,14 @@ class ApiConfig {
             return RetrofitClient.getCategoria("http://54.242.6.253:8080/")!!.create(CategoriaService::class.java)
         }
 
+        fun getProdutoService():ProdutoService{
+            return RetrofitClient.getProduto("http://54.242.6.253:8080/")!!.create(ProdutoService::class.java)
+        }
+
+        fun getProdutoConfeiteiroService():ProdutoService{
+            return RetrofitClient.getProduto("http://54.242.6.253:8080/")!!.create(ProdutoService::class.java)
+        }
+
     }
 
 

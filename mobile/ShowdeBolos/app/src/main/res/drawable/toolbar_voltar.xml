@@ -11,6 +11,7 @@
 
     </item>
 
-    <item android:drawable="@drawable/ic_seta"></item>
+    <item android:drawable="@drawable/ic_seta_voltar"
+        android:gravity="center"></item>
 
 </layer-list>

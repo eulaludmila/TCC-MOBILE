@@ -1,6 +1,7 @@
 package tcc.sp.senai.br.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.squareup.picasso.Picasso
+import tcc.sp.senai.br.showdebolos.PerfilConfeiteiroActivity
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import java.io.IOException
@@ -51,7 +53,12 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
         //colocando o listener da lista na lista(eu criei o próprio listener)
         holder.itemView.setOnClickListener{
 
-            Toast.makeText(context,"sdfks", Toast.LENGTH_SHORT).show();
+            val intent = Intent(context, PerfilConfeiteiroActivity::class.java)
+            intent.putExtra("confeiteiro", ConfeiteiroDTO(confeiteiros[position].codConfeiteiro,confeiteiros[position].nome,confeiteiros[position].sobrenome,
+                                                                confeiteiros[position].dtNasc,confeiteiros[position].celular,confeiteiros[position].foto,
+                                                                confeiteiros[position].sexo,confeiteiros[position].avaliacao))
+            context!!.startActivity(intent)
+
         }
 
 

@@ -30,6 +30,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.adapter.CategoriaHomeAdapter
+import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
 import tcc.sp.senai.br.showdebolos.R.id.recyclerViewConfeiteiro
 import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
@@ -39,6 +40,7 @@ import tcc.sp.senai.br.showdebolos.services.RetrofitClient
 class  FirstFragment : Fragment() {
     var confeiteiros: List<ConfeiteiroDTO> = ArrayList()
     var categorias: List<Categoria> = ArrayList()
+    var produtos: List<Produto> = ArrayList()
     lateinit var clickBotao: ClickBotao
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,22 +48,14 @@ class  FirstFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
         recyclerViewConfeiteiro.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-//        recyclerViewConfeiteiro.adapter = ConfeiteiroHomeAdapter(confeiteiros, requireContext(), object:ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener{
-//            override fun onClickConfeiteiro(view: View, index: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//        })
+
 
         val recyclerViewCategoria = view.findViewById(R.id.recyclerViewCategorias) as RecyclerView
         recyclerViewCategoria.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//        recyclerViewCategoria.adapter = CategoriaHomeAdapter(categorias, requireContext(), object: CategoriaHomeAdapter.CategoriaOnlickListener{
-//            override fun onClickCategoria(view: View, index: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//
-//                Toast.makeText(context,"clickcategoriua",Toast.LENGTH_SHORT)
-//            }
 
-//        })
+
+        val recyclerViewProduto = view.findViewById(R.id.recyclerViewProdutos) as RecyclerView
+        recyclerViewProduto.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         val txt_ver_mais = view.findViewById<TextView>(R.id.txt_ver_mais)
 
@@ -79,7 +73,7 @@ class  FirstFragment : Fragment() {
 
             override fun onResponse(call: Call<List<ConfeiteiroDTO>>, response: Response<List<ConfeiteiroDTO>>) {
 //
-              CarregarConfeiteiroHome(confeiteiros = response.body()!!)
+                CarregarConfeiteiroHome(confeiteiros = response.body()!!)
                 Log.i("Retrofit222", "fgfgfgf")
             }
 
@@ -105,6 +99,21 @@ class  FirstFragment : Fragment() {
 
         })
 
+        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto()
+
+        callProduto.enqueue(object : Callback<List<Produto>>{
+
+            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+//
+                CarregarProdutosHome(produtos = response.body()!!)
+                Log.i("Retrofit222", "fgfgfgf")
+            }
+
+            override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {
+                Log.i("Retrofit", t?.message)
+            }
+
+        })
 
         return view
 
@@ -146,6 +155,16 @@ class  FirstFragment : Fragment() {
         })
 
         recyclerViewCategorias.adapter = categoriaHomeAdapter
+
+    }
+
+    fun CarregarProdutosHome(produtos: List<Produto> ){
+
+        this.produtos = produtos
+
+        val produtoHomeAdapter = ProdutoHomeAdapter(produtos, context!!)
+
+        recyclerViewProdutos.adapter = produtoHomeAdapter
 
     }
 
