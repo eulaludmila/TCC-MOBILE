@@ -48,6 +48,7 @@ class PerfilConfeiteiroActivity : AppCompatActivity() {
         })
 
         txt_nome_confeiteiro_perfil.text = confeiteiro.nome + " " + confeiteiro.sobrenome
+        rt_avaliacao_confeiteiro_perfil.progress = confeiteiro.avaliacao.toInt()
         Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.foto}").into(img_foto_confeiteiro)
         Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.foto}").into(img_foto_confeiteiro)
 

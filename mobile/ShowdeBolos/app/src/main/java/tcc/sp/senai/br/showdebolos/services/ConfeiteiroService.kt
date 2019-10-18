@@ -9,4 +9,7 @@ interface ConfeiteiroService {
 
     @GET("confeiteiroDTO/avaliacao")
     fun buscarConfeiteiros(): Call<List<ConfeiteiroDTO>>
+
+    @GET("confeiteiroDTO")
+    fun buscarTodosConfeiteiros(): Call<List<ConfeiteiroDTO>>
 }

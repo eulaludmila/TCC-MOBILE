@@ -3,19 +3,23 @@ package tcc.sp.senai.br.showdebolos
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_first_fragment.*
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 
 
 class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
+    val firstFragment: FirstFragment? = null
     var confeiteiro: ArrayList<String> = ArrayList()
 
     override fun clickBotao(){
-        val intent = Intent(this, VisualizarProdutoActivity::class.java)
+        val intent = Intent(this, TodosConfeiteirosActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
@@ -24,6 +28,8 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
+
+
 
 
 

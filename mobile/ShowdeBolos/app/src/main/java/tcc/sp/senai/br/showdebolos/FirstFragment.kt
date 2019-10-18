@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main_fragment.*
 import org.jetbrains.anko.find
 import tcc.sp.senai.br.adapter.ConfeiteiroHomeAdapter
 import android.support.v4.app.ActivityCompat.finishAffinity
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 
 import android.view.MenuItem
@@ -31,13 +32,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.adapter.CategoriaHomeAdapter
 import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
+import tcc.sp.senai.br.showdebolos.R.id.first_fragment
 import tcc.sp.senai.br.showdebolos.R.id.recyclerViewConfeiteiro
 import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.RetrofitClient
 
 
-class  FirstFragment : Fragment() {
+class  FirstFragment : Fragment(){
+
     var confeiteiros: List<ConfeiteiroDTO> = ArrayList()
     var categorias: List<Categoria> = ArrayList()
     var produtos: List<Produto> = ArrayList()
@@ -48,7 +51,6 @@ class  FirstFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
         recyclerViewConfeiteiro.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-
 
         val recyclerViewCategoria = view.findViewById(R.id.recyclerViewCategorias) as RecyclerView
         recyclerViewCategoria.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -61,64 +63,27 @@ class  FirstFragment : Fragment() {
 
         txt_ver_mais.setOnClickListener {
 
-            val intent = Intent(context, VisualizarProdutoActivity::class.java)
-            startActivity(intent)
+            clickBotao.clickBotao()
 
         }
 
+        carregarRecyclerView()
 
-        val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
+        val swipeRefreshLayout:SwipeRefreshLayout = view.findViewById(R.id.swipe_home)
+        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.escuro))
+        swipeRefreshLayout.setOnRefreshListener {
 
-        callConfeiteiro.enqueue(object : Callback<List<ConfeiteiroDTO>>{
+            carregarRecyclerView()
+            swipeRefreshLayout.isRefreshing = false
 
-            override fun onResponse(call: Call<List<ConfeiteiroDTO>>, response: Response<List<ConfeiteiroDTO>>) {
-//
-                CarregarConfeiteiroHome(confeiteiros = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
-            }
-
-            override fun onFailure(call: Call<List<ConfeiteiroDTO>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
-            }
-
-        })
-
-        val callCategoria = ApiConfig.getCategoriaService()!!.buscarCategoria()
-
-        callCategoria.enqueue(object : Callback<List<Categoria>>{
-
-            override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
-//
-                CarregarCategoriaHome(categorias = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
-            }
-
-            override fun onFailure(call: Call<List<Categoria>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
-            }
-
-        })
-
-        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto()
-
-        callProduto.enqueue(object : Callback<List<Produto>>{
-
-            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
-//
-                CarregarProdutosHome(produtos = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
-            }
-
-            override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
-            }
-
-        })
+        }
 
         return view
 
 
     }
+
+
 
 
     fun CarregarConfeiteiroHome(confeiteiros: List<ConfeiteiroDTO> ){
@@ -166,6 +131,57 @@ class  FirstFragment : Fragment() {
 
         recyclerViewProdutos.adapter = produtoHomeAdapter
 
+    }
+
+     fun carregarRecyclerView(){
+        val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
+
+
+        callConfeiteiro.enqueue(object : Callback<List<ConfeiteiroDTO>>{
+
+            override fun onResponse(call: Call<List<ConfeiteiroDTO>>, response: Response<List<ConfeiteiroDTO>>) {
+
+                CarregarConfeiteiroHome(confeiteiros = response.body()!!)
+                Log.i("Retrofit222", "fgfgfgf")
+            }
+
+            override fun onFailure(call: Call<List<ConfeiteiroDTO>>?, t: Throwable?) {
+                Log.i("Retrofit", t?.message)
+            }
+
+        })
+
+        val callCategoria = ApiConfig.getCategoriaService()!!.buscarCategoria()
+
+        callCategoria.enqueue(object : Callback<List<Categoria>>{
+
+            override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
+//
+                CarregarCategoriaHome(categorias = response.body()!!)
+                Log.i("Retrofit222", "fgfgfgf")
+            }
+
+            override fun onFailure(call: Call<List<Categoria>>?, t: Throwable?) {
+                Log.i("Retrofit", t?.message)
+            }
+
+        })
+
+        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto()
+
+        callProduto.enqueue(object : Callback<List<Produto>>{
+
+            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+//
+                CarregarProdutosHome(produtos = response.body()!!)
+                Log.i("Retrofit222", "fgfgfgf")
+            }
+
+            override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {
+                Log.i("Retrofit", t?.message)
+            }
+
+        })
     }
 
     interface ClickBotao{

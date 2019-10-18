@@ -56,7 +56,7 @@
                 android:text="cliente"
                 android:textSize="18sp"
                 android:numStars="5"
-                android:stepSize="0.5"
+                android:stepSize="1"
                 android:max="10"
                 android:progressTint="@color/amarelo"
                 style="?attr/ratingBarStyleSmall"

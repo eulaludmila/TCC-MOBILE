@@ -98,10 +98,13 @@
                         >
 
                         <RatingBar
+                            android:id="@+id/rt_avaliacao_confeiteiro_perfil"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5"
+                            android:stepSize="1"
+                            android:layout_marginTop="5dp"
                             android:progressTint="#FFFFD322"
                             />
 
@@ -110,6 +113,7 @@
                             android:layout_height="wrap_content"
                             android:hint="4,6"
                             android:textColor="@color/claro"
+                            android:layout_marginLeft="10dp"
                             android:textSize="20sp" />
 
                     </LinearLayout>
