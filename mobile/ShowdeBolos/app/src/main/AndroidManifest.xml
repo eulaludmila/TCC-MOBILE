@@ -18,20 +18,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-
-        </activity>
-        <activity android:name=".MainActivityFragment" android:theme="@style/noBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+        <activity
+            android:name=".MainActivityFragment"
+            android:theme="@style/noBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            >
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".CircularReveal"
             android:theme="@style/noBar" />
@@ -65,14 +62,13 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".CadastroEnderecoConfeiteiroActivity" />
-        <activity android:name=".PerfilConfeiteiroActivity" android:theme="@style/noBar" >
-
-
-
-        </activity>
-        <activity android:name=".VisualizarProdutoActivity" android:theme="@style/noBar" >
-
-        </activity>
+        <activity
+            android:name=".PerfilConfeiteiroActivity"
+            android:theme="@style/noBar"></activity>
+        <activity
+            android:name=".VisualizarProdutoActivity"
+            android:theme="@style/noBar"></activity>
+        <activity android:name=".TodosConfeiteirosActivity" android:theme="@style/noBar"></activity>
     </application>
 
 </manifest>
