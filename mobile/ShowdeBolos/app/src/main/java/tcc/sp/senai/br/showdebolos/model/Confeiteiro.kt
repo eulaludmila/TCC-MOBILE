@@ -9,9 +9,10 @@ data class Confeiteiro (val codConfeiteiro: Int,
                     val dtNasc: String,
                     val email: String,
                     val senha: String,
-                    val codCelular: Celular,
+                    val celular: Celular,
                     val foto: String,
-                    val sexo: String) : Serializable{
+                    val sexo: String,
+                    val avaliacao: Double) : Serializable{
 
 
 

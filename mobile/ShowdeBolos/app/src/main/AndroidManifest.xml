@@ -69,6 +69,7 @@
             android:name=".VisualizarProdutoActivity"
             android:theme="@style/noBar"></activity>
         <activity android:name=".TodosConfeiteirosActivity" android:theme="@style/noBar"></activity>
+        <activity android:name=".ProdutosCategoriaActivity" android:theme="@style/noBar"></activity>
     </application>
 
 </manifest>

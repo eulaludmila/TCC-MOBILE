@@ -159,9 +159,9 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                         android:textSize="23sp" />
 
                     <TextView
+                        android:id="@+id/endereco_confeiteiro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Itapevi - SP"
                         android:textAlignment="center"
                         android:textColor="@color/preto"
                         android:textSize="20sp" />

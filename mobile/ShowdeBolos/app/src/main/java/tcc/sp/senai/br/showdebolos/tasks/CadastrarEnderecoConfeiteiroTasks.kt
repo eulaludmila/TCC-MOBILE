@@ -20,12 +20,12 @@ class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfei
         jsEnderecoConfeiteiro.`object`()
         jsEnderecoConfeiteiro.key("confeiteiro")
                 .`object`()
-                .key("codConfeiteiro").value(enderecoConfeiteiro.codConfeiteiro.codConfeiteiro)
+                .key("codConfeiteiro").value(enderecoConfeiteiro.confeiteiro.codConfeiteiro)
 
                 .endObject()
         jsEnderecoConfeiteiro.key("endereco")
                 .`object`()
-                .key("codEndereco").value(enderecoConfeiteiro.codEndereco.codEndereco)
+                .key("codEndereco").value(enderecoConfeiteiro.endereco.codEndereco)
                 .endObject()
 
                 .endObject()
@@ -69,7 +69,8 @@ class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfei
                 joConfeiteiro.getString("senha"),
                 celular,
                 joConfeiteiro.getString("sexo"),
-                joConfeiteiro.getString("foto"))
+                joConfeiteiro.getString("foto"),
+                joConfeiteiro.getDouble("avaliacao"))
 
 
 

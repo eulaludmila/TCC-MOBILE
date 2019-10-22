@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_first_fragment.*
 import kotlinx.android.synthetic.main.activity_main_fragment.*
+import java.lang.reflect.Field
 
 
 class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
@@ -28,10 +29,6 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
-
-
-
-
 
         openFirst()
 
@@ -86,6 +83,10 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
     }
 
 
+
+
+
+
     fun openFirst(){
         var f = FirstFragment()
         f.clickBotao = this
@@ -94,15 +95,16 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
     }
 
     fun replaceFragment(fragment: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.layout_fragment, fragment)
-        fragmentTransaction.commit()
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.layout_fragment, fragment)
+            fragmentTransaction.commit()
+
 
     }
 
     override fun onBackPressed() {
-        if (bottomNavigation.getSelectedItemId() !== R.id.inicio) {
-            bottomNavigation.setSelectedItemId(R.id.inicio)
+        if (bottomNavigation.selectedItemId !== R.id.inicio) {
+            bottomNavigation.selectedItemId = R.id.inicio
         } else {
             super.onBackPressed()
         }

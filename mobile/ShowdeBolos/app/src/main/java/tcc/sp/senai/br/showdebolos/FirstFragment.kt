@@ -41,7 +41,7 @@ import tcc.sp.senai.br.showdebolos.services.RetrofitClient
 
 class  FirstFragment : Fragment(){
 
-    var confeiteiros: List<ConfeiteiroDTO> = ArrayList()
+    var confeiteiros: List<EnderecoConfeiteiro> = ArrayList()
     var categorias: List<Categoria> = ArrayList()
     var produtos: List<Produto> = ArrayList()
     lateinit var clickBotao: ClickBotao
@@ -86,7 +86,7 @@ class  FirstFragment : Fragment(){
 
 
 
-    fun CarregarConfeiteiroHome(confeiteiros: List<ConfeiteiroDTO> ){
+    fun CarregarConfeiteiroHome(confeiteiros: List<EnderecoConfeiteiro> ){
 
         this.confeiteiros = confeiteiros
 
@@ -94,8 +94,8 @@ class  FirstFragment : Fragment(){
             override fun onClickConfeiteiro(view: View, index: Int) {
                 val c = confeiteiros.get(index)
                 AlertDialog.Builder(context!!)
-                        .setTitle(c.nome)
-                        .setMessage(c.sobrenome)
+                        .setTitle(c.confeiteiro.nome)
+                        .setMessage(c.confeiteiro.sobrenome)
                         .show()
             }
 
@@ -137,15 +137,15 @@ class  FirstFragment : Fragment(){
         val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
 
 
-        callConfeiteiro.enqueue(object : Callback<List<ConfeiteiroDTO>>{
+        callConfeiteiro.enqueue(object : Callback<List<EnderecoConfeiteiro>>{
 
-            override fun onResponse(call: Call<List<ConfeiteiroDTO>>, response: Response<List<ConfeiteiroDTO>>) {
+            override fun onResponse(call: Call<List<EnderecoConfeiteiro>>, response: Response<List<EnderecoConfeiteiro>>) {
 
                 CarregarConfeiteiroHome(confeiteiros = response.body()!!)
                 Log.i("Retrofit222", "fgfgfgf")
             }
 
-            override fun onFailure(call: Call<List<ConfeiteiroDTO>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<EnderecoConfeiteiro>>?, t: Throwable?) {
                 Log.i("Retrofit", t?.message)
             }
 

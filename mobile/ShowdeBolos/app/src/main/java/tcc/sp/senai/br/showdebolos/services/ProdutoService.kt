@@ -13,6 +13,9 @@ interface ProdutoService {
     @GET("produto/produtos")
     fun buscarProduto(): Call<List<Produto>>
 
+    @GET("produto/categoria/{codCategoria}")
+    fun buscarProdutoCategoria(@Path("codCategoria") codCategoriaService: String): Call<List<Produto>>
+
 
     @GET("produto/confeiteiro/{codConfeiteiro}")
     fun buscarProdutoConfeiteiro(@Path("codConfeiteiro") codConfeiteiroDTO: String): Call<List<Produto>>

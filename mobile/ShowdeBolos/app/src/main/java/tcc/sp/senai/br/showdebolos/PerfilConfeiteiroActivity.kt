@@ -15,6 +15,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
+import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import tcc.sp.senai.br.showdebolos.model.Produto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import kotlin.collections.ArrayList
@@ -27,11 +28,11 @@ class PerfilConfeiteiroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_perfil_confeiteiro)
 
 
-        val confeiteiro = intent.getSerializableExtra("confeiteiro") as ConfeiteiroDTO
+        val confeiteiro = intent.getSerializableExtra("confeiteiro") as EnderecoConfeiteiro
         val recyclerViewPerfilConfeiteiro: RecyclerView = findViewById(R.id.recyclerViewPerfilConfeiteiro)
         recyclerViewPerfilConfeiteiro.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
 
-        val callProduto = ApiConfig.getProdutoService()!!.buscarProdutoConfeiteiro(confeiteiro.codConfeiteiro.toString())
+        val callProduto = ApiConfig.getProdutoService()!!.buscarProdutoConfeiteiro(confeiteiro.confeiteiro.codConfeiteiro.toString())
 
         callProduto.enqueue(object : Callback<List<Produto>> {
 
@@ -47,10 +48,13 @@ class PerfilConfeiteiroActivity : AppCompatActivity() {
 
         })
 
-        txt_nome_confeiteiro_perfil.text = confeiteiro.nome + " " + confeiteiro.sobrenome
-        rt_avaliacao_confeiteiro_perfil.progress = confeiteiro.avaliacao.toInt()
-        Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.foto}").into(img_foto_confeiteiro)
-        Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.foto}").into(img_foto_confeiteiro)
+        Log.d("confeiteiro2222222", confeiteiro.toString())
+
+        txt_nome_confeiteiro_perfil.text = confeiteiro.confeiteiro.nome + " " + confeiteiro.confeiteiro.sobrenome
+        rt_avaliacao_confeiteiro_perfil.progress = confeiteiro.confeiteiro.avaliacao.toInt()
+        txt_localizacao.text = confeiteiro.endereco.cidade.cidade
+        Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro)
+        Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro)
 
 
 

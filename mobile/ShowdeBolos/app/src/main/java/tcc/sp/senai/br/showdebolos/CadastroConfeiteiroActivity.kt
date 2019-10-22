@@ -136,7 +136,8 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                                 txtSenha.text.toString(),
                                 celular,
                                 "teste.png",
-                                sexo)
+                                sexo,
+                                0.0)
 
                         if(imagePath == null){
                             Toast.makeText(this, "Selecione um arquivo de imagem", Toast.LENGTH_LONG);

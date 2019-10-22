@@ -4,5 +4,5 @@ import java.io.Serializable
 
 data class Categoria(val codCategoria: Int,
                      val categoria: String,
-                     val tipoUni: String): Serializable {
+                     val tipoUnidade: String): Serializable {
 }
