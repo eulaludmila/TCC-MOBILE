@@ -1,19 +1,16 @@
 package tcc.sp.senai.br.adapter
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toast
-import tcc.sp.senai.br.showdebolos.FirstFragment
+import tcc.sp.senai.br.showdebolos.MainActivityFragment
+import tcc.sp.senai.br.showdebolos.PerfilConfeiteiroActivity
+import tcc.sp.senai.br.showdebolos.ProdutosCategoriaActivity
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.Categoria
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
@@ -21,6 +18,7 @@ import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 
 class CategoriaHomeAdapter (private val categorias:List<Categoria>,
                             private val context: Context, val categoriaOnlickListener: CategoriaOnlickListener) : RecyclerView.Adapter<CategoriaHomeAdapter.ViewHolder>() {
+
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -47,7 +45,9 @@ class CategoriaHomeAdapter (private val categorias:List<Categoria>,
 
         holder.itemView.setOnClickListener {
 
-
+            val intent = Intent(context!!, ProdutosCategoriaActivity::class.java)
+            intent.putExtra("categoria",Categoria(categorias[position].codCategoria,categorias[position].categoria,categorias[position].tipoUnidade))
+            context!!.startActivity(intent)
 
         }
 

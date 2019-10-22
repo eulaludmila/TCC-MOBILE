@@ -64,10 +64,10 @@ class CadastroEnderecoConfeiteiroActivity : AppCompatActivity() {
 
                         //Colocando os dados do JSON em suas respectivas caixas de texto
                         val endereco = carregarEndereco.get() as Endereco
-                        txt_cidade_confeiteiro.setText(endereco.codCidade.cidade)
+                        txt_cidade_confeiteiro.setText(endereco.cidade.cidade)
                         txt_rua_cliente.setText(endereco.endereco)
                         txt_bairro_confeiteiro.setText(endereco.bairro)
-                        txt_uf_confeiteiro.setText(endereco.codCidade.codEstado.uf)
+                        txt_uf_confeiteiro.setText(endereco.cidade.estado.uf)
 
 
                     }catch (e : ExecutionException){

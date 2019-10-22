@@ -33,7 +33,7 @@ class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro, var carregando: Co
         jsCliente.key("celular")
                 .`object`()
                 .key("celular")
-                .value(confeiteiro.codCelular.celular)
+                .value(confeiteiro.celular.celular)
                 .endObject()
         jsCliente.key("sexo").value("F")
         jsCliente.key("foto").value("Teste")
@@ -71,7 +71,8 @@ class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro, var carregando: Co
                 JSONObject(resposta).getString("senha"),
                 celular,
                 JSONObject(resposta).getString("foto"),
-                JSONObject(resposta).getString("sexo"))
+                JSONObject(resposta).getString("sexo"),
+                JSONObject(resposta).getDouble("avaliacao"))
 
 
 
