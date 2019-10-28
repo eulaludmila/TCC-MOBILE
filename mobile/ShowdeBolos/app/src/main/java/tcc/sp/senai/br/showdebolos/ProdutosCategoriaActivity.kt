@@ -1,6 +1,7 @@
 package tcc.sp.senai.br.showdebolos
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -18,17 +19,20 @@ import tcc.sp.senai.br.showdebolos.services.ApiConfig
 class ProdutosCategoriaActivity : AppCompatActivity() {
 
     var produtos: List<Produto> = ArrayList()
+    var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_produtos_categoria_activity)
+        sharedPreferences = this.getSharedPreferences("idValue",0)
+
 
         val recyclerViewProdutosCategoria: RecyclerView = findViewById(R.id.recyclerViewProdutosCategorias)
         recyclerViewProdutosCategoria.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
 
         val categoria = intent.getSerializableExtra("categoria") as Categoria
 
-        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProdutoCategoria(categoria.codCategoria.toString())
+        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProdutoCategoria(categoria.codCategoria.toString(),sharedPreferences!!.getString("token", ""))
 
         callProduto.enqueue(object : Callback<List<Produto>>{
 

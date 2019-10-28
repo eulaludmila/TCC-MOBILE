@@ -1,6 +1,7 @@
 package tcc.sp.senai.br.showdebolos
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -45,8 +46,11 @@ class  FirstFragment : Fragment(){
     var categorias: List<Categoria> = ArrayList()
     var produtos: List<Produto> = ArrayList()
     lateinit var clickBotao: ClickBotao
+    var sharedPreferences:SharedPreferences? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        sharedPreferences = this.activity!!.getSharedPreferences("idValue",0)
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
@@ -134,7 +138,8 @@ class  FirstFragment : Fragment(){
     }
 
      fun carregarRecyclerView(){
-        val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros()
+
+         val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros(sharedPreferences!!.getString("token", ""))
 
 
         callConfeiteiro.enqueue(object : Callback<List<EnderecoConfeiteiro>>{
@@ -146,7 +151,7 @@ class  FirstFragment : Fragment(){
             }
 
             override fun onFailure(call: Call<List<EnderecoConfeiteiro>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
+                Log.i("Retrofit33333", t?.message)
             }
 
         })
@@ -167,7 +172,7 @@ class  FirstFragment : Fragment(){
 
         })
 
-        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto()
+        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto(sharedPreferences!!.getString("token", ""))
 
         callProduto.enqueue(object : Callback<List<Produto>>{
 

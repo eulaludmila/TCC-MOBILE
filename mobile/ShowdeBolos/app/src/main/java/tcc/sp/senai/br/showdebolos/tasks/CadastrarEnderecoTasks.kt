@@ -14,7 +14,7 @@ class CadastrarEnderecoTasks(val endereco: Endereco): AsyncTask<Endereco,Enderec
 
 
     override fun doInBackground(vararg params: Endereco?): Endereco? {
-        val url = URL("http://54.242.6.253:8080/endereco")
+        val url = URL("http://3.232.178.219:8080/endereco")
 
         val jsCliente = JSONStringer()
 

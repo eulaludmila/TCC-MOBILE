@@ -163,6 +163,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
+                        android:text="Jandira - SP"
                         android:textColor="@color/preto"
                         android:textSize="20sp" />
 
@@ -239,7 +240,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bolo" />
+                    android:background="@drawable/add_foto" />
 
 
 

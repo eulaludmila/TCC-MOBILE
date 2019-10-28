@@ -1,20 +1,17 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.widget.Toolbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_first_fragment.*
 import kotlinx.android.synthetic.main.activity_perfil_confeiteiro.*
-import kotlinx.android.synthetic.main.activity_visualizar_produto.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
-import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import tcc.sp.senai.br.showdebolos.model.Produto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
@@ -23,16 +20,19 @@ import kotlin.collections.ArrayList
 class PerfilConfeiteiroActivity : AppCompatActivity() {
 
     private var produtos: List<Produto> = ArrayList()
+    var sharedPreferences: SharedPreferences? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil_confeiteiro)
 
+        sharedPreferences = this.getSharedPreferences("idValue",0)
 
         val confeiteiro = intent.getSerializableExtra("confeiteiro") as EnderecoConfeiteiro
         val recyclerViewPerfilConfeiteiro: RecyclerView = findViewById(R.id.recyclerViewPerfilConfeiteiro)
         recyclerViewPerfilConfeiteiro.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
 
-        val callProduto = ApiConfig.getProdutoService()!!.buscarProdutoConfeiteiro(confeiteiro.confeiteiro.codConfeiteiro.toString())
+        val callProduto = ApiConfig.getProdutoService()!!.buscarProdutoConfeiteiro(confeiteiro.confeiteiro.codConfeiteiro.toString(),sharedPreferences!!.getString("token", ""))
 
         callProduto.enqueue(object : Callback<List<Produto>> {
 
@@ -52,9 +52,10 @@ class PerfilConfeiteiroActivity : AppCompatActivity() {
 
         txt_nome_confeiteiro_perfil.text = confeiteiro.confeiteiro.nome + " " + confeiteiro.confeiteiro.sobrenome
         rt_avaliacao_confeiteiro_perfil.progress = confeiteiro.confeiteiro.avaliacao.toInt()
-        txt_localizacao.text = confeiteiro.endereco.cidade.cidade
-        Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro)
-        Picasso.with(img_foto_confeiteiro.context).load("http://54.242.6.253${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro)
+        txt_cidade.text = confeiteiro.endereco.cidade.cidade
+        txt_uf.text = confeiteiro.endereco.cidade.estado.uf
+        Picasso.with(img_foto_confeiteiro.context).load("http://3.232.178.219${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro)
+        Picasso.with(img_foto_confeiteiro.context).load("http://3.232.178.219${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro)
 
 
 

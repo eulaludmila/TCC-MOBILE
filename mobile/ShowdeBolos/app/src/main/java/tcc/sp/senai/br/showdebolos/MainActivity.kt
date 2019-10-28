@@ -2,6 +2,7 @@ package tcc.sp.senai.br.showdebolos
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.support.v7.app.AppCompatActivity
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
 
-
+    var mPreferences: SharedPreferences? = null
 
 
     fun alertaInternet (valor: String){
@@ -88,6 +89,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val app = applicationContext as MyApp
+
+
         if (app.isOk) {
             //do nothing
         } else {
@@ -112,11 +115,21 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
+        checkSharedPreferences()
 
     }
 
+    fun checkSharedPreferences(){
 
+        mPreferences = getSharedPreferences("idValue",0)
+        val token = mPreferences!!.getString("token", "")
+
+        if(token != ""){
+            val intent = Intent(this, MainActivityFragment::class.java)
+            startActivity(intent)
+        }
+
+    }
 
 
 }
