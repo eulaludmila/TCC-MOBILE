@@ -7,9 +7,11 @@ import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_first_fragment.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_fragment.*
 import java.lang.reflect.Field
 
@@ -31,6 +33,7 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
         setContentView(R.layout.activity_main_fragment)
 
         openFirst()
+
 
         /*val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiroHome = view.findViewById(R.id.recyclerViewConfeiteiroHome) as RecyclerView*/

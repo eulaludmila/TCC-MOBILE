@@ -18,17 +18,20 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
-        <activity
-            android:name=".MainActivityFragment"
-            android:theme="@style/noBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".MainActivityFragment"
+            android:theme="@style/noBar">
+
+        </activity>
+        <activity android:name=".MainActivity"
+            android:theme="@style/noBar"></activity>
         <activity
             android:name=".CircularReveal"
             android:theme="@style/noBar" />

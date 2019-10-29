@@ -1,6 +1,7 @@
 package tcc.sp.senai.br.showdebolos
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,9 @@ import kotlinx.android.synthetic.main.activity_circular_reveal.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class CircularReveal : AppCompatActivity() {
+
+
+    var mPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +42,8 @@ class CircularReveal : AppCompatActivity() {
         }
 
         Handler().postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-            startActivity(intent)
-            overridePendingTransition(0,0)
-            finish()
-
-        }, 250)
+            checkSharedPreferences()
+        }, 200)
 
     }
 
@@ -62,6 +61,24 @@ class CircularReveal : AppCompatActivity() {
         // make the view visible and start the animation
         root_layout.setVisibility(View.VISIBLE)
         circularReveal.start()
+    }
+
+    fun checkSharedPreferences(){
+
+        mPreferences = getSharedPreferences("idValue",0)
+        val token = mPreferences!!.getString("token", "")
+
+        if(token != ""){
+            val intent = Intent(this, MainActivityFragment::class.java)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+            startActivity(intent)
+            overridePendingTransition(0,0)
+            finish()
+        }
+
     }
 
 }

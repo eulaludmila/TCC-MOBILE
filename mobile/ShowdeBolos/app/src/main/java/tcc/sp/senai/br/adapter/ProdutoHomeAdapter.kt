@@ -44,7 +44,7 @@ class ProdutoHomeAdapter (private val produtos:List<Produto>,
         holder.avaliacao.progress = produtos.get(position).avaliacao.toInt()
         var url = produtos[position].foto
         Picasso.with(holder!!.fotoProduto.context).cancelRequest(holder!!.fotoProduto)
-        Picasso.with(holder!!.fotoProduto.context).load("http://54.242.6.253$url").into(holder!!.fotoProduto)
+        Picasso.with(holder!!.fotoProduto.context).load("http://3.232.178.219$url").into(holder!!.fotoProduto)
 
         holder.itemView.setOnClickListener {
 

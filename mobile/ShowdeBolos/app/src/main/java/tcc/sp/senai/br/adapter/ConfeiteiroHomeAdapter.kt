@@ -56,9 +56,6 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<EnderecoConfeiteiro>
 
             val intent = Intent(context, PerfilConfeiteiroActivity::class.java)
             intent.putExtra("confeiteiro", EnderecoConfeiteiro(confeiteiros[position].codEnderecoConfeiteiro,confeiteiros[position].confeiteiro,confeiteiros[position].endereco))
-            Log.d("endereco2222222222", confeiteiros[position].endereco.cidade.cidade)
-            Log.d("celular2222222222", confeiteiros[position].confeiteiro.celular.toString())
-            Log.d("endereco2222222222", confeiteiros[position].endereco.toString())
             context!!.startActivity(intent)
 
         }
@@ -66,7 +63,7 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<EnderecoConfeiteiro>
 
         var url = confeiteiros[position].confeiteiro.foto
         Picasso.with(holder!!.foto.context).cancelRequest(holder!!.foto)
-        Picasso.with(holder!!.foto.context).load("http://54.242.6.253$url").into(holder!!.foto)
+        Picasso.with(holder!!.foto.context).load("http://3.232.178.219$url").into(holder!!.foto)
 
         try{
             val carregarImgTasks = CarregarImgTasks(url)
@@ -88,7 +85,7 @@ class ConfeiteiroHomeAdapter (private var confeiteiros:List<EnderecoConfeiteiro>
 
         override fun doInBackground(vararg p0: URL?): Drawable? {
 
-            var url = URL("http://54.242.6.253$caminho")
+            var url = URL("http://3.232.178.219$caminho")
             var content: InputStream?
 
             try{

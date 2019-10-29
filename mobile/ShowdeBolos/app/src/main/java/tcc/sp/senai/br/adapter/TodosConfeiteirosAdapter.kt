@@ -13,12 +13,13 @@ import com.squareup.picasso.Picasso
 import tcc.sp.senai.br.showdebolos.PerfilConfeiteiroActivity
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
+import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import java.io.IOException
 import java.io.InputStream
 import java.net.MalformedURLException
 import java.net.URL
 
-class TodosConfeiteirosAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
+class TodosConfeiteirosAdapter (private var confeiteiros:List<EnderecoConfeiteiro>,
                                 private var context: Context?,
                                 var confeiteiroOnClickListener: ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener) : RecyclerView.Adapter<TodosConfeiteirosAdapter.ViewHolder>() {
 
@@ -45,25 +46,23 @@ class TodosConfeiteirosAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.nomeConfeiteiro.text = confeiteiros.get(position).nome
+        holder.nomeConfeiteiro.text = confeiteiros[position].confeiteiro.nome
 
-        holder.avaliacao.progress = confeiteiros.get(position).avaliacao.toInt()
+        holder.avaliacao.progress = confeiteiros[position].confeiteiro.avaliacao.toInt()
 
         //colocando o listener da lista na lista(eu criei o próprio listener)
         holder.itemView.setOnClickListener{
 
             val intent = Intent(context, PerfilConfeiteiroActivity::class.java)
-            intent.putExtra("confeiteiro", ConfeiteiroDTO(confeiteiros[position].codConfeiteiro,confeiteiros[position].nome,confeiteiros[position].sobrenome,
-                    confeiteiros[position].dtNasc,confeiteiros[position].celular,confeiteiros[position].foto,
-                    confeiteiros[position].sexo,confeiteiros[position].avaliacao))
+            intent.putExtra("confeiteiro", EnderecoConfeiteiro(confeiteiros[position].codEnderecoConfeiteiro,confeiteiros[position].confeiteiro,confeiteiros[position].endereco))
             context!!.startActivity(intent)
 
         }
 
 
-        var url = confeiteiros[position].foto
+        var url = confeiteiros[position].confeiteiro.foto
         Picasso.with(holder!!.foto.context).cancelRequest(holder!!.foto)
-        Picasso.with(holder!!.foto.context).load("http://54.242.6.253$url").into(holder!!.foto)
+        Picasso.with(holder!!.foto.context).load("http://3.232.178.219$url").into(holder!!.foto)
 
         try{
             val carregarImgTasks = CarregarImgTasks(url)
@@ -85,7 +84,7 @@ class TodosConfeiteirosAdapter (private var confeiteiros:List<ConfeiteiroDTO>,
 
         override fun doInBackground(vararg p0: URL?): Drawable? {
 
-            var url = URL("http://54.242.6.253$caminho")
+            var url = URL("http://3.232.178.219$caminho")
             var content: InputStream?
 
             try{

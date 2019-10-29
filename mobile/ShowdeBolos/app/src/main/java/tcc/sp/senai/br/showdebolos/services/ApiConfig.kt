@@ -7,26 +7,26 @@ class ApiConfig {
     fun APIutils(){}
 
     companion object {
-        val API_URL = "http://54.242.6.253:8080/foto/"
+        val API_URL = "http://3.232.178.219:8080/foto/"
 
         fun getFotosService(): FotosService? {
             return RetrofitClient.getclient(API_URL)!!.create(FotosService::class.java)
         }
 
         fun getConfeiteiroService(): ConfeiteiroService {
-            return RetrofitClient.getConfeiteiro("http://54.242.6.253:8080/")!!.create(ConfeiteiroService::class.java)
+            return RetrofitClient.getConfeiteiro("http://3.232.178.219:8080/")!!.create(ConfeiteiroService::class.java)
         }
 
         fun getCategoriaService():CategoriaService{
-            return RetrofitClient.getCategoria("http://54.242.6.253:8080/")!!.create(CategoriaService::class.java)
+            return RetrofitClient.getCategoria("http://3.232.178.219:8080/")!!.create(CategoriaService::class.java)
         }
 
         fun getProdutoService():ProdutoService{
-            return RetrofitClient.getProduto("http://54.242.6.253:8080/")!!.create(ProdutoService::class.java)
+            return RetrofitClient.getProduto("http://3.232.178.219:8080/")!!.create(ProdutoService::class.java)
         }
 
         fun getProdutoConfeiteiroService():ProdutoService{
-            return RetrofitClient.getProduto("http://54.242.6.253:8080/")!!.create(ProdutoService::class.java)
+            return RetrofitClient.getProduto("http://3.232.178.219:8080/")!!.create(ProdutoService::class.java)
         }
 
     }

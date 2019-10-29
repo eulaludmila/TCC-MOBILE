@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -51,42 +51,65 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="61dp"
+                        android:layout_marginTop="47dp"
                         android:ellipsize="end"
-                        android:textAlignment="center"
                         android:singleLine="true"
                         android:text="Eula Ludmila"
+                        android:textAlignment="center"
                         android:textColor="@color/preto"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="276dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="105dp"
+                        android:layout_marginBottom="66dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/txt_localizacao"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/txt_cidade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="16dp"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginRight="17dp"
-                            android:textAlignment="center"
                             android:ellipsize="end"
                             android:singleLine="true"
                             android:text="Itapevi - SP"
-                            android:textColor="@color/preto" />
+                            android:textAlignment="center"
+                            android:textColor="@color/preto"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@drawable/ic_localizacao" />
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="46dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/ic_localizacao"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/txt_cidade"
+                            app:layout_constraintStart_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/txt_uf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_weight="1"
+                            android:text="TextView"
+                            android:textColor="@color/preto"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_cidade" />
+
+                    </android.support.constraint.ConstraintLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -165,4 +188,4 @@
 
 
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
