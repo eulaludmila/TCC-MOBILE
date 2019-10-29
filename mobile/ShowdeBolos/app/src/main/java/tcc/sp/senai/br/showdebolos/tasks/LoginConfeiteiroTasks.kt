@@ -7,6 +7,7 @@ import org.json.JSONObject
 import org.json.JSONStringer
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.Cliente
+import tcc.sp.senai.br.showdebolos.model.Confeiteiro
 import java.io.FileNotFoundException
 import java.io.PrintStream
 import java.lang.RuntimeException
@@ -16,20 +17,20 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
-class LoginClienteTasks(val cliente:Cliente, val context: Context): AsyncTask<String, String, String>() {
+class LoginConfeiteiroTasks(val confeiteiro:Confeiteiro, val context: Context): AsyncTask<String, String, String>() {
 
     var token :String = ""
 
     override fun doInBackground(vararg p0: String?): String? {
         try {
 
-            val url = URL("http://3.232.178.219:8080/login/cliente")
+            val url = URL("http://3.232.178.219:8080/login/confeiteiro")
 
             val jsCliente = JSONStringer()
 
             jsCliente.`object`()
-                jsCliente.key("username").value(cliente.email)
-                jsCliente.key("password").value(cliente.senha)
+            jsCliente.key("username").value(confeiteiro.email)
+            jsCliente.key("password").value(confeiteiro.senha)
             jsCliente.endObject()
 
             val conexao = url.openConnection() as HttpURLConnection
@@ -58,7 +59,7 @@ class LoginClienteTasks(val cliente:Cliente, val context: Context): AsyncTask<St
         }catch (e:RuntimeException){
             e.printStackTrace()
             this.token = "erro"
-        }catch (e: ConnectException){
+        }catch (e:ConnectException){
             e.printStackTrace()
             this.token = "conexao"
         }

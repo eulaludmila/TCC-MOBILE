@@ -38,22 +38,28 @@ class LoginClienteActivity : AppCompatActivity() {
                     val loginCliente = LoginClienteTasks(cliente, this)
                     loginCliente.execute()
                     val retornoLogin = loginCliente.get()
-                if(retornoLogin != "erro"){
-
-                    mPreferences = getSharedPreferences("idValue", 0)
-
-                    mEditor = mPreferences!!.edit()
-                    mEditor!!.putString("token",retornoLogin)
-                    mEditor!!.commit()
-                    val intent = Intent(this, MainActivityFragment::class.java)
-                    startActivity(intent)
-                }else{
+                if(retornoLogin == "conexao"){
+                    val builder = AlertDialog.Builder(this@LoginClienteActivity)
+                    builder.setTitle("ERRO")
+                    builder.setIcon(R.drawable.ic_erro)
+                    builder.setMessage("Erro ao conectador ao servidor.")
+                    builder.setMessage("Tente novamente mais tarde.")
+                    builder.setPositiveButton("OK"){dialog, which ->  }
+                    builder.show()
+                }else if(retornoLogin == "erro"){
                     val builder = AlertDialog.Builder(this@LoginClienteActivity)
                     builder.setTitle("ERRO")
                     builder.setIcon(R.drawable.ic_erro)
                     builder.setMessage("E-mail ou Senha estão incorretos.")
                     builder.setPositiveButton("OK"){dialog, which ->  }
                     builder.show()
+                }else{
+                    mPreferences = getSharedPreferences("idValue", 0)
+                    mEditor = mPreferences!!.edit()
+                    mEditor!!.putString("token",retornoLogin)
+                    mEditor!!.commit()
+                    val intent = Intent(this, MainActivityFragment::class.java)
+                    startActivity(intent)
                 }
 
             }else{

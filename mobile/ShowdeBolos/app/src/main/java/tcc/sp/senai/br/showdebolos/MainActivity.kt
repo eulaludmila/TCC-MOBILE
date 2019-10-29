@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity() {
             alertDialog.setTitle("ERRO!") // O Titulo da notificação
 
             alertDialog.setNegativeButton(R.string.nao, { _, _ ->
-                finish();
-
+                android.os.Process.killProcess(android.os.Process.myPid())
             })
             alertDialog.show()
         }else{
