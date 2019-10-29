@@ -11,7 +11,7 @@ import tcc.sp.senai.br.showdebolos.model.Produto
 
 interface ProdutoService {
 
-    @GET("produto/produtos")
+    @GET("produto")
     fun buscarProduto(@Header("Authorization") token:String ): Call<List<Produto>>
 
     @GET("produto/categoria/{codCategoria}")

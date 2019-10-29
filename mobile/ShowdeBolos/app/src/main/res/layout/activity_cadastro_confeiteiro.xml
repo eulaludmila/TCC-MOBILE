@@ -199,7 +199,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/spinner_bg"
-
+                android:spinnerMode="dialog"
                 android:hint="Sexo:"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
