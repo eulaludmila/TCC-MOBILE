@@ -137,6 +137,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                     android:layout_weight="1"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/img_confeiteiro_visualizar"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:background="@drawable/bolo" />
@@ -236,11 +237,11 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/img_confeiteiro_visualizar"
+                    android:id="@+id/img_categoria_visualizar"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:background="@drawable/add_foto" />
+                    />
 
 
 

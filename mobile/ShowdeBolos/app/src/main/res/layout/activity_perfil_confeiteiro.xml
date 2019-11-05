@@ -143,14 +143,21 @@
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/img_foto_confeiteiro"
+                <android.support.v7.widget.CardView
                     android:layout_width="111dp"
                     android:layout_height="106dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="37dp"
-                    android:scaleType="fitXY" />
+                    app:cardCornerRadius="55dp">
+                    <ImageView
+                        android:id="@+id/img_foto_confeiteiro"
+                        android:layout_width="111dp"
+                        android:layout_height="106dp"
+
+                        android:scaleType="fitXY" />
+                </android.support.v7.widget.CardView>
+
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar

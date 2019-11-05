@@ -35,8 +35,8 @@ class CadastrarConfeiteiroTasks(val confeiteiro: Confeiteiro, var carregando: Co
                 .key("celular")
                 .value(confeiteiro.celular.celular)
                 .endObject()
-        jsCliente.key("sexo").value("F")
-        jsCliente.key("foto").value("Teste")
+        jsCliente.key("sexo").value(confeiteiro.sexo)
+        jsCliente.key("foto").value(confeiteiro.foto)
         jsCliente.endObject()
 
         val conexao = url.openConnection() as HttpURLConnection

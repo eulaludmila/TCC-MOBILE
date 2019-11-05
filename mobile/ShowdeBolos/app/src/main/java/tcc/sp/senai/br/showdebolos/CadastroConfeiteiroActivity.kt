@@ -7,7 +7,9 @@ import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
@@ -20,6 +22,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
 import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
 import okhttp3.MediaType
@@ -37,18 +40,21 @@ import tcc.sp.senai.br.showdebolos.model.Foto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarConfeiteiroTasks
+import tcc.sp.senai.br.showdebolos.tasks.VerificarEmailCpfTasks
 import tcc.sp.senai.br.utils.Verificacao
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.util.*
 
 class CadastroConfeiteiroActivity : AppCompatActivity() {
 
     val COD_IMAGE = 101
     //forçando a varialvel a ser nula
-    var imageBitmap: Bitmap? = null
+//    var imageBitmap: Bitmap? = null
     var imagePath: String? = null
     var fotoService: FotosService? = null
+    val matrix:Matrix? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +78,66 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
         img_add_foto_confeiteiro.setOnClickListener{
             abrirGaleria()
         }
+
+        txt_email_confeiteiro.setOnFocusChangeListener { v, hasFocus ->
+
+            if(hasFocus){
+
+            }else{
+                if(txt_email_confeiteiro.length() > 13){
+                    carregando_confeiteiro.visibility = View.VISIBLE
+                    val verificarEmailTasks = VerificarEmailCpfTasks(txt_email_confeiteiro.text.toString(),"confeiteiro","email",carregando_confeiteiro)
+
+                    verificarEmailTasks.execute()
+
+                    val retorno:String = verificarEmailTasks.get()
+
+                    if(retorno == "1"){
+                        val builder = AlertDialog.Builder(this@CadastroConfeiteiroActivity)
+                        builder.setTitle("ERRO")
+                        builder.setIcon(R.drawable.ic_erro)
+                        builder.setMessage("Este e-mail já esta cadastrado")
+                        builder.setPositiveButton("OK"){dialog, which ->  }
+                        builder.show()
+                        txt_email_confeiteiro.setText("")
+                    }else{
+
+                    }
+                }
+            }
+
+        }
+
+        txt_cpf_confeiteiro.setOnFocusChangeListener { v, hasFocus ->
+
+            if(hasFocus){
+
+            }else{
+                if(txt_cpf_confeiteiro.length() === 14){
+
+                    carregando_confeiteiro.visibility = View.VISIBLE
+                    val verificarEmailCpfTasks = VerificarEmailCpfTasks(txt_cpf_confeiteiro.text.toString(),"confeiteiro","cpf",carregando_confeiteiro)
+
+                    verificarEmailCpfTasks.execute()
+
+                    val retorno:String = verificarEmailCpfTasks.get()
+
+                    if(retorno == "1"){
+                        val builder = AlertDialog.Builder(this@CadastroConfeiteiroActivity)
+                        builder.setTitle("ERRO")
+                        builder.setIcon(R.drawable.ic_erro)
+                        builder.setMessage("Este cpf já esta cadastrado")
+                        builder.setPositiveButton("OK"){dialog, which ->  }
+                        builder.show()
+                        txt_cpf_confeiteiro.setText("")
+                    }
+
+                }
+            }
+
+        }
+
+
 
         txt_celular_confeiteiro.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (hasFocus){
@@ -143,21 +209,14 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                             Toast.makeText(this, "Selecione um arquivo de imagem", Toast.LENGTH_LONG);
                         }else{
 
-                            carregando.setVisibility(View.VISIBLE)
 
                             Handler().postDelayed({
-
-                                val cadastroConfeiteiro = CadastrarConfeiteiroTasks(confeiteiro, carregando)
-                                cadastroConfeiteiro.execute()
-
-                                val retornoConfeiteiro = cadastroConfeiteiro.get() as Confeiteiro
-
-                                uploadImage(retornoConfeiteiro)
-
+                                carregando_confeiteiro.setVisibility(View.VISIBLE)
                                 val intent = Intent(this, CadastroEnderecoConfeiteiroActivity::class.java)
-                                intent.putExtra("confeiteiro", retornoConfeiteiro)
+                                confeiteiro.foto = imagePath!!
+                                intent.putExtra("confeiteiro", confeiteiro)
                                 startActivity(intent)
-
+                                finish()
                             },100)
 
                         }
@@ -200,15 +259,15 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
                 //lendo a uri com a imagem
                 val selectedImage: Uri = data.data
                 val inputStream = contentResolver.openInputStream(data.data)
-
+                val imageBitmap = BitmapFactory.decodeStream(inputStream)
+                imagePath = getRealPathFromUri(selectedImage)
 
                 //transformando o resultado em bitmap
-                imageBitmap = BitmapFactory.decodeStream(inputStream)
+                val rotadedBitmap = modifyOrientation(imageBitmap, imagePath!!)
 
                 //exibir a imagem no aplicativo
-                img_confeiteiro.setImageBitmap(imageBitmap)
+                img_confeiteiro.setImageBitmap(rotadedBitmap)
 
-                imagePath = getRealPathFromUri(selectedImage)
 
             }else{
                 Toast.makeText(this, "Não foi possivel selecinar a imagem", Toast.LENGTH_SHORT).show()
@@ -218,39 +277,36 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
 
     }
 
-    fun uploadImage(confeiteiro: Confeiteiro){
+    @Throws(IOException::class)
+    fun modifyOrientation(bitmap: Bitmap, image_absolute_path: String): Bitmap {
+        val ei = ExifInterface(image_absolute_path)
+        val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
-        val file = File(imagePath)
-        val bitmap: Bitmap = BitmapFactory.decodeFile(file.path)
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 30,stream)
-        val image  = stream.toByteArray()
-        val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), image)
-        val codBody = RequestBody.create(MediaType.parse("text/plain"), confeiteiro.codConfeiteiro.toString())
-        val body = MultipartBody.Part.createFormData("foto", file.name, imageBody)
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> return rotate(bitmap, 90f)
 
+            ExifInterface.ORIENTATION_ROTATE_180 -> return rotate(bitmap, 180f)
 
+            ExifInterface.ORIENTATION_ROTATE_270 -> return rotate(bitmap, 270f)
 
-        val call = fotoService!!.uploadImageConfeiteiro(body, codBody)
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> return flip(bitmap, true, false)
 
-        call.enqueue(object : Callback<Confeiteiro>{
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> return flip(bitmap, false, true)
 
-            override fun onResponse(call: Call<Confeiteiro>?, response: Response<Confeiteiro>?) {
-                if(response!!.isSuccessful){
-//                    Toast.makeText(this@CadastroConfeiteiroActivity, "Imagem Enviada com Sucesso", Toast.LENGTH_LONG).show()
-                }
-            }
+            else -> return bitmap
+        }
+    }
 
-            override fun onFailure(call: Call<Confeiteiro>?, t: Throwable?) {
-                Toast.makeText(this@CadastroConfeiteiroActivity, "ERRO!!! + ${t!!.message}", Toast.LENGTH_LONG).show()
-                Log.d("ERRO IMAGEM", t.message)
-            }
+    fun rotate(bitmap: Bitmap, degrees: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(degrees)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
 
-
-
-        })
-
-
+    fun flip(bitmap: Bitmap, horizontal: Boolean, vertical: Boolean): Bitmap {
+        val matrix = Matrix()
+        matrix.preScale((if (horizontal) -1 else 1).toFloat(), (if (vertical) -1 else 1).toFloat())
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
     fun getRealPathFromUri(uri:Uri):String{
@@ -333,7 +389,7 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
             builder.setMessage("Selecione o sexo")
             builder.setPositiveButton("OK"){dialog, which ->  }
             builder.show()
-
+            validado = false
         }else{
 
         }

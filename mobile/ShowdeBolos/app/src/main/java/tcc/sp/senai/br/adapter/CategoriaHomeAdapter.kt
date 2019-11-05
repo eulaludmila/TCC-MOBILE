@@ -14,6 +14,9 @@ import tcc.sp.senai.br.showdebolos.ProdutosCategoriaActivity
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.Categoria
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
+import android.provider.MediaStore
+
+
 
 
 class CategoriaHomeAdapter (private val categorias:List<Categoria>,
@@ -54,9 +57,6 @@ class CategoriaHomeAdapter (private val categorias:List<Categoria>,
 
 
     }
-
-
-
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
