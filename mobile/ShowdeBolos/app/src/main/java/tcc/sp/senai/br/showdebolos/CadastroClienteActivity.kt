@@ -17,7 +17,9 @@ import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
+import android.media.ExifInterface
 import android.net.Uri
 import android.widget.*
 import tcc.sp.senai.br.showdebolos.tasks.CadastrarClienteTasks
@@ -26,6 +28,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.util.Log
+import android.view.View.VISIBLE
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -44,6 +47,7 @@ class CadastroClienteActivity : AppCompatActivity() {
     var inputStream: InputStream? = null
     //forçando a varialvel a ser nula
     var imageBitmap: Bitmap? = null
+    var rotatedBitmap: Bitmap? = null
     var imagePath: String? = null
     var fotoService:FotosService? = null
 
@@ -74,7 +78,8 @@ class CadastroClienteActivity : AppCompatActivity() {
 
             }else{
                 if(txt_email_cliente.length() > 13){
-                    val verificarEmailTasks = VerificarEmailCpfTasks(txt_email_cliente.text.toString(),"cliente","email")
+                    carregando.visibility = VISIBLE
+                    val verificarEmailTasks = VerificarEmailCpfTasks(txt_email_cliente.text.toString(),"cliente","email",carregando)
 
                     verificarEmailTasks.execute()
 
@@ -96,25 +101,37 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         }
 
-        if(txt_cpf_cliente.length() == 14){
+        txt_cpf_cliente.setOnFocusChangeListener { v, hasFocus ->
 
-            val verificarEmailCpfTasks = VerificarEmailCpfTasks(txt_cpf_cliente.text.toString(),"cliente","cpf")
+            if(hasFocus){
 
-            verificarEmailCpfTasks.execute()
+            }else{
+                if(txt_cpf_cliente.length() == 14){
 
-            val retorno:String = verificarEmailCpfTasks.get()
+                    carregando.visibility = VISIBLE
 
-            if(retorno == "1"){
-                val builder = AlertDialog.Builder(this@CadastroClienteActivity)
-                builder.setTitle("ERRO")
-                builder.setIcon(R.drawable.ic_erro)
-                builder.setMessage("Este cpf já esta cadastrado")
-                builder.setPositiveButton("OK"){dialog, which ->  }
-                builder.show()
-                txt_cpf_cliente.setText("")
+                    val verificarEmailCpfTasks = VerificarEmailCpfTasks(txt_cpf_cliente.text.toString(),"cliente","cpf",carregando)
+
+                    verificarEmailCpfTasks.execute()
+
+                    val retorno:String = verificarEmailCpfTasks.get()
+
+                    if(retorno == "1"){
+                        val builder = AlertDialog.Builder(this@CadastroClienteActivity)
+                        builder.setTitle("ERRO")
+                        builder.setIcon(R.drawable.ic_erro)
+                        builder.setMessage("Este cpf já esta cadastrado")
+                        builder.setPositiveButton("OK"){dialog, which ->  }
+                        builder.show()
+                        txt_cpf_cliente.setText("")
+                    }
+
+                }
             }
 
         }
+
+
 
 
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
@@ -192,7 +209,9 @@ class CadastroClienteActivity : AppCompatActivity() {
 
                                 val retornoCliente = cadastrarCliente.get() as Cliente
 
-                                uploadImage(retornoCliente)
+                                uploadImage(retornoCliente,rotatedBitmap!!)
+
+                                finish()
 
                             },100)
 
@@ -237,15 +256,16 @@ class CadastroClienteActivity : AppCompatActivity() {
                 //lendo a uri com a imagem
                 val selectedImage: Uri = data.data
                 val inputStream = contentResolver.openInputStream(data.data)
-
-
-                //transformando o resultado em bitmap
                 imageBitmap = BitmapFactory.decodeStream(inputStream)
 
-                //exibir a imagem no aplicativo
-                img_cliente.setImageBitmap(imageBitmap)
-
                 imagePath = getRealPathFromUri(selectedImage)
+
+                rotatedBitmap = modifyOrientation(imageBitmap!!,imagePath!!)
+                //transformando o resultado em bitmap
+
+                //exibir a imagem no aplicativo
+                img_cliente.setImageBitmap(rotatedBitmap)
+
 
             }else{
                 Toast.makeText(this, "Não foi possivel selecinar a imagem", Toast.LENGTH_SHORT).show()
@@ -255,12 +275,42 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     }
 
+    @Throws(IOException::class)
+    fun modifyOrientation(bitmap: Bitmap, image_absolute_path: String): Bitmap {
+        val ei = ExifInterface(image_absolute_path)
+        val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> return rotate(bitmap, 90f)
+
+            ExifInterface.ORIENTATION_ROTATE_180 -> return rotate(bitmap, 180f)
+
+            ExifInterface.ORIENTATION_ROTATE_270 -> return rotate(bitmap, 270f)
+
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> return flip(bitmap, true, false)
+
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> return flip(bitmap, false, true)
+
+            else -> return bitmap
+        }
+    }
+
+    fun rotate(bitmap: Bitmap, degrees: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(degrees)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    fun flip(bitmap: Bitmap, horizontal: Boolean, vertical: Boolean): Bitmap {
+        val matrix = Matrix()
+        matrix.preScale((if (horizontal) -1 else 1).toFloat(), (if (vertical) -1 else 1).toFloat())
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
 
 
-    fun uploadImage(cliente: Cliente){
+    fun uploadImage(cliente: Cliente, bitmap: Bitmap){
 
         val file = File(imagePath)
-        val bitmap: Bitmap = BitmapFactory.decodeFile(file.path)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 30,stream)
         val image  = stream.toByteArray()
@@ -372,9 +422,8 @@ class CadastroClienteActivity : AppCompatActivity() {
             builder.setMessage("Selecione o sexo")
             builder.setPositiveButton("OK"){dialog, which ->  }
             builder.show()
-
+            validado = false
         }else{
-
         }
 
         if(txt_email_cliente.text.toString().isEmpty()){

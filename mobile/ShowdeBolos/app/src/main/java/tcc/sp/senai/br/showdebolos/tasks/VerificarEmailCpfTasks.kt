@@ -1,6 +1,8 @@
 package tcc.sp.senai.br.showdebolos.tasks
 
 import android.os.AsyncTask
+import android.support.constraint.ConstraintLayout
+import android.view.View
 import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -12,7 +14,7 @@ import java.net.URL
 
 
 
-class VerificarEmailCpfTasks(private val valor:String, val usuario:String, val tipo:String): AsyncTask<String, String, String>() {
+class VerificarEmailCpfTasks(private val valor:String, val usuario:String, val tipo:String,var carregando: ConstraintLayout): AsyncTask<String, String, String>() {
 
     private var dados = ""
 
@@ -38,4 +40,12 @@ class VerificarEmailCpfTasks(private val valor:String, val usuario:String, val t
 
 
     }
+
+    override fun onPostExecute(result: String?) {
+        super.onPostExecute(result)
+
+        carregando!!.visibility = View.INVISIBLE
+
+    }
+
 }

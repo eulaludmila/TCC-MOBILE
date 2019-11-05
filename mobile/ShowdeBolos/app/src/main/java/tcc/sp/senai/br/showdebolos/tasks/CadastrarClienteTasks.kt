@@ -31,8 +31,8 @@ class CadastrarClienteTasks(val cliente: Cliente, val celular: Celular): AsyncTa
                 .key("celular")
                 .value(celular.celular)
                 .endObject()
-        jsCliente.key("sexo").value("F")
-        jsCliente.key("foto").value("Teste")
+        jsCliente.key("sexo").value(cliente.sexo)
+        jsCliente.key("foto").value(cliente.foto)
         jsCliente.endObject()
 
         val conexao = url.openConnection() as HttpURLConnection

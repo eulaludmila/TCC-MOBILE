@@ -85,7 +85,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/txt_produto_preco_home"
+                    android:id="@+id/txt_cidade_estado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/allerta"

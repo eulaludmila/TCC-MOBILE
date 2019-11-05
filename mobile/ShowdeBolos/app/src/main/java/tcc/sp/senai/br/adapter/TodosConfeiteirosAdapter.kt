@@ -49,6 +49,7 @@ class TodosConfeiteirosAdapter (private var confeiteiros:List<EnderecoConfeiteir
         holder.nomeConfeiteiro.text = confeiteiros[position].confeiteiro.nome
 
         holder.avaliacao.progress = confeiteiros[position].confeiteiro.avaliacao.toInt()
+        holder.cidade.text = confeiteiros[position].endereco.cidade.cidade + confeiteiros[position].endereco.cidade.estado.uf
 
         //colocando o listener da lista na lista(eu criei o próprio listener)
         holder.itemView.setOnClickListener{
@@ -119,6 +120,7 @@ class TodosConfeiteirosAdapter (private var confeiteiros:List<EnderecoConfeiteir
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         var nomeConfeiteiro: TextView = itemView.findViewById(R.id.txt_nome_todos_confeiteiros)
+        var cidade: TextView = itemView.findViewById(R.id.txt_cidade_estado)
         var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_todos_confeiteiros)
         var progressBar: ProgressBar = itemView.findViewById(R.id.progressImgConfeiteiro)
         var foto: ImageView = itemView.findViewById(R.id.img_todos_confeiteiros)
