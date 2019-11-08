@@ -6,22 +6,30 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_circular_reveal.*
+import kotlinx.android.synthetic.main.activity_login_cliente.*
 import kotlinx.android.synthetic.main.activity_main.*
+import tcc.sp.senai.br.showdebolos.model.Celular
+import tcc.sp.senai.br.showdebolos.model.Cliente
+import tcc.sp.senai.br.showdebolos.tasks.LoginClienteTasks
 
 class CircularReveal : AppCompatActivity() {
 
 
     var mPreferences: SharedPreferences? = null
+    var mEditor:SharedPreferences.Editor? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0,0)
         setContentView(R.layout.activity_circular_reveal)
+
 
         if (savedInstanceState == null) {
             root_layout.setVisibility(View.INVISIBLE)
@@ -66,9 +74,16 @@ class CircularReveal : AppCompatActivity() {
     fun checkSharedPreferences(){
 
         mPreferences = getSharedPreferences("idValue",0)
-        val token = mPreferences!!.getString("token", "")
+        val email = mPreferences!!.getString("email", "")
+        val senha = mPreferences!!.getString("senha", "")
 
-        if(token != ""){
+        if(email != "" && senha != ""){
+            val cliente = Cliente(0,"","","","",email,senha, Celular(0,""),"","")
+            val loginCliente = LoginClienteTasks(cliente, this)
+            loginCliente.execute()
+            val retornoLogin = loginCliente.get()
+            mEditor = mPreferences!!.edit()
+            mEditor!!.putString("token",retornoLogin)
             val intent = Intent(this, MainActivityFragment::class.java)
             startActivity(intent)
         }else{

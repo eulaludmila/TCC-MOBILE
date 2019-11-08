@@ -18,13 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <TextView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewCarrinho"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Second tab"
-            android:textSize="40sp"
-            android:id="@+id/txt"
-            />
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

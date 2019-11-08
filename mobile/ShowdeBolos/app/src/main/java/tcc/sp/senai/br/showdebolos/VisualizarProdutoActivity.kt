@@ -1,5 +1,6 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
@@ -9,12 +10,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_login_cliente.*
 import kotlinx.android.synthetic.main.activity_visualizar_produto.*
 import org.jetbrains.anko.toast
 import tcc.sp.senai.br.showdebolos.model.Cidade
 import tcc.sp.senai.br.showdebolos.model.Produto
 
 class VisualizarProdutoActivity : AppCompatActivity() {
+
+    var mPreferences: SharedPreferences? = null
+    var mEditor: SharedPreferences.Editor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +121,6 @@ class VisualizarProdutoActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 var minimo = produto.quantidade.multiplo
-                var maximo = produto.quantidade.maximo
                 val preco = produto.preco
 
                 if(categoria == "Bolo Simples"){
@@ -133,7 +137,20 @@ class VisualizarProdutoActivity : AppCompatActivity() {
                 }
 
                 Log.d("valor", total.toString())
+                txt_preco.text = "R$ "+total.toString()+"0"
             }
+
+        }
+
+        btn_add_carrinho.setOnClickListener {
+
+            mPreferences = getSharedPreferences("idValue", 0)
+            mEditor = mPreferences!!.edit()
+            val listProduto = mutableSetOf<String>()
+            listProduto.add(produto.codProduto.toString())
+            mEditor!!.putStringSet("idProduto",listProduto)
+//            mEditor!!.putInt("produtoQtd",listQtde[position])
+            mEditor!!.commit()
 
         }
 
