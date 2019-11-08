@@ -5,14 +5,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login_cliente.*
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
 import tcc.sp.senai.br.showdebolos.tasks.LoginClienteTasks
-import java.lang.RuntimeException
 
 class LoginClienteActivity : AppCompatActivity() {
 
@@ -27,6 +24,8 @@ class LoginClienteActivity : AppCompatActivity() {
             val intent = Intent(this, CadastroClienteActivity::class.java)
             startActivity(intent)
         }
+
+
 
         btn_entrar_cliente.setOnClickListener {
 
@@ -57,6 +56,8 @@ class LoginClienteActivity : AppCompatActivity() {
                     mPreferences = getSharedPreferences("idValue", 0)
                     mEditor = mPreferences!!.edit()
                     mEditor!!.putString("token",retornoLogin)
+                    mEditor!!.putString("login",txt_email_cliente.text.toString())
+                    mEditor!!.putString("senha",txt_senha_cliente.text.toString())
                     mEditor!!.commit()
                     val intent = Intent(this, MainActivityFragment::class.java)
                     startActivity(intent)

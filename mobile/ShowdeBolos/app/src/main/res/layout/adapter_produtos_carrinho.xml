@@ -27,9 +27,10 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:id="@+id/img_produto_carrinho"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -40,13 +41,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_nome_produto_carrinho"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:text="Bolo de Chocolate"
-                    android:textSize="18sp"
-                    android:textColor="@color/preto"
                     android:textAlignment="center"
-                    android:layout_margin="8dp"/>
+                    android:textColor="@color/preto"
+                    android:textSize="18sp" />
 
                 <RatingBar
                     android:id="@+id/rtg_pagamento"
@@ -59,15 +61,17 @@
                     android:progressTint="@color/amarelo"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"/>
+
                 <TextView
+                    android:id="@+id/txt_preco_carrinho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="R$120,00"
-                    android:textSize="18sp"
-                    android:textColor="@color/preto"
-                    android:textAlignment="center"
                     android:layout_gravity="center"
-                    android:layout_margin="8dp"/>
+                    android:layout_margin="8dp"
+                    android:text="R$120,00"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -89,12 +93,14 @@
                     android:text="Quantidade: "
                     android:textSize="17sp"
                     android:textColor="@color/preto"/>
+
                 <TextView
+                    android:id="@+id/txt_quantidade_carrinho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4 Kg"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"/>
+                    android:textColor="@color/preto"
+                    android:textSize="17sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,12 +113,14 @@
                     android:text="Confeiteiro(a): "
                     android:textSize="17sp"
                     android:textColor="@color/preto"/>
+
                 <TextView
+                    android:id="@+id/txt_confeiteiro_carrinho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="fgfhhfhfhfhfhfhfhfhfhfhfhf"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"/>
+                    android:textColor="@color/preto"
+                    android:textSize="17sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,12 +151,14 @@
                     android:text="Endereço para buscar: "
                     android:textSize="17sp"
                     android:textColor="@color/preto"/>
+
                 <TextView
+                    android:id="@+id/txt_endereco_carrinho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4 Kg"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"/>
+                    android:textColor="@color/preto"
+                    android:textSize="17sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

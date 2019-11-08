@@ -17,6 +17,8 @@ interface ProdutoService {
     @GET("produto/categoria/{codCategoria}")
     fun buscarProdutoCategoria(@Path("codCategoria") codCategoriaService: String,@Header("Authorization") token:String ): Call<List<Produto>>
 
+    @GET("produto/{codProduto}")
+    fun buscarProdutoId(@Path("codProduto") codProdutoService: String): Call<List<Produto>>
 
     @GET("produto/confeiteiro/{codConfeiteiro}")
     fun buscarProdutoConfeiteiro(@Path("codConfeiteiro") codConfeiteiroDTO: String,@Header("Authorization") token:String ): Call<List<Produto>>

@@ -134,18 +134,27 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/img_confeiteiro_visualizar"
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@drawable/bolo" />
+                        android:layout_height="95dp"
+                        app:cardCornerRadius="55dp">
+                        <ImageView
+                            android:id="@+id/img_confeiteiro_visualizar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardElevation="0dp"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/bolo" />
+                    </android.support.v7.widget.CardView>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="2.5"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -240,6 +249,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
                     android:id="@+id/img_categoria_visualizar"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
+                    android:background="@drawable/logo"
                     android:layout_weight="1"
                     />
 
@@ -252,48 +262,75 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
 
 
     </android.support.v4.widget.NestedScrollView>
+
     <LinearLayout
+        android:id="@+id/area_compra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/borda_layout"
-        android:paddingTop="10dp"
         >
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="49dp"
-            android:background="@drawable/borda_radius_lados"
-            android:layout_marginRight="3dp"
-            android:layout_marginLeft="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/verde"
             android:orientation="horizontal"
             >
-            <Spinner
-                android:id="@+id/spn_quantidade"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:spinnerMode="dialog"
-                >
 
-            </Spinner>
+            <TextView
+                android:id="@+id/txt_preco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R$ 12.90"
+                android:textColor="@color/branco"
+                android:textSize="15dp"
+                android:textAlignment="center"
+                android:padding="8dp"/>
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="49dp"
+                android:background="@drawable/borda_radius_lados"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal"
+                >
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Comprar"
-            style="@style/sacola"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginBottom="10dp"
+                <Spinner
+                    android:id="@+id/spn_quantidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"
+                    >
+                </Spinner>
 
-            />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_add_carrinho"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Comprar"
+                style="@style/sacola"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="10dp"
+                />
+        </LinearLayout>
+
+
+
 
 
     </LinearLayout>
