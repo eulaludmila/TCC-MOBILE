@@ -141,16 +141,15 @@ class VisualizarProdutoActivity : AppCompatActivity() {
             }
 
         }
-
+        mPreferences = getSharedPreferences("idValue", 0)
+        mEditor = mPreferences!!.edit()
+        val listProduto = mutableSetOf<String>()
         btn_add_carrinho.setOnClickListener {
-
-            mPreferences = getSharedPreferences("idValue", 0)
-            mEditor = mPreferences!!.edit()
-            val listProduto = mutableSetOf<String>()
+            
             listProduto.add(produto.codProduto.toString())
             mEditor!!.putStringSet("idProduto",listProduto)
 //            mEditor!!.putInt("produtoQtd",listQtde[position])
-            mEditor!!.commit()
+            mEditor!!.apply()
 
         }
 

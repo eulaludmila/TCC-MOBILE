@@ -84,6 +84,7 @@ class CircularReveal : AppCompatActivity() {
             val retornoLogin = loginCliente.get()
             mEditor = mPreferences!!.edit()
             mEditor!!.putString("token",retornoLogin)
+            mEditor!!.commit()
             val intent = Intent(this, MainActivityFragment::class.java)
             startActivity(intent)
         }else{

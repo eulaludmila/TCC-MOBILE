@@ -56,7 +56,7 @@ class LoginClienteActivity : AppCompatActivity() {
                     mPreferences = getSharedPreferences("idValue", 0)
                     mEditor = mPreferences!!.edit()
                     mEditor!!.putString("token",retornoLogin)
-                    mEditor!!.putString("login",txt_email_cliente.text.toString())
+                    mEditor!!.putString("email",txt_email_cliente.text.toString())
                     mEditor!!.putString("senha",txt_senha_cliente.text.toString())
                     mEditor!!.commit()
                     val intent = Intent(this, MainActivityFragment::class.java)
