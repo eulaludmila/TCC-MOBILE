@@ -17,33 +17,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
-import kotlinx.android.synthetic.main.activity_cadastro_confeiteiro.*
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.model.Celular
 
 import tcc.sp.senai.br.showdebolos.model.Confeiteiro
-import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
-import tcc.sp.senai.br.showdebolos.model.Foto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.FotosService
-import tcc.sp.senai.br.showdebolos.tasks.CadastrarConfeiteiroTasks
 import tcc.sp.senai.br.showdebolos.tasks.VerificarEmailCpfTasks
-import tcc.sp.senai.br.utils.Verificacao
+import tcc.sp.senai.br.showdebolos.utils.Verificacao
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.IOException
 import java.util.*
 

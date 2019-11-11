@@ -9,7 +9,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
-import tcc.sp.senai.br.utils.Verificacao
+import tcc.sp.senai.br.showdebolos.utils.Verificacao
 import java.util.*
 import android.app.Activity
 import android.app.AlertDialog

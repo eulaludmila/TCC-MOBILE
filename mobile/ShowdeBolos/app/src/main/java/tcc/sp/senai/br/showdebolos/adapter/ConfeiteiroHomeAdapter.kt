@@ -1,4 +1,4 @@
-package tcc.sp.senai.br.adapter
+package tcc.sp.senai.br.showdebolos.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -12,22 +12,21 @@ import android.widget.*
 import com.squareup.picasso.Picasso
 import tcc.sp.senai.br.showdebolos.PerfilConfeiteiroActivity
 import tcc.sp.senai.br.showdebolos.R
-import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import java.io.IOException
 import java.io.InputStream
 import java.net.MalformedURLException
 import java.net.URL
 
-class TodosConfeiteirosAdapter (private var confeiteiros:List<EnderecoConfeiteiro>,
-                                private var context: Context?,
-                                var confeiteiroOnClickListener: ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener) : RecyclerView.Adapter<TodosConfeiteirosAdapter.ViewHolder>() {
+class ConfeiteiroHomeAdapter (private var confeiteiros:List<EnderecoConfeiteiro>,
+                              private var context: Context?,
+                              var confeiteiroOnClickListener: ConfeiteiroOnlickListener) : RecyclerView.Adapter<ConfeiteiroHomeAdapter.ViewHolder>() {
 
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
 
-        var view = LayoutInflater.from(context).inflate(R.layout.adapter_todos_confeiteiros, viewGroup, false)
+        var view = LayoutInflater.from(context).inflate(R.layout.adapter_home_confeiteiro, viewGroup, false)
 
         return ViewHolder(view)
 
@@ -46,10 +45,9 @@ class TodosConfeiteirosAdapter (private var confeiteiros:List<EnderecoConfeiteir
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.nomeConfeiteiro.text = confeiteiros[position].confeiteiro.nome
+        holder.nomeConfeiteiro.text = confeiteiros.get(position).confeiteiro.nome
 
-        holder.avaliacao.progress = confeiteiros[position].confeiteiro.avaliacao.toInt()
-        holder.cidade.text = confeiteiros[position].endereco.cidade.cidade + confeiteiros[position].endereco.cidade.estado.uf
+        holder.avaliacao.progress = confeiteiros.get(position).confeiteiro.avaliacao.toInt()
 
         //colocando o listener da lista na lista(eu criei o próprio listener)
         holder.itemView.setOnClickListener{
@@ -119,10 +117,9 @@ class TodosConfeiteirosAdapter (private var confeiteiros:List<EnderecoConfeiteir
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
-        var nomeConfeiteiro: TextView = itemView.findViewById(R.id.txt_nome_todos_confeiteiros)
-        var cidade: TextView = itemView.findViewById(R.id.txt_cidade_estado)
-        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_todos_confeiteiros)
-        var progressBar: ProgressBar = itemView.findViewById(R.id.progressImgConfeiteiro)
-        var foto: ImageView = itemView.findViewById(R.id.img_todos_confeiteiros)
+        var nomeConfeiteiro: TextView = itemView.findViewById(R.id.txt_confeiteiro_home)
+        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_confeiteiro_home)
+        var progressBar: ProgressBar = itemView.findViewById(R.id.progressImg)
+        var foto: ImageView = itemView.findViewById(R.id.image_confeiteiro_home)
     }
 }

@@ -3,24 +3,32 @@ package tcc.sp.senai.br.showdebolos
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_login_cliente.*
 import kotlinx.android.synthetic.main.activity_visualizar_produto.*
 import org.jetbrains.anko.toast
+import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
 import tcc.sp.senai.br.showdebolos.model.Cidade
 import tcc.sp.senai.br.showdebolos.model.Produto
+import tcc.sp.senai.br.showdebolos.model.ProdutoDTO
 
 class VisualizarProdutoActivity : AppCompatActivity() {
 
     var mPreferences: SharedPreferences? = null
     var mEditor: SharedPreferences.Editor? = null
 
+    var total = 0.0
+    var quantidade = ""
+
+    @RequiresApi(28)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visualizar_produto)
@@ -30,8 +38,8 @@ class VisualizarProdutoActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
 
-        val produto = intent.getSerializableExtra("produto") as Produto
 
+        val produto = intent.getSerializableExtra("produto") as Produto
         var min = produto.quantidade.multiplo
         var max = produto.quantidade.maximo
         val list = mutableListOf<String>()
@@ -47,11 +55,15 @@ class VisualizarProdutoActivity : AppCompatActivity() {
                 for( x in min..max){
                     list.add(x.toString() + " Unidades")
                     listQtde.add(x)
+
+
                 }
             }else{
                 for( x in min..max step min){
                     list.add(x.toString() + " Unidades")
                     listQtde.add(x)
+
+
                 }
             }
 
@@ -64,11 +76,15 @@ class VisualizarProdutoActivity : AppCompatActivity() {
                 for( x in min..max){
                     list.add(x.toString() + " Unidades")
                     listQtde.add(x)
+
+
                 }
             }else{
                 for( x in min..max step min){
                     list.add(x.toString() + " Unidades")
                     listQtde.add(x)
+
+
                 }
             }
 
@@ -76,6 +92,7 @@ class VisualizarProdutoActivity : AppCompatActivity() {
             for( x in min..max){
                 list.add(x.toString() + " Kg")
                 listQtde.add(x)
+
             }
         }
 
@@ -90,6 +107,8 @@ class VisualizarProdutoActivity : AppCompatActivity() {
             var posicao = spn_quantidade.selectedItemPosition
 
             Log.d("aqki",listQtde[posicao].toString())
+
+
         }
 
 
@@ -113,7 +132,7 @@ class VisualizarProdutoActivity : AppCompatActivity() {
         Picasso.with(img_categoria_visualizar.context).load("http://3.232.178.219${produto.categoria}").into(img_categoria_visualizar)
 
         spn_quantidade.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            var total = 0.0
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -126,18 +145,25 @@ class VisualizarProdutoActivity : AppCompatActivity() {
                 if(categoria == "Bolo Simples"){
 
                     total = listQtde[position] * preco
+                    quantidade = list[position]
+
 
                 }else if(categoria == "Doce"){
 
                     total = (listQtde[position] / minimo) * preco
+                    quantidade = list[position]
+
 
                 }else if(categoria == "Bolo recheado"){
 
                     total = (preco / minimo) * listQtde[position]
+                    quantidade = list[position]
+
                 }
 
                 Log.d("valor", total.toString())
-                txt_preco.text = "R$ "+total.toString()+"0"
+
+                btn_add_carrinho.text = "ADICIONAR R$ "+total.toString()+"0"
             }
 
         }
@@ -145,11 +171,24 @@ class VisualizarProdutoActivity : AppCompatActivity() {
         mEditor = mPreferences!!.edit()
         val listProduto = mutableSetOf<String>()
         btn_add_carrinho.setOnClickListener {
-            
-            listProduto.add(produto.codProduto.toString())
-            mEditor!!.putStringSet("idProduto",listProduto)
-//            mEditor!!.putInt("produtoQtd",listQtde[position])
-            mEditor!!.apply()
+
+            val dao = ProdutoDAO(this)
+
+                Log.d("quantidade_total", quantidade.toString())
+
+            val produtoDTO = ProdutoDTO(produto.codProduto,
+                                        produto.nomeProduto,
+                                        produto.descricao,
+                                        produto.confeiteiro.codConfeiteiro,
+                                        produto.foto,
+                                        total,
+                                        produto.avaliacao,
+                                        quantidade)
+
+            dao.salvar(produtoDTO)
+
+            Toast.makeText(this, "${produto.nomeProduto} adicionado a sacola", Toast.LENGTH_LONG).show()
+
 
         }
 

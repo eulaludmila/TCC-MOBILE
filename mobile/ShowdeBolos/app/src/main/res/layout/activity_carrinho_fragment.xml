@@ -17,13 +17,43 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewCarrinho"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="80dp">
 
-        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewCarrinho"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:paddingBottom="48dp">
+        <Button
+            android:id="@+id/btn_finalizar_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/sacola"
+            android:text="FINALIZAR"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginBottom="10dp"
+
+            />
+    </LinearLayout>
+
+
+
 
 </android.support.design.widget.CoordinatorLayout>

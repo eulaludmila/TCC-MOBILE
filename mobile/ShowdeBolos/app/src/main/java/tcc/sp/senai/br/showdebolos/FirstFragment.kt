@@ -1,43 +1,27 @@
 package tcc.sp.senai.br.showdebolos
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toolbar
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_first_fragment.*
-import kotlinx.android.synthetic.main.activity_main_fragment.*
-import org.jetbrains.anko.find
-import tcc.sp.senai.br.adapter.ConfeiteiroHomeAdapter
-import android.support.v4.app.ActivityCompat.finishAffinity
+import tcc.sp.senai.br.showdebolos.adapter.ConfeiteiroHomeAdapter
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 
-import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
-import org.jetbrains.anko.doFromSdk
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tcc.sp.senai.br.adapter.CategoriaHomeAdapter
-import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
-import tcc.sp.senai.br.showdebolos.R.id.first_fragment
-import tcc.sp.senai.br.showdebolos.R.id.recyclerViewConfeiteiro
+import tcc.sp.senai.br.showdebolos.adapter.CategoriaHomeAdapter
+import tcc.sp.senai.br.showdebolos.adapter.ProdutoHomeAdapter
 import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
-import tcc.sp.senai.br.showdebolos.services.RetrofitClient
 
 
 class  FirstFragment : Fragment(){

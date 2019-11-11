@@ -271,25 +271,7 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
         android:orientation="vertical"
         android:background="@drawable/borda_layout"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/verde"
-            android:orientation="horizontal"
-            >
 
-            <TextView
-                android:id="@+id/txt_preco"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="R$ 12.90"
-                android:textColor="@color/branco"
-                android:textSize="15dp"
-                android:textAlignment="center"
-                android:padding="8dp"/>
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -319,9 +301,8 @@ Importante ressaltar que este bolo possui uma cobertura de chocolate e recheio d
             <Button
                 android:id="@+id/btn_add_carrinho"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:text="Comprar"
                 style="@style/sacola"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="3dp"

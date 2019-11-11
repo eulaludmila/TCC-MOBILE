@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_perfil_confeiteiro.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
+import tcc.sp.senai.br.showdebolos.adapter.ProdutoHomeAdapter
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import tcc.sp.senai.br.showdebolos.model.Produto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig

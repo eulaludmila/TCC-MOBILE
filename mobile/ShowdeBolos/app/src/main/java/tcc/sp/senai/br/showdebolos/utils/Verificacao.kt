@@ -1,7 +1,6 @@
-package tcc.sp.senai.br.utils
+package tcc.sp.senai.br.showdebolos.utils
 
 import android.content.Context
-import android.widget.Toast
 
 /***
  *
