@@ -16,10 +16,16 @@ import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.VisualizarProdutoActivity
 import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import tcc.sp.senai.br.showdebolos.model.Produto
+import android.R.attr.name
+import android.content.SharedPreferences
+import android.support.v7.widget.LinearLayoutManager
+
 
 class ProdutoCarrinhoAdapter (private val produtos:List<Produto>,
-                          private val context: Context) : RecyclerView.Adapter<ProdutoCarrinhoAdapter.ViewHolder>() {
+                              private val context: Context) : RecyclerView.Adapter<ProdutoCarrinhoAdapter.ViewHolder>() {
 
+    var sharedPreferences: SharedPreferences? = null
+    var cod:String = ""
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
 
@@ -31,22 +37,43 @@ class ProdutoCarrinhoAdapter (private val produtos:List<Produto>,
 
     override fun getItemCount(): Int {
 
-        return if (produtos != null) produtos.size else 0
+        sharedPreferences = context.getSharedPreferences("idValue",0)
+        val produtosId = sharedPreferences!!.getStringSet("idProduto", mutableSetOf<String>())
+        val list = ArrayList<String>(produtosId)
+
+        return if (produtos != null) list.size else 0
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        sharedPreferences = context.getSharedPreferences("idValue",0)
+        val produto = mutableListOf<Produto>()
+        val produtosId = sharedPreferences!!.getStringSet("idProduto", mutableSetOf<String>())
+        val list = ArrayList<String>(produtosId)
+
+        for (i in 0 until list.size){
+
+            val id = list[i]
+
+            this.cod = id
+
+            for (produtos in produtos){
+
+                if (produtos.codProduto.toString() == cod){
+                    produto.add(produtos)
+                }
+
+            }
+        }
 
 
-        holder.nomeProduto.text = produtos[position].nomeProduto
-        holder.precoProduto.text = "R$: " + produtos[position].preco.toString()
-//        holder.localizacao.text = produtos[position].confeiteir
-        var url = produtos[position].foto
+        holder.nomeProduto.text = produto[position].nomeProduto
+        holder.precoProduto.text = "R$: " + produto[position].preco.toString()
+        //        holder.localizacao.text = produtos[position].confeiteir
+        var url = produto[position].foto
         Picasso.with(holder!!.fotoProduto.context).cancelRequest(holder!!.fotoProduto)
         Picasso.with(holder!!.fotoProduto.context).load("http://3.232.178.219$url").into(holder!!.fotoProduto)
-
-
 
 
     }
@@ -56,7 +83,7 @@ class ProdutoCarrinhoAdapter (private val produtos:List<Produto>,
         var nomeProduto:TextView = itemView.findViewById(R.id.txt_nome_produto_carrinho)
         var localizacao:TextView = itemView.findViewById(R.id.txt_endereco_carrinho)
         var precoProduto:TextView = itemView.findViewById(R.id.txt_preco_carrinho)
-//        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_produto_home)
+        //        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_produto_home)
         var fotoProduto: ImageView = itemView.findViewById(R.id.img_produto_carrinho)
 
 

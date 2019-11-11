@@ -48,22 +48,31 @@ class CarrinhoFragment : Fragment() {
         recyclerViewCarrinho.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
 
         val produtosId = sharedPreferences!!.getStringSet("idProduto", mutableSetOf<String>())
+        val list = ArrayList<String>(produtosId)
 
-        for (i in produtosId.indices){
+        for (i in 0 until list.size){
 
-            val id = produtosId.elementAt(i)
+            val id = list[i]
 
             this.cod = id
         }
+        Log.d("produtos222222", cod)
 
-        val callProduto = ApiConfig.getProdutoService().buscarProdutoId(cod!!)
+
+
+        val callProduto = ApiConfig.getProdutoService().buscarProdutoId()
 
         callProduto.enqueue(object : Callback<List<Produto>> {
 
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
 //
-                CarregarProduto(produtos = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
+                if(response.body() != null){
+                    CarregarProduto(produtos = response.body()!!)
+                    Log.i("Retrofit222", "fgfgfgf")
+                }else{
+
+                }
+
             }
 
             override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {

@@ -114,21 +114,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        checkSharedPreferences()
 
     }
 
-    fun checkSharedPreferences(){
 
-        mPreferences = getSharedPreferences("idValue",0)
-        val token = mPreferences!!.getString("token", "")
-
-        if(token != ""){
-            val intent = Intent(this, MainActivityFragment::class.java)
-            startActivity(intent)
-        }
-
-    }
 
 
 }
