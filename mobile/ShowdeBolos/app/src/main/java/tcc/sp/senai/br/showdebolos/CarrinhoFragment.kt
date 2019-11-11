@@ -6,22 +6,15 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
-import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_carrinho_fragment.*
-import kotlinx.android.synthetic.main.activity_first_fragment.*
-import kotlinx.android.synthetic.main.activity_main_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tcc.sp.senai.br.adapter.ConfeiteiroHomeAdapter
-import tcc.sp.senai.br.adapter.ProdutoCarrinhoAdapter
-import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
+import tcc.sp.senai.br.showdebolos.adapter.ProdutoCarrinhoAdapter
 import tcc.sp.senai.br.showdebolos.model.Produto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 

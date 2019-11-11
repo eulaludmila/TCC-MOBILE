@@ -1,4 +1,4 @@
-package tcc.sp.senai.br.adapter
+package tcc.sp.senai.br.showdebolos.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -8,15 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import tcc.sp.senai.br.showdebolos.MainActivityFragment
-import tcc.sp.senai.br.showdebolos.PerfilConfeiteiroActivity
 import tcc.sp.senai.br.showdebolos.ProdutosCategoriaActivity
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.model.Categoria
-import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
-import android.provider.MediaStore
-
-
 
 
 class CategoriaHomeAdapter (private val categorias:List<Categoria>,

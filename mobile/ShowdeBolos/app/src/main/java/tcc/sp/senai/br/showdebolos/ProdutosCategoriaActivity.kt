@@ -1,6 +1,5 @@
 package tcc.sp.senai.br.showdebolos
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_produtos_categoria_activity.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tcc.sp.senai.br.adapter.ProdutoHomeAdapter
+import tcc.sp.senai.br.showdebolos.adapter.ProdutoHomeAdapter
 import tcc.sp.senai.br.showdebolos.model.Categoria
 import tcc.sp.senai.br.showdebolos.model.Produto
 import tcc.sp.senai.br.showdebolos.services.ApiConfig

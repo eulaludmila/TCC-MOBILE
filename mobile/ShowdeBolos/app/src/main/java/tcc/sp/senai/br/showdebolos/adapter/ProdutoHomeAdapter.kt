@@ -1,20 +1,17 @@
-package tcc.sp.senai.br.adapter
+package tcc.sp.senai.br.showdebolos.adapter
 
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toast
 import com.squareup.picasso.Picasso
 import tcc.sp.senai.br.showdebolos.R
 import tcc.sp.senai.br.showdebolos.VisualizarProdutoActivity
-import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
 import tcc.sp.senai.br.showdebolos.model.Produto
 
 class ProdutoHomeAdapter (private val produtos:List<Produto>,

@@ -3,7 +3,6 @@ package tcc.sp.senai.br.showdebolos
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SharedMemory
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,9 +12,8 @@ import kotlinx.android.synthetic.main.activity_todos_confeiteiros.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import tcc.sp.senai.br.adapter.ConfeiteiroHomeAdapter
-import tcc.sp.senai.br.adapter.TodosConfeiteirosAdapter
-import tcc.sp.senai.br.showdebolos.model.ConfeiteiroDTO
+import tcc.sp.senai.br.showdebolos.adapter.ConfeiteiroHomeAdapter
+import tcc.sp.senai.br.showdebolos.adapter.TodosConfeiteirosAdapter
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 
