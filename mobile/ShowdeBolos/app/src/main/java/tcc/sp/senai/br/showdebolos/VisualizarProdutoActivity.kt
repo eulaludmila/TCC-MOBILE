@@ -1,5 +1,6 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -174,7 +175,9 @@ class VisualizarProdutoActivity : AppCompatActivity() {
 
             val dao = ProdutoDAO(this)
 
-                Log.d("quantidade_total", quantidade.toString())
+            val produtos = dao.getProdutos()
+
+            Log.d("quantidade_total", quantidade.toString())
 
             val produtoDTO = ProdutoDTO(produto.codProduto,
                                         produto.nomeProduto,
@@ -185,9 +188,57 @@ class VisualizarProdutoActivity : AppCompatActivity() {
                                         produto.avaliacao,
                                         quantidade)
 
-            dao.salvar(produtoDTO)
 
-            Toast.makeText(this, "${produto.nomeProduto} adicionado a sacola", Toast.LENGTH_LONG).show()
+            try {
+                    if(produtos[0].codConfeiteiro == produto.confeiteiro.codConfeiteiro){
+                        for (i in 0 until produtos.size){
+                            if(produtos[i].codProduto == produto.codProduto){
+                                val builder = AlertDialog.Builder(this@VisualizarProdutoActivity)
+                                builder.setTitle("ERRO")
+                                builder.setIcon(R.drawable.ic_erro)
+                                builder.setMessage("Este produto já esta no seu carrinho.")
+                                builder.setPositiveButton("OK"){dialog, which ->  }
+                                builder.setNegativeButton("CANCELAR"){dialog, which ->
+                                    dao.excluir(produtos[i])
+                                    dao.salvar(produtoDTO)
+                                }
+                                builder.show()
+                                break
+                            }else{
+                                dao.salvar(produtoDTO)
+                                Toast.makeText(this, "${produto.nomeProduto} adicionado a sacola", Toast.LENGTH_LONG).show()
+                                break
+                            }
+
+                        }
+
+                    }else{
+                        val builder = AlertDialog.Builder(this@VisualizarProdutoActivity)
+                        builder.setTitle("ERRO")
+                        builder.setIcon(R.drawable.ic_erro)
+                        builder.setMessage("Você pode escolher produtos somente do mesmo confeiteiro.\n" +
+                                "Deseja trocar de confeiteiro?")
+                        builder.setPositiveButton("OK"){dialog, which ->
+                            dao.excluirTodos()
+                            dao.salvar(produtoDTO)
+                        }
+                        builder.setNegativeButton("CANCELAR"){dialog, which ->
+                        }
+                        builder.show()
+                    }
+
+            }catch (e:IndexOutOfBoundsException){
+                e.printStackTrace()
+                dao.salvar(produtoDTO)
+                Toast.makeText(this, "${produto.nomeProduto} adicionado a sacola", Toast.LENGTH_LONG).show()
+            }
+
+
+
+
+
+
+
 
 
         }

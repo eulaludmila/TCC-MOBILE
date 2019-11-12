@@ -44,13 +44,20 @@ class ProdutoDAO : SQLiteOpenHelper {
 
     }
 
-    fun excluir(produto: Produto){
+    fun excluir(produto: ProdutoDTO){
 
         val db = writableDatabase
 
         val params = arrayOf<String>(produto.codProduto.toString())
 
         db.delete("tbl_produto", "cod_produto = ?", params)
+    }
+
+    fun excluirTodos(){
+
+        val db = writableDatabase
+
+        db.delete("tbl_produto", null ,null);
     }
 
     fun getContentValues(produto:ProdutoDTO):ContentValues{
