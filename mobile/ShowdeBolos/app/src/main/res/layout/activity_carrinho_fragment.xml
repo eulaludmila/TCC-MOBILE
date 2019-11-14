@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AndamentoFragment"
+    tools:context=".ConfiguracoesFragment"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -20,16 +20,92 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:paddingBottom="80dp">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+              <LinearLayout
+                  android:id="@+id/layout_info_confeiteiro"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:visibility="invisible">
+
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="100dp"
+                      android:orientation="horizontal"
+                      android:layout_margin="8dp">
+
+                      <ImageView
+                          android:id="@+id/img_foto_confeiteiro_carrinho"
+                          android:layout_width="0dp"
+                          android:layout_weight="1"
+                          android:layout_height="match_parent"
+                          android:src="@drawable/logo"
+                          android:layout_margin="8dp"/>
+
+                      <LinearLayout
+                          android:layout_width="0dp"
+                          android:layout_weight="2"
+                          android:layout_height="match_parent"
+                          android:orientation="vertical">
+                          <TextView
+                              android:id="@+id/txt_nome_confeiteiro_carrinho"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:text="KAILANY SOUSA"
+                              android:textStyle="bold"
+                              android:textSize="24sp"
+                              android:layout_margin="8dp"
+                              android:textAlignment="center"
+                              android:gravity="center"/>
+
+
+                      </LinearLayout>
+                  </LinearLayout>
+
+                  <TextView
+                      android:id="@+id/txt_endereco_confeiteiro_carrinho"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Av. Bruna, nº 07 - Parque Wey"
+                      android:textSize="16sp"
+                      android:layout_margin="8dp"
+                      android:textAlignment="center"/>
+              </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/info_carrinho_vazio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Você ainda não adicionou nenhum produto ao carrinho"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewCarrinho"
+                android:id="@+id/recyclerViewCarrinho2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
+
 
 
         </LinearLayout>
@@ -37,20 +113,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_gravity="bottom"
-        android:paddingBottom="48dp">
-        <Button
-            android:id="@+id/btn_finalizar_pedido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/sacola"
-            android:text="FINALIZAR"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginBottom="10dp"
+        android:paddingBottom="48dp"
+        android:background="@color/branco"
+        android:layout_margin="8dp">
 
-            />
+            <Button
+                android:id="@+id/btn_confirmar_pedido"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                style="@style/sacola"
+                android:textSize="18sp"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="10dp"/>
+
+
     </LinearLayout>
 
 

@@ -3,17 +3,9 @@ package tcc.sp.senai.br.showdebolos
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
-import android.view.animation.AnimationUtils
-import android.widget.TextView
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_first_fragment.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_fragment.*
-import java.lang.reflect.Field
 
 
 class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
@@ -63,8 +55,8 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
                 return@setOnNavigationItemSelectedListener true
 
-                }R.id.andamento -> {
-                replaceFragment(AndamentoFragment())
+                }R.id.configuracoes -> {
+                replaceFragment(ConfiguracoesFragment())
 
                 return@setOnNavigationItemSelectedListener true
 
