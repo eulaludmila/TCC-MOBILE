@@ -214,7 +214,8 @@ class VisualizarProdutoActivity : AppCompatActivity() {
 
                     }else{
                         val builder = AlertDialog.Builder(this@VisualizarProdutoActivity)
-                        builder.setTitle("ERRO")
+                        builder.setTitle("ER" +
+                                ",0RO")
                         builder.setIcon(R.drawable.ic_erro)
                         builder.setMessage("Você pode escolher produtos somente do mesmo confeiteiro.\n" +
                                 "Deseja trocar de confeiteiro?")

@@ -8,14 +8,8 @@
     </item>
 
     <item
-        android:id="@+id/andamento"
-        android:title="Andamento"
-        android:icon="@drawable/ic_andamento">
-    </item>
-
-    <item
         android:id="@+id/carrinho"
-        android:title="Andamento"
+        android:title="Carrinho"
         android:icon="@drawable/ic_carrinho">
     </item>
 
@@ -23,6 +17,12 @@
         android:id="@+id/pagamento"
         android:title="Pagamento"
         android:icon="@drawable/ic_dinheiro">
+    </item>
+
+    <item
+        android:id="@+id/configuracoes"
+        android:title="Configurações"
+        android:icon="@drawable/ic_config">
     </item>
 
 </menu>

@@ -3,6 +3,7 @@ package tcc.sp.senai.br.showdebolos
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -10,25 +11,32 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_carrinho_fragment.*
+import kotlinx.android.synthetic.main.activity_perfil_confeiteiro.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.adapter.ProdutoCarrinhoAdapter
-import tcc.sp.senai.br.showdebolos.model.Produto
+import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
+import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
+import tcc.sp.senai.br.showdebolos.model.ProdutoDTO
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 
 class CarrinhoFragment : Fragment() {
 
-    var sharedPreferences: SharedPreferences? = null
-    var produtos: List<Produto> = ArrayList()
-    var cod:String = ""
+    var sharedPreferences:SharedPreferences? = null
 
+    @RequiresApi(28)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.activity_carrinho_fragment, container, false)
         val toolbar = view.findViewById(R.id.toolbar) as android.support.v7.widget.Toolbar
-//        val txt = view.findViewById(R.id.txt) as TextView
+
         if(activity is AppCompatActivity){
             (activity as AppCompatActivity).setSupportActionBar(toolbar)
             toolbar.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -37,42 +45,78 @@ class CarrinhoFragment : Fragment() {
 
         sharedPreferences = this.activity!!.getSharedPreferences("idValue",0)
 
-        val recyclerViewCarrinho: RecyclerView = view.findViewById(R.id.recyclerViewCarrinho)
-        recyclerViewCarrinho.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
 
-        val produtosId = sharedPreferences!!.getStringSet("idProduto", mutableSetOf<String>())
-        val list = ArrayList<String>(produtosId)
 
-        for (i in 0 until list.size){
+        val recyclerViewCarrinho: RecyclerView = view.findViewById(R.id.recyclerViewCarrinho2) as RecyclerView
+        recyclerViewCarrinho.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL,false)
 
-            val id = list[i]
+        val btnConfirmarPedido = view.findViewById<Button>(R.id.btn_confirmar_pedido)
 
-            this.cod = id
+        val txtNomeConfeiteiro = view.findViewById<TextView>(R.id.txt_nome_confeiteiro_carrinho)
+
+        val txtEnderecoConfeiteiro = view.findViewById<TextView>(R.id.txt_endereco_confeiteiro_carrinho)
+
+        val layoutInfoConfeiteiro = view.findViewById<LinearLayout>(R.id.layout_info_confeiteiro)
+
+        val layoutCarrinhoVazio = view.findViewById<LinearLayout>(R.id.info_carrinho_vazio)
+
+
+        val dao = ProdutoDAO(context!!)
+
+        val produtosCarrinho = dao.getProdutos()
+
+        val produtoCarrinhoAdapter = ProdutoCarrinhoAdapter(produtosCarrinho, context!!)
+
+        var total = 0.0
+        var codConfeiteiro = 0
+
+        for (i in 0 until produtosCarrinho.size){
+
+
+            total += produtosCarrinho[i].precoTotal
+
+            codConfeiteiro = produtosCarrinho[i].codConfeiteiro
+
+
         }
-        Log.d("produtos222222", cod)
+
+        if(total == 0.0){
+            layoutCarrinhoVazio.visibility = 1
+        } else {
 
 
+            layoutInfoConfeiteiro.visibility = 1
 
-        val callProduto = ApiConfig.getProdutoService().buscarProdutoId()
+            val callConfeiteiro = ApiConfig.getConfeiteiroService().buscarConfeiteiro(sharedPreferences!!.getString("token", ""), codConfeiteiro.toString() )
 
-        callProduto.enqueue(object : Callback<List<Produto>> {
+            callConfeiteiro.enqueue(object : Callback<EnderecoConfeiteiro> {
 
-            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
-//
-                if(response.body() != null){
-                    CarregarProduto(produtos = response.body()!!)
-                    Log.i("Retrofit222", "fgfgfgf")
-                }else{
+                override fun onResponse(call: Call<EnderecoConfeiteiro>, response: Response<EnderecoConfeiteiro>) {
+
+                    val confeiteiro =  response.body()!!
+
+                    txtNomeConfeiteiro.text = "${confeiteiro.confeiteiro.nome} ${confeiteiro.confeiteiro.sobrenome}"
+                    txtEnderecoConfeiteiro.text = "${confeiteiro.endereco.endereco}, nº${confeiteiro.endereco.numero} - ${confeiteiro.endereco.bairro}"
+                    Picasso.with(img_foto_confeiteiro_carrinho.context).load("http://3.232.178.219${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro_carrinho)
+
 
                 }
 
-            }
+                override fun onFailure(call: Call<EnderecoConfeiteiro>?, t: Throwable?) {
+                    Log.i("Retrofit", t?.message)
+                }
 
-            override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
-            }
+            })
+        }
 
-        })
+
+
+
+
+        btnConfirmarPedido.text = "CONFIRMAR     R$ ${total}"
+
+        recyclerViewCarrinho.adapter = produtoCarrinhoAdapter
+
 
         toolbar.setNavigationOnClickListener {
 
@@ -86,14 +130,5 @@ class CarrinhoFragment : Fragment() {
         return view
     }
 
-    fun CarregarProduto(produtos: List<Produto> ){
-
-        this.produtos = produtos
-
-        val produtoCarrinhoAdapter = ProdutoCarrinhoAdapter(produtos, context!!)
-
-        recyclerViewCarrinho.adapter = produtoCarrinhoAdapter
-
-    }
 
 }

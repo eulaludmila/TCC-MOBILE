@@ -9,18 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import tcc.sp.senai.br.showdebolos.R
-import tcc.sp.senai.br.showdebolos.model.Produto
 import android.content.SharedPreferences
 import android.support.annotation.RequiresApi
 import android.util.Log
 import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
+import tcc.sp.senai.br.showdebolos.model.ProdutoDTO
 
 
-class ProdutoCarrinhoAdapter (private val produtos:List<Produto>,
+class ProdutoCarrinhoAdapter (private val produtos: List<ProdutoDTO>,
                               private val context: Context) : RecyclerView.Adapter<ProdutoCarrinhoAdapter.ViewHolder>() {
 
-    var sharedPreferences: SharedPreferences? = null
-    var cod:String = ""
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
 
@@ -33,12 +31,6 @@ class ProdutoCarrinhoAdapter (private val produtos:List<Produto>,
     @RequiresApi(28)
     override fun getItemCount(): Int {
 
-        val dao = ProdutoDAO(context)
-
-        val produtos = dao.getProdutos()
-
-        dao.close()
-
         return if (produtos != null) produtos.size else 0
     }
 
@@ -46,11 +38,6 @@ class ProdutoCarrinhoAdapter (private val produtos:List<Produto>,
     @RequiresApi(28)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val dao = ProdutoDAO(context)
-
-        val produtos = dao.getProdutos()
-
-        dao.close()
 
         Log.d("PRODUTO_ADICIONADO", produtos.toString())
 
