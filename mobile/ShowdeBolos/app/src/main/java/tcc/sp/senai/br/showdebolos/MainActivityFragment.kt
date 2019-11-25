@@ -62,7 +62,7 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
             }R.id.pagamento -> {
 
-                replaceFragment(PagamentoFragment())
+                replaceFragment(PedidosParaSeremPagosFragment())
 
                 return@setOnNavigationItemSelectedListener true
 

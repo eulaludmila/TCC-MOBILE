@@ -1,5 +1,7 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -31,6 +33,7 @@ class CarrinhoFragment : Fragment() {
 
     var sharedPreferences:SharedPreferences? = null
 
+    @SuppressLint("WrongConstant")
     @RequiresApi(28)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -116,6 +119,12 @@ class CarrinhoFragment : Fragment() {
         btnConfirmarPedido.text = "CONFIRMAR     R$ ${total}"
 
         recyclerViewCarrinho.adapter = produtoCarrinhoAdapter
+
+        btnConfirmarPedido.setOnClickListener {
+
+            val abrirPagamento = Intent(context, PagamentoActivity::class.java)
+            startActivity(abrirPagamento)
+        }
 
 
         toolbar.setNavigationOnClickListener {
