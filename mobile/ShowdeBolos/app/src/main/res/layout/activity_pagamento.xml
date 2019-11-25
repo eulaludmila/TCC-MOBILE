@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PagamentoActivity">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_txt_data_vencimento"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:hint="Data de vencimento"
+        android:padding="0dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/cinza"
+        app:boxStrokeWidth="5px"
+        app:errorTextAppearance="@style/error_appearance"
+        app:hintTextAppearance="@style/HintTextStyle2"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="346dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/txt_data_vencimento"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawablePadding="4dp"
+            android:elevation="10dp"
+            android:inputType="date"
+            android:maxLength="5"
+            android:padding="0dp">
+
+        </android.support.design.widget.TextInputEditText>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_txt_codigo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:hint="Codigo de segurança"
+        android:padding="0dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/cinza"
+        app:boxStrokeWidth="5px"
+        app:errorTextAppearance="@style/error_appearance"
+        app:hintTextAppearance="@style/HintTextStyle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/layout_txt_data_vencimento"
+        app:layout_constraintTop_toBottomOf="@+id/layout_txt_nome_titular">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/txt_codigo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawablePadding="4dp"
+            android:elevation="10dp"
+            android:inputType="number"
+            android:padding="0dp">
+
+        </android.support.design.widget.TextInputEditText>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_txt_numero_cartao"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="230dp"
+        android:gravity="center"
+        android:hint="Número do cartão:"
+        android:padding="0dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeWidth="5px"
+        app:boxStrokeColor="@color/cinza"
+        app:errorTextAppearance="@style/error_appearance"
+        app:hintTextAppearance="@style/HintTextStyle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/creditCardView">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/txt_numero_cartao"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawablePadding="4dp"
+            android:maxLength="19"
+            android:elevation="10dp"
+            android:inputType="number"
+            android:padding="0dp">
+
+        </android.support.design.widget.TextInputEditText>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_txt_nome_titular"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:hint="Nome do titular:"
+        android:padding="0dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeWidth="5px"
+        app:boxStrokeColor="@color/cinza"
+        app:errorTextAppearance="@style/error_appearance"
+        app:hintTextAppearance="@style/HintTextStyle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_txt_numero_cartao">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/txt_nome_titular"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawablePadding="4dp"
+            android:elevation="10dp"
+            android:inputType="text"
+            android:padding="0dp">
+
+        </android.support.design.widget.TextInputEditText>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_txt_cpf_titular"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:hint="CPF do titular"
+        android:padding="0dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/cinza"
+        app:boxStrokeWidth="5px"
+        app:errorTextAppearance="@style/error_appearance"
+        app:hintTextAppearance="@style/HintTextStyle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_txt_data_vencimento">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/txt_cpf_titular"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawablePadding="4dp"
+            android:elevation="10dp"
+            android:inputType="number"
+            android:padding="0dp">
+
+        </android.support.design.widget.TextInputEditText>
+    </android.support.design.widget.TextInputLayout>
+
+    <com.cooltechworks.creditcarddesign.CreditCardView
+        android:id="@+id/creditCardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:card_number="XXXXXXXXXXXXXXXX"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </com.cooltechworks.creditcarddesign.CreditCardView>
+
+</android.support.constraint.ConstraintLayout>
