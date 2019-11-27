@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_gradient" >
+    >
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CadastroEnderecoClienteActivity">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.8"
+            android:background="@drawable/text_background"
+            android:gravity="center"
+            android:text="Por favor, nos informe seu endereço"
+            android:textAlignment="center"
+            android:textColor="@color/branco"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_txt_cep_cliente"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="252dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:hint="CEP:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_cep_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout6"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:hint="UF:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/layout_txt_cep_cliente"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_uf_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:enabled="false"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout12"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Cidade:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_txt_cep_cliente">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_cidade_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:enabled="false"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout13"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Bairro:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_bairro_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:enabled="false"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_txt_rua_cliente"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Rua:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_rua_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:enabled="false"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout10"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Numero:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_txt_rua_cliente">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_numero_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="number"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayout11"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="Complemento:"
+            android:textColorHint="@color/branco"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/branco"
+            app:boxStrokeWidth="5px"
+            app:hintTextAppearance="@style/HintTextStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/txt_complemento_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="10dp"
+                android:inputType="text"
+                android:textColor="@color/branco"
+                android:visibility="visible">
+
+            </android.support.design.widget.TextInputEditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/carregando_cliente"
+            android:visibility="invisible"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/edittext_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/allerta"
+                android:text="Aguarde..."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

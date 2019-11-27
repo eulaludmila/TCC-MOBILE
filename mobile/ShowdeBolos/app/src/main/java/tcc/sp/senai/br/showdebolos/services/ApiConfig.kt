@@ -18,6 +18,11 @@ class ApiConfig {
             return RetrofitClient.getConfeiteiro("http://3.232.178.219:8080/")!!.create(ConfeiteiroService::class.java)
         }
 
+
+        fun getClienteService(): ClienteService {
+            return RetrofitClient.getCliente("http://3.232.178.219:8080/")!!.create(ClienteService::class.java)
+        }
+
         fun getCategoriaService():CategoriaService{
             return RetrofitClient.getCategoria("http://3.232.178.219:8080/")!!.create(CategoriaService::class.java)
         }

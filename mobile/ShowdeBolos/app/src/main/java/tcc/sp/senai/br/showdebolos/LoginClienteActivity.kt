@@ -56,6 +56,7 @@ class LoginClienteActivity : AppCompatActivity() {
                     mPreferences = getSharedPreferences("idValue", 0)
                     mEditor = mPreferences!!.edit()
                     mEditor!!.putString("token",retornoLogin)
+                    mEditor!!.putString("tipoPerfil","cliente")
                     mEditor!!.putString("email",txt_email_cliente.text.toString())
                     mEditor!!.putString("senha",txt_senha_cliente.text.toString())
                     mEditor!!.commit()

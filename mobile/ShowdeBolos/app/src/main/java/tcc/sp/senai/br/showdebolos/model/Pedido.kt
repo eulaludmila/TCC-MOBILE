@@ -4,8 +4,8 @@ import java.util.*
 
 data class Pedido (val codPedido:Int,
                    val valorTotal:Float,
-                   val dataSolicitacao: Date,
-//                   val dataEntrega: Date,
+                   val dataSolicitacao: String,
+                   val dataEntrega: String,
                    val tipoPagamento: Char,
                    val status:Char,
                    val aprovacao:Char,

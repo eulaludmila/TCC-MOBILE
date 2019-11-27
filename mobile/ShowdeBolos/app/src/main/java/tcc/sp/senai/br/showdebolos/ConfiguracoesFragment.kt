@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_configuracoes_fragment.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import tcc.sp.senai.br.showdebolos.model.Cliente
+import tcc.sp.senai.br.showdebolos.model.EnderecoCliente
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.utils.JWTUtils
@@ -26,46 +28,47 @@ class ConfiguracoesFragment : Fragment() {
 
         mPreferences = this!!.activity!!.getSharedPreferences("idValue", 0)
         val token = mPreferences!!.getString("token","")
-
-        var parts = token.split(".")
-
-        var json = parts[1]
-
-        val tokenDecod = JWTUtils.getJson(json)
-
-        val jsontoken = JSONObject(tokenDecod)
-
-        Log.d("token22222", tokenDecod.toString())
-
-        var idPerfil  = jsontoken.getString("codUsuario")
-
-        Log.d("token22222",idPerfil.toString())
-
-        mEditor = mPreferences!!.edit()
-        mEditor!!.putString("codCliente",idPerfil)
-        mEditor!!.commit()
+        val tipoPerfil = mPreferences!!.getString("tipoPerfil","")
+        val idPerfil = mPreferences!!.getString("codCliente","")
 
 
-        val callPerfil = ApiConfig.getConfeiteiroService().buscarConfeiteiro(token, idPerfil)
 
-        callPerfil.enqueue(object : retrofit2.Callback<EnderecoConfeiteiro>{
-            override fun onFailure(call: Call<EnderecoConfeiteiro>?, t: Throwable?) {
+        if(tipoPerfil=="cliente"){
 
-            }
+            val callPerfil = ApiConfig.getClienteService().buscarCliente(token, idPerfil)
 
-            override fun onResponse(call: Call<EnderecoConfeiteiro>?, response: Response<EnderecoConfeiteiro>?) {
-                val perfil = response!!.body()
+            callPerfil.enqueue(object : retrofit2.Callback<Cliente>{
+                override fun onFailure(call: Call<Cliente>?, t: Throwable?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
 
-                txt_nome.text = perfil!!.confeiteiro.nome
-                txt_uf_perfil.text= perfil!!.endereco.cidade.cidade +" - "+ perfil!!.endereco.cidade.estado.uf
-                Picasso.with(img_perfil.context).load("http://3.232.178.219${perfil.confeiteiro.foto}").into(img_perfil)
+                override fun onResponse(call: Call<Cliente>?, response: Response<Cliente>?) {
+                    val perfil = response!!.body()
 
+                    txt_nome.text = perfil!!.nome
+//                    txt_uf_perfil.text= perfil!!.endereco.cidade.cidade +" - "+ perfil!!.endereco.cidade.estado.uf
+                    Picasso.with(img_perfil.context).load("http://3.232.178.219${perfil.foto}").into(img_perfil)
+                }
 
-            }
+            })
+        }else if (tipoPerfil=="confeiteiro"){
 
-        })
+            val callPerfil = ApiConfig.getConfeiteiroService().buscarConfeiteiro(token, idPerfil)
 
+            callPerfil.enqueue(object : retrofit2.Callback<EnderecoConfeiteiro>{
+                override fun onFailure(call: Call<EnderecoConfeiteiro>?, t: Throwable?) {
 
+                }
+
+                override fun onResponse(call: Call<EnderecoConfeiteiro>?, response: Response<EnderecoConfeiteiro>?) {
+                    val perfil = response!!.body()
+
+                    txt_nome.text = perfil!!.confeiteiro.nome
+                    txt_uf_perfil.text= perfil!!.endereco.cidade.cidade +" - "+ perfil!!.endereco.cidade.estado.uf
+                    Picasso.with(img_perfil.context).load("http://3.232.178.219${perfil.confeiteiro.foto}").into(img_perfil)
+                }
+            })
+        }
 
         val view = inflater.inflate(R.layout.activity_configuracoes_fragment, container, false)
         val toolbar = view.findViewById(R.id.toolbar) as android.support.v7.widget.Toolbar
