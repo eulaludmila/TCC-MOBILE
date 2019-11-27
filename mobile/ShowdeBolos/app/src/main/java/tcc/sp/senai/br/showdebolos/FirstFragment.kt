@@ -15,6 +15,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 
 import android.widget.TextView
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +23,7 @@ import tcc.sp.senai.br.showdebolos.adapter.CategoriaHomeAdapter
 import tcc.sp.senai.br.showdebolos.adapter.ProdutoHomeAdapter
 import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
+import tcc.sp.senai.br.showdebolos.utils.JWTUtils
 
 
 class  FirstFragment : Fragment(){
@@ -31,8 +33,30 @@ class  FirstFragment : Fragment(){
     var produtos: List<Produto> = ArrayList()
     lateinit var clickBotao: ClickBotao
     var sharedPreferences:SharedPreferences? = null
+    var mPreferences: SharedPreferences? = null
+    var mEditor:SharedPreferences.Editor? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val token = mPreferences!!.getString("token","")
+
+        var parts = token.split(".")
+
+        var json = parts[1]
+
+        val tokenDecod = JWTUtils.getJson(json)
+
+        val jsontoken = JSONObject(tokenDecod)
+
+        Log.d("token22222", tokenDecod.toString())
+
+        var idPerfil  = jsontoken.getString("codUsuario")
+
+        Log.d("token22222",idPerfil.toString())
+
+        mEditor = mPreferences!!.edit()
+        mEditor!!.putString("codCliente",idPerfil)
+        mEditor!!.commit()
 
         sharedPreferences = this.activity!!.getSharedPreferences("idValue",0)
         // Inflate the layout for this fragment

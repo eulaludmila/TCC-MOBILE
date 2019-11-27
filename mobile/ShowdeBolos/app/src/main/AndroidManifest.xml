@@ -45,6 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".CadastroClienteActivity"
             android:label="@string/cadastro_cliente">
@@ -74,6 +75,7 @@
         <activity android:name=".TodosConfeiteirosActivity" android:theme="@style/noBar"></activity>
         <activity android:name=".ProdutosCategoriaActivity" android:theme="@style/noBar"></activity>
         <activity android:name=".PagamentoActivity" ></activity>
+        <activity android:name=".CadastroEnderecoClienteActivity"></activity>
     </application>
 
 </manifest>

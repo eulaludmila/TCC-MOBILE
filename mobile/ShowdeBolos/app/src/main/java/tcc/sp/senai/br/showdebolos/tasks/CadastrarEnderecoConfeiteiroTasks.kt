@@ -9,7 +9,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
-class CadastrarEnderecoConfeiteiroTasks( val enderecoConfeiteiro: EnderecoConfeiteiro) : AsyncTask<Confeiteiro, Confeiteiro, Confeiteiro>() {
+class CadastrarEnderecoConfeiteiroTasks(val enderecoConfeiteiro: EnderecoConfeiteiro) : AsyncTask<Confeiteiro, Confeiteiro, Confeiteiro>() {
 
 
     override fun doInBackground(vararg params: Confeiteiro?): Confeiteiro? {

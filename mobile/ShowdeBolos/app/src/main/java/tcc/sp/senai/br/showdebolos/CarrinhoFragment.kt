@@ -121,9 +121,8 @@ class CarrinhoFragment : Fragment() {
         recyclerViewCarrinho.adapter = produtoCarrinhoAdapter
 
         btnConfirmarPedido.setOnClickListener {
-
-            val abrirPagamento = Intent(context, PagamentoActivity::class.java)
-            startActivity(abrirPagamento)
+            val cadastrarEnderecoCliente = Intent(context, PagamentoActivity::class.java)
+            startActivity(cadastrarEnderecoCliente)
         }
 
 

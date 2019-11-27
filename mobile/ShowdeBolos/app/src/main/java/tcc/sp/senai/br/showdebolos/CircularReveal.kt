@@ -14,9 +14,13 @@ import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_circular_reveal.*
 import kotlinx.android.synthetic.main.activity_login_cliente.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
+import tcc.sp.senai.br.showdebolos.model.Confeiteiro
 import tcc.sp.senai.br.showdebolos.tasks.LoginClienteTasks
+import tcc.sp.senai.br.showdebolos.tasks.LoginConfeiteiroTasks
+import tcc.sp.senai.br.showdebolos.utils.JWTUtils
 
 class CircularReveal : AppCompatActivity() {
 
@@ -76,17 +80,30 @@ class CircularReveal : AppCompatActivity() {
         mPreferences = getSharedPreferences("idValue",0)
         val email = mPreferences!!.getString("email", "")
         val senha = mPreferences!!.getString("senha", "")
+        val tipoPerfil = mPreferences!!.getString("tipoPerfil", "")
 
         if(email != "" && senha != ""){
-            val cliente = Cliente(0,"","","","",email,senha, Celular(0,""),"","")
-            val loginCliente = LoginClienteTasks(cliente, this)
-            loginCliente.execute()
-            val retornoLogin = loginCliente.get()
-            mEditor = mPreferences!!.edit()
-            mEditor!!.putString("token",retornoLogin)
-            mEditor!!.commit()
-            val intent = Intent(this, MainActivityFragment::class.java)
-            startActivity(intent)
+            if(tipoPerfil == "cliente"){
+                val cliente = Cliente(0,"","","","",email,senha, Celular(0,""),"","")
+                val loginCliente = LoginClienteTasks(cliente, this)
+                loginCliente.execute()
+                val retornoLogin = loginCliente.get()
+                mEditor = mPreferences!!.edit()
+                mEditor!!.putString("token",retornoLogin)
+                mEditor!!.commit()
+                val intent = Intent(this, MainActivityFragment::class.java)
+                startActivity(intent)
+            }else if(tipoPerfil == "confeiteiro"){
+                val confeiteiro = Confeiteiro(0,"","","","",email,senha, Celular(0,""),"","",0.0)
+                val loginConfeiteiro = LoginConfeiteiroTasks(confeiteiro, this)
+                loginConfeiteiro.execute()
+                val retornoLogin = loginConfeiteiro.get()
+                mEditor = mPreferences!!.edit()
+                mEditor!!.putString("token",retornoLogin)
+                mEditor!!.commit()
+                val intent = Intent(this, MainActivityFragment::class.java)
+                startActivity(intent)
+            }
         }else{
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
