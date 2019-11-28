@@ -10,59 +10,60 @@
     android:id="@+id/first_fragment">
 
 
-        <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp">
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txt_view_cidade_cliente"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:textSize="16sp"
+                android:textColor="@color/branco"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_seta_baixo"
+                />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/sv_card_aux"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/branco"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true"
+            android:layout_gravity="top"
+            >
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/sv_aux"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="16dp">
+                android:background="@drawable/borda_layout"/>
 
-                <TextView
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:text="Itapevi"
-                    android:textSize="16sp"
-                    android:textColor="@color/branco"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_gravity="center_vertical"
-                    />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_seta_baixo"
-                    />
-
-            </LinearLayout>
-
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/sv_card_aux"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="14dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/branco"
-                app:cardCornerRadius="5dp"
-                app:cardUseCompatPadding="true"
-                android:layout_gravity="top"
-                >
-
-                <android.support.v7.widget.SearchView
-                    android:id="@+id/sv_aux"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/borda_layout"/>
-
-            </android.support.v7.widget.CardView>
-        </android.support.design.widget.AppBarLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

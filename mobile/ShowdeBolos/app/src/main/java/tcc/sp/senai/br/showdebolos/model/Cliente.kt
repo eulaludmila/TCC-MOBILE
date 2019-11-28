@@ -7,7 +7,7 @@ data class Cliente (val codCliente: Int,
                     val dtNasc: String,
                     val email: String,
                     val senha: String,
-                    val codCelular: Celular,
+                    val celular: Celular,
                     val sexo: String,
                     val foto: String){
 

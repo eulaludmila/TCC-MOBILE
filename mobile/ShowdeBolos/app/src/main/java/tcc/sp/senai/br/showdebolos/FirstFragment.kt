@@ -1,5 +1,6 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,7 +16,9 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 
 import android.widget.TextView
+import android.widget.Toast
 import org.json.JSONObject
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,32 +36,15 @@ class  FirstFragment : Fragment(){
     var produtos: List<Produto> = ArrayList()
     lateinit var clickBotao: ClickBotao
     var sharedPreferences:SharedPreferences? = null
-    var mPreferences: SharedPreferences? = null
-    var mEditor:SharedPreferences.Editor? = null
+
+    var perfil:List<EnderecoCliente>? = null
+    var token:String? = null
+    var parts:List<String>? = null
+    var idPerfil:String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val token = mPreferences!!.getString("token","")
 
-        var parts = token.split(".")
-
-        var json = parts[1]
-
-        val tokenDecod = JWTUtils.getJson(json)
-
-        val jsontoken = JSONObject(tokenDecod)
-
-        Log.d("token22222", tokenDecod.toString())
-
-        var idPerfil  = jsontoken.getString("codUsuario")
-
-        Log.d("token22222",idPerfil.toString())
-
-        mEditor = mPreferences!!.edit()
-        mEditor!!.putString("codCliente",idPerfil)
-        mEditor!!.commit()
-
-        sharedPreferences = this.activity!!.getSharedPreferences("idValue",0)
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
         val recyclerViewConfeiteiro = view.findViewById(R.id.recyclerViewConfeiteiro) as RecyclerView
@@ -73,11 +59,26 @@ class  FirstFragment : Fragment(){
 
         val txt_ver_mais = view.findViewById<TextView>(R.id.txt_ver_mais)
 
+        val txtCidade = view!!.findViewById<TextView>(R.id.txt_view_cidade_cliente)
+
+
+
         txt_ver_mais.setOnClickListener {
 
             clickBotao.clickBotao()
 
         }
+
+
+        sharedPreferences = this.activity!!.getSharedPreferences("idValue",0)
+        token = sharedPreferences!!.getString("token","")
+
+
+        idPerfil  = sharedPreferences!!.getString("codCliente","")
+
+        Log.d("COD_CLIENTE", idPerfil.toString())
+        Log.d("TOKEN", token.toString())
+
 
         carregarRecyclerView()
 
@@ -90,12 +91,54 @@ class  FirstFragment : Fragment(){
 
         }
 
-
         return view
 
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        cadastrarEnderecoCliente(txt_view_cidade_cliente)
+    }
+
+    fun cadastrarEnderecoCliente(txtCidade:TextView){
+
+
+        val callPerfil = ApiConfig.getEnderecoCliente().buscarEnderecoCliente(this!!.token!!, this!!.idPerfil!!)
+
+        callPerfil.enqueue(object : retrofit2.Callback<List<EnderecoCliente>>{
+            override fun onFailure(call: Call<List<EnderecoCliente>>?, t: Throwable?) {
+
+
+                Log.d("ERRO_ENDERECO_CLIENTE", t!!.message)
+            }
+
+            override fun onResponse(call: Call<List<EnderecoCliente>>?, response: Response<List<EnderecoCliente>>?) {
+                perfil = response!!.body()
+
+
+                if(perfil!!.isEmpty()){
+                    val builder = android.app.AlertDialog.Builder(this@FirstFragment.context)
+                    builder.setTitle("Cadastre um endereço")
+//                    builder.setIcon(R.drawable.ic_erro)
+                    builder.setMessage("Percebemos que você ainda não cadastrou nenhum endereço. Por favor, nos informe um endereço")
+                    builder.setPositiveButton("Cadastrar"){dialog, which ->
+                        val cadastrarEndereco = Intent(this@FirstFragment.context, CadastroEnderecoClienteActivity::class.java)
+                        startActivity(cadastrarEndereco)
+                    }
+                    builder.show()
+                } else {
+
+                    for(i in 0 until perfil!!.size){
+                        txtCidade.text = perfil!![i].endereco.cidade.cidade
+                    }
+
+                }
+
+            }
+        })
+
+    }
 
 
     fun CarregarConfeiteiroHome(confeiteiros: List<EnderecoConfeiteiro> ){
@@ -145,9 +188,9 @@ class  FirstFragment : Fragment(){
 
     }
 
-     fun carregarRecyclerView(){
+    fun carregarRecyclerView(){
 
-         val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros(sharedPreferences!!.getString("token", ""))
+        val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros(sharedPreferences!!.getString("token", ""))
 
 
         callConfeiteiro.enqueue(object : Callback<List<EnderecoConfeiteiro>>{

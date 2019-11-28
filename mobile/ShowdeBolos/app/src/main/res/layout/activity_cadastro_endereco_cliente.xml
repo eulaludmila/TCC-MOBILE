@@ -24,7 +24,7 @@
             android:alpha="0.8"
             android:background="@drawable/text_background"
             android:gravity="center"
-            android:text="Por favor, nos informe seu endereço"
+            android:text="Por favor, nos informe um endereço"
             android:textAlignment="center"
             android:textColor="@color/branco"
             android:textSize="16dp"

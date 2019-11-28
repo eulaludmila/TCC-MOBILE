@@ -46,22 +46,7 @@ class CadastroEnderecoClienteActivity : AppCompatActivity() {
         mPreferences = this!!.getSharedPreferences("idValue", 0)
         token = mPreferences!!.getString("token","")
 
-
-        parts = token?.split(".")
-
-        var json = parts!![1]
-
-        val tokenDecod = JWTUtils.getJson(json)
-
-        val jsontoken = JSONObject(tokenDecod)
-
-
-        idPerfil  = jsontoken.getString("codUsuario")
-
-
-        mEditor = mPreferences!!.edit()
-        mEditor!!.putString("codCliente",idPerfil)
-        mEditor!!.commit()
+        idPerfil  = mPreferences!!.getString("codCliente","")
 
 
         val estado = Estado(0,txt_uf_cliente.text.toString(), "")
@@ -196,9 +181,7 @@ class CadastroEnderecoClienteActivity : AppCompatActivity() {
                 val cadastroEnderecoCliente = CadastrarEnderecoClienteTasks(enderecoCliente, this!!.token!!)
                 cadastroEnderecoCliente.execute()
 
-
-                val abrirPagamento = Intent(this, PagamentoActivity::class.java)
-                startActivity(abrirPagamento)
+                finish()
 
             }
 

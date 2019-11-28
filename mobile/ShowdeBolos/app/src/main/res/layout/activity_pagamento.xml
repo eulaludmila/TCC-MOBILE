@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:drawablePadding="4dp"
-            android:maxLength="19"
+            android:maxLength="16"
             android:elevation="10dp"
             android:inputType="number"
             android:padding="0dp">

@@ -48,15 +48,15 @@ class CadastrarEnderecoClienteTasks(val enderecoCliente: EnderecoCliente, val to
 
         conexao.connect()
 
-//        val scanner = Scanner(conexao.inputStream)
-//        val resposta = scanner.nextLine()
-//
-//        val joEnderecoConfeiteiro = JSONObject(resposta)
-//
-//        val joConfeiteiro = joEnderecoConfeiteiro.getJSONObject("cliente")
-//
-//
-//
+        val scanner = Scanner(conexao.inputStream)
+        val resposta = scanner.nextLine()
+
+        val joEnderecoConfeiteiro = JSONObject(resposta)
+
+        val joEndereco = joEnderecoConfeiteiro.getJSONObject("endereco")
+
+
+
 //        val joCelular = joConfeiteiro.getJSONObject("celular")
 //
 //        val celular = Celular(joCelular.getInt("codCelular"),
