@@ -99,7 +99,7 @@ class CarrinhoFragment : Fragment() {
                     val confeiteiro =  response.body()!!
 
                     txtNomeConfeiteiro.text = "${confeiteiro.confeiteiro.nome} ${confeiteiro.confeiteiro.sobrenome}"
-                    txtEnderecoConfeiteiro.text = "${confeiteiro.endereco.endereco}, nº${confeiteiro.endereco.numero} - ${confeiteiro.endereco.bairro}"
+                    txtEnderecoConfeiteiro.text = "${confeiteiro.endereco.endereco}, nยบ${confeiteiro.endereco.numero} - ${confeiteiro.endereco.bairro}"
                     Picasso.with(img_foto_confeiteiro_carrinho.context).load("http://3.232.178.219${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro_carrinho)
 
 
@@ -121,8 +121,10 @@ class CarrinhoFragment : Fragment() {
         recyclerViewCarrinho.adapter = produtoCarrinhoAdapter
 
         btnConfirmarPedido.setOnClickListener {
-            val cadastrarEnderecoCliente = Intent(context, PagamentoActivity::class.java)
-            startActivity(cadastrarEnderecoCliente)
+
+            val abrirPagamento = Intent(context, PagamentoActivity::class.java)
+            abrirPagamento.putExtra("total",total)
+            startActivity(abrirPagamento)
         }
 
 

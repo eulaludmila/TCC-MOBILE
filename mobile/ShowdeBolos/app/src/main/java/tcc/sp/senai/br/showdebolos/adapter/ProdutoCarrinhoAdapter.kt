@@ -12,6 +12,8 @@ import tcc.sp.senai.br.showdebolos.R
 import android.content.SharedPreferences
 import android.support.annotation.RequiresApi
 import android.util.Log
+import android.widget.Button
+import tcc.sp.senai.br.showdebolos.CarrinhoFragment
 import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
 import tcc.sp.senai.br.showdebolos.model.ProdutoDTO
 
@@ -43,11 +45,25 @@ class ProdutoCarrinhoAdapter (private val produtos: List<ProdutoDTO>,
 
         holder.nomeProduto.text = produtos[position].nomeProduto
         holder.precoProduto.text = "R$: " + produtos[position].precoTotal.toString()
-        holder.quantidade.text = produtos[position].quantidade.toString()
-        //        holder.localizacao.text = produtos[position].confeiteir
+        holder.quantidade.text = produtos[position].quantidade
+
         var url = produtos[position].foto
         Picasso.with(holder!!.fotoProduto.context).cancelRequest(holder!!.fotoProduto)
         Picasso.with(holder!!.fotoProduto.context).load("http://3.232.178.219$url").into(holder!!.fotoProduto)
+
+        holder.btnExcluir.setOnClickListener {
+
+            val dao = ProdutoDAO(context)
+
+            dao.excluir(produtos[position])
+
+            val listaProdutos = dao.getProdutos()
+
+
+
+        }
+
+
 
 
     }
@@ -59,6 +75,8 @@ class ProdutoCarrinhoAdapter (private val produtos: List<ProdutoDTO>,
         var quantidade:TextView = itemView.findViewById(R.id.txt_quantidade_carrinho)
         //        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_produto_home)
         var fotoProduto: ImageView = itemView.findViewById(R.id.img_produto_carrinho)
+
+        var btnExcluir:ImageView = itemView.findViewById(R.id.img_excluir)
 
 
 

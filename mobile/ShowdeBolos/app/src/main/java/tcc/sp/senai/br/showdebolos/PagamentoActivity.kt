@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_configuracoes_fragment.*
 import kotlinx.android.synthetic.main.activity_pagamento.*
@@ -50,17 +51,19 @@ class PagamentoActivity : AppCompatActivity() {
             Log.w("TAG", "Failed to change box color, item might look wrong")
         }
 
-        val callCliente = ApiConfig.getClienteService().buscarEnderecoCliente(token, idPerfil)
+        val callCliente = ApiConfig.getEnderecoCliente().buscarEnderecoCliente(token, idPerfil)
 
-        callCliente.enqueue(object : retrofit2.Callback<EnderecoCliente>{
-            override fun onFailure(call: Call<EnderecoCliente>?, t: Throwable?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        callCliente.enqueue(object : retrofit2.Callback<List<EnderecoCliente>>{
+            override fun onFailure(call: Call<List<EnderecoCliente>>?, t: Throwable?) {
+                Log.d("falha222" , t!!.message)
             }
 
-            override fun onResponse(call: Call<EnderecoCliente>?, response: Response<EnderecoCliente>?) {
+            override fun onResponse(call: Call<List<EnderecoCliente>>?, response: Response<List<EnderecoCliente>>?) {
                 val perfil = response!!.body()
 
-                cliente = EnderecoCliente(perfil!!.codEnderecoConfeiteiro,perfil.cliente,perfil.endereco)
+                Log.d("perfil222", perfil.toString())
+
+                cliente = EnderecoCliente(perfil!![0].codEnderecoConfeiteiro,perfil!![0].cliente,perfil!![0].endereco)
             }
 
         })
@@ -106,7 +109,6 @@ class PagamentoActivity : AppCompatActivity() {
 
         }
 
-        txt_numero_cartao.addTextChangedListener(Mask.mask("#### #### #### ####", txt_numero_cartao))
         txt_numero_cartao.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
 
@@ -178,11 +180,18 @@ class PagamentoActivity : AppCompatActivity() {
         when (item!!.itemId) {
             R.id.confirmar -> {
 
-                val total = intent.getSerializableExtra("confeiteiro") as Int
+                val total = intent.getSerializableExtra("total") as Double
 
                 val cartao = Cartao(txt_numero_cartao.text.toString(),txt_codigo.text.toString(),txt_data_vencimento.text.toString(),txt_nome_titular.text.toString(),txt_cpf_titular.text.toString())
 
-//                val pagamento = PagamentoTasks(cliente!!,confeiteiro!!,total,)
+                val pagamento = PagamentoTasks(cliente!!,confeiteiro!!,total.toString(),cartao)
+
+                pagamento.execute()
+
+                val retornoPagamento = pagamento.get() as String
+
+                Log.d("pagamento222", retornoPagamento)
+                Toast.makeText(this, retornoPagamento , Toast.LENGTH_LONG).show()
 
 
                 finish()
