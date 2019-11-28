@@ -93,6 +93,7 @@ class CircularReveal : AppCompatActivity() {
                 mEditor!!.commit()
                 val intent = Intent(this, MainActivityFragment::class.java)
                 startActivity(intent)
+                finish()
             }else if(tipoPerfil == "confeiteiro"){
                 val confeiteiro = Confeiteiro(0,"","","","",email,senha, Celular(0,""),"","",0.0)
                 val loginConfeiteiro = LoginConfeiteiroTasks(confeiteiro, this)
@@ -103,6 +104,7 @@ class CircularReveal : AppCompatActivity() {
                 mEditor!!.commit()
                 val intent = Intent(this, MainActivityFragment::class.java)
                 startActivity(intent)
+                finish()
             }
         }else{
             val intent = Intent(this, MainActivity::class.java)

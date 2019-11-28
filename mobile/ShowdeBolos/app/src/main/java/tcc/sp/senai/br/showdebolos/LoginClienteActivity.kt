@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_login_cliente.*
+import org.jetbrains.anko.act
 import tcc.sp.senai.br.showdebolos.model.Celular
 import tcc.sp.senai.br.showdebolos.model.Cliente
 import tcc.sp.senai.br.showdebolos.tasks.LoginClienteTasks
@@ -62,6 +63,8 @@ class LoginClienteActivity : AppCompatActivity() {
                     mEditor!!.commit()
                     val intent = Intent(this, MainActivityFragment::class.java)
                     startActivity(intent)
+                    finish()
+
                 }
 
             }else{

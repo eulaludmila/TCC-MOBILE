@@ -65,6 +65,7 @@ class LoginConfeiteiroActivity : AppCompatActivity(){
                     mEditor!!.commit()
                     val intent = Intent(this, MainActivityFragment::class.java)
                     startActivity(intent)
+                    finish()
                 }
 
             }else{
