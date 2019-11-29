@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
 import com.squareup.picasso.Picasso
@@ -13,9 +15,11 @@ import kotlinx.android.synthetic.main.activity_configuracoes_fragment.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import tcc.sp.senai.br.showdebolos.adapter.ListaConfiguracaoAdapter
 import tcc.sp.senai.br.showdebolos.model.Cliente
 import tcc.sp.senai.br.showdebolos.model.EnderecoCliente
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
+import tcc.sp.senai.br.showdebolos.model.ListaConfiguracao
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.utils.JWTUtils
 
@@ -29,9 +33,15 @@ class ConfiguracoesFragment : Fragment() {
         mPreferences = this!!.activity!!.getSharedPreferences("idValue", 0)
         val token = mPreferences!!.getString("token","")
         val tipoPerfil = mPreferences!!.getString("tipoPerfil","")
-        val idPerfil = mPreferences!!.getString("codCliente","")
+        val idPerfil = mPreferences!!.getString("codUsuario","")
 
+        val view = inflater.inflate(R.layout.activity_configuracoes_fragment, container, false)
 
+        val recyclerView = view.findViewById(R.id.recycler_view_configuracoes) as RecyclerView
+
+        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
+        carregarListar(view, tipoPerfil)
 
         if(tipoPerfil=="cliente"){
 
@@ -70,9 +80,7 @@ class ConfiguracoesFragment : Fragment() {
             })
         }
 
-        val view = inflater.inflate(R.layout.activity_configuracoes_fragment, container, false)
         val toolbar = view.findViewById(R.id.toolbar) as android.support.v7.widget.Toolbar
-
 
 
         if(activity is AppCompatActivity){
@@ -90,6 +98,36 @@ class ConfiguracoesFragment : Fragment() {
             fragmentTransaction.replace(R.id.layout_fragment, FirstFragment()).commit()
         }
         return view
+    }
+
+    fun carregarListar(view:View, tipoPerfil:String){
+
+        val recyclerView = view.findViewById(R.id.recycler_view_configuracoes) as RecyclerView
+
+        val itens = ArrayList<ListaConfiguracao>()
+
+        val item1 = ListaConfiguracao(R.drawable.ic_bolo,"Produtos","Edição, visualização")
+        val item2 = ListaConfiguracao(R.drawable.ic_local, "Endereço", "Adicionar local de entregar")
+        val item3 = ListaConfiguracao(R.drawable.ic_historico, "Histórico", "Produtos recentemente comprados")
+        val item4 = ListaConfiguracao(R.drawable.ic_produtos_confirmados, "Pedidos", "Confirmação, acompanhamento")
+        val item5 = ListaConfiguracao(R.drawable.ic_exit, "Sair", "Fazer logoff")
+
+        if(tipoPerfil=="cliente"){
+            itens.add(item2)
+            itens.add(item3)
+            itens.add(item5)
+        }else if(tipoPerfil=="confeiteiro"){
+            itens.add(item1)
+            itens.add(item4)
+            itens.add(item5)
+        }
+
+
+        val listaConfiguracaoAdapter = ListaConfiguracaoAdapter(itens,this!!.context!!)
+        recyclerView.adapter = listaConfiguracaoAdapter
+
+
+
     }
 
 

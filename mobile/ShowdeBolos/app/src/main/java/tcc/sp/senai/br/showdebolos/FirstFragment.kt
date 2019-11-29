@@ -36,6 +36,7 @@ class  FirstFragment : Fragment(){
     var produtos: List<Produto> = ArrayList()
     lateinit var clickBotao: ClickBotao
     var sharedPreferences:SharedPreferences? = null
+    var mEditor:SharedPreferences.Editor? = null
 
     var perfil:List<EnderecoCliente>? = null
     var token:String? = null
@@ -59,9 +60,6 @@ class  FirstFragment : Fragment(){
 
         val txt_ver_mais = view.findViewById<TextView>(R.id.txt_ver_mais)
 
-        val txtCidade = view!!.findViewById<TextView>(R.id.txt_view_cidade_cliente)
-
-
 
         txt_ver_mais.setOnClickListener {
 
@@ -74,7 +72,20 @@ class  FirstFragment : Fragment(){
         token = sharedPreferences!!.getString("token","")
 
 
-        idPerfil  = sharedPreferences!!.getString("codCliente","")
+        parts = token?.split(".")
+
+        var json = parts!![1]
+
+        val tokenDecod = JWTUtils.getJson(json)
+
+        val jsontoken = JSONObject(tokenDecod)
+
+
+        idPerfil  = jsontoken.getString("codUsuario")
+
+        mEditor = sharedPreferences!!.edit()
+        mEditor!!.putString("codUsuario",idPerfil)
+        mEditor!!.commit()
 
         Log.d("COD_CLIENTE", idPerfil.toString())
         Log.d("TOKEN", token.toString())
@@ -90,6 +101,7 @@ class  FirstFragment : Fragment(){
             swipeRefreshLayout.isRefreshing = false
 
         }
+
 
         return view
 
@@ -116,8 +128,9 @@ class  FirstFragment : Fragment(){
             override fun onResponse(call: Call<List<EnderecoCliente>>?, response: Response<List<EnderecoCliente>>?) {
                 perfil = response!!.body()
 
+                Log.d("LIHAS", response.raw().toString())
 
-                if(perfil!!.isEmpty()){
+                if(0 == perfil!!.size){
                     val builder = android.app.AlertDialog.Builder(this@FirstFragment.context)
                     builder.setTitle("Cadastre um endereço")
 //                    builder.setIcon(R.drawable.ic_erro)
@@ -128,13 +141,14 @@ class  FirstFragment : Fragment(){
                     }
                     builder.show()
                 } else {
-
                     for(i in 0 until perfil!!.size){
                         txtCidade.text = perfil!![i].endereco.cidade.cidade
                     }
-
                 }
 
+
+
+                Log.d("ENDERECO_CLIENTE", perfil!!.toString())
             }
         })
 

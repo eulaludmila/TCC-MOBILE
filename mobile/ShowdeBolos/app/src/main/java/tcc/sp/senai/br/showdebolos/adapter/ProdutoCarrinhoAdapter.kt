@@ -22,6 +22,8 @@ class ProdutoCarrinhoAdapter (private val produtos: List<ProdutoDTO>,
                               private val context: Context) : RecyclerView.Adapter<ProdutoCarrinhoAdapter.ViewHolder>() {
 
 
+
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
 
         var view = LayoutInflater.from(context).inflate(R.layout.adapter_produtos_carrinho, viewGroup, false)
