@@ -55,14 +55,14 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
                 return@setOnNavigationItemSelectedListener true
 
-                }R.id.configuracoes -> {
+            }R.id.configuracoes -> {
                 replaceFragment(ConfiguracoesFragment())
 
                 return@setOnNavigationItemSelectedListener true
 
-            }R.id.pagamento -> {
+            }R.id.aguardando -> {
 
-                replaceFragment(PedidosParaSeremPagosFragment())
+                replaceFragment(PedidosAguardandoRespostaFragment())
 
                 return@setOnNavigationItemSelectedListener true
 
@@ -90,9 +90,9 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
     }
 
     fun replaceFragment(fragment: Fragment){
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.layout_fragment, fragment)
-            fragmentTransaction.commit()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.layout_fragment, fragment)
+        fragmentTransaction.commit()
 
 
     }
