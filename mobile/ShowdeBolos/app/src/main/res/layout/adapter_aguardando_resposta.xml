@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:orientation="vertical"
+        android:background="@drawable/borda_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
+                android:layout_gravity="center_horizontal">
+                <TextView
+                    android:id="@+id/txt_cod_pedido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pedido 20"
+                    android:textSize="20sp"
+                    android:textColor="@color/preto"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:id="@+id/txt_pedido_nome_cliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cliente: "
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:id="@+id/txt_pedido_quantidade"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Quantidade: 4Kg"
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"/>
+
+                <TextView
+                    android:id="@+id/txt_pedido_valor_total"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Total: R$ 20,00"
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"
+                    android:textAlignment="textEnd"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+                <TextView
+                    android:id="@+id/txt_pedido_data_entrega"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Data: 24/10/2002"
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"/>
+
+                <TextView
+                    android:id="@+id/txt_pedido_hora_entrega"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Hora: 23:00"
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"
+                    android:textAlignment="textEnd"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="40dp">
+                <TextView
+                    android:id="@+id/txt_pedido_tipo_pagamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pagamento: Cartão de Crédito"
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btn_recusar_pedido"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="Recusar"
+                    android:textSize="14sp"
+                    android:textColor="@color/branco"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/botao_cancelar_radius"
+                    />
+                <Button
+                    android:id="@+id/btn_confirmar_pedido"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="Aceitar"
+                    android:textSize="14sp"
+                    android:textColor="@color/branco"
+                    android:background="@drawable/botao_confirmar_radius"/>
+                <Button
+                    android:id="@+id/btn_detalhes_pedido"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="Detalhes"
+                    android:textSize="14sp"
+                    android:textColor="@color/branco"
+                    android:background="@drawable/botao_confirmar_radius"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

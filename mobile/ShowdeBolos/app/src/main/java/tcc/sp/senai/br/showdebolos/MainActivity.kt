@@ -1,8 +1,10 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.support.v7.app.AppCompatActivity
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
 
     var mPreferences: SharedPreferences? = null
+    var permission: Array<String>? = null
 
 
     fun alertaInternet (valor: String){
@@ -89,6 +92,11 @@ class MainActivity : AppCompatActivity() {
 
         val app = applicationContext as MyApp
 
+        permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        requestPermissions(permission, 0)
+
+
+
 
         if (app.isOk) {
             //do nothing
@@ -114,6 +122,19 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(permission, 0)
+
+            return
+        }
 
     }
 

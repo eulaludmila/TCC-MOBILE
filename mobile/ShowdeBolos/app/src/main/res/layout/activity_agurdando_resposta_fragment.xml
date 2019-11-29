@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfiguracoesFragment"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bar">
+        <include layout="@layout/toolbar"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:cardElevation="6dp"-->
+                <!--app:cardCornerRadius="8dp"-->
+                <!--android:layout_margin="16dp"-->
+                <!--app:cardUseCompatPadding="true">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Área de para a confirmação do pagamento na realização da encomenda"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textColor="@color/colorPrimaryDark"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_gravity="center"/>-->
+
+            <!--</android.support.v7.widget.CardView>-->
+
+            <TextView
+                android:id="@+id/txt_pedido_nome_cliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pedidos que estão esperando a sua resposta"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textColor="@color/branco"
+                android:background="@color/escuro"
+                android:layout_margin="8dp"/>
+
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerViewPedidosAguardando"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

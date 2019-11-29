@@ -14,9 +14,9 @@
     </item>
 
     <item
-        android:id="@+id/pagamento"
-        android:title="Pagamento"
-        android:icon="@drawable/ic_dinheiro">
+        android:id="@+id/aguardando"
+        android:title="Aguardando"
+        android:icon="@drawable/ic_clock">
     </item>
 
     <item

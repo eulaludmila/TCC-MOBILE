@@ -1,9 +1,11 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -41,11 +43,23 @@ class CadastroConfeiteiroActivity : AppCompatActivity() {
 //    var imageBitmap: Bitmap? = null
     var imagePath: String? = null
     var fotoService: FotosService? = null
-    val matrix:Matrix? = null
+    var permission: Array<String>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_confeiteiro)
+
+        permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        requestPermissions(permission, 0)
+
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(permission, 0)
+
+            return
+        }
 
         fotoService = ApiConfig.getFotosService()
 

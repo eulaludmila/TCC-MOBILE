@@ -104,6 +104,21 @@ class RetrofitClient {
             return retrofit
         }
 
+        fun getPedidoAguarde(url: String): Retrofit? {
+            if (retrofit == null) {
+
+                val gson = GsonBuilder()
+                        .setLenient()
+                        .create()
+
+                retrofit = Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+            }
+            return retrofit
+        }
+
     }
 
 

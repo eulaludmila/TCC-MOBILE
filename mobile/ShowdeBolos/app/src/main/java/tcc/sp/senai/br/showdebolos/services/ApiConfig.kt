@@ -42,6 +42,10 @@ class ApiConfig {
             return RetrofitClient.getPedido("http://3.232.178.219:8080/")!!.create(PedidoService::class.java)
         }
 
+        fun getItemPedidoEmAguarde():PedidoService{
+            return RetrofitClient.getPedidoAguarde("http://3.232.178.219:8080/")!!.create(PedidoService::class.java)
+        }
+
     }
 
 
