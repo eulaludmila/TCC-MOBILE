@@ -76,6 +76,7 @@
         <activity android:name=".ProdutosCategoriaActivity" android:theme="@style/noBar"></activity>
         <activity android:name=".PagamentoActivity" ></activity>
         <activity android:name=".CadastroEnderecoClienteActivity"></activity>
+        <activity android:name=".SucessoActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
     </application>
 
 </manifest>

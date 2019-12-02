@@ -110,7 +110,7 @@ class  FirstFragment : Fragment(){
     override fun onResume() {
         super.onResume()
 
-        val tipoPerfil = sharedPreferences!!.getString("tipoPerfil","")
+        val tipoPerfil = sharedPreferences!!.getString("tipoPerfil", "")
 
         if(tipoPerfil == "cliente"){
             cadastrarEnderecoCliente(txt_view_cidade_cliente)
@@ -136,7 +136,7 @@ class  FirstFragment : Fragment(){
 
                 Log.d("LIHAS", response.raw().toString())
 
-                if(perfil!!.isEmpty()){
+                if(0 == perfil!!.size){
                     val builder = android.app.AlertDialog.Builder(this@FirstFragment.context)
                     builder.setTitle("Cadastre um endereço")
 //                    builder.setIcon(R.drawable.ic_erro)

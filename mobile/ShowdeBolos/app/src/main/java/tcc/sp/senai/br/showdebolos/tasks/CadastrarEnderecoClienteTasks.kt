@@ -31,6 +31,8 @@ class CadastrarEnderecoClienteTasks(val enderecoCliente: EnderecoCliente, val to
 
                 .endObject()
 
+        Log.d("JSON_ENDERECO", jsEnderecoCliente.toString())
+
 
         val conexao = url.openConnection() as HttpURLConnection
 

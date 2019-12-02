@@ -9,18 +9,25 @@ import android.support.v4.content.ContextCompat
 import android.support.design.widget.TextInputLayout
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.JsonToken
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_configuracoes_fragment.*
 import kotlinx.android.synthetic.main.activity_pagamento.*
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
+import tcc.sp.senai.br.showdebolos.services.ItemPedidoService
 import tcc.sp.senai.br.showdebolos.tasks.PagamentoTasks
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PagamentoActivity : AppCompatActivity() {
@@ -28,14 +35,19 @@ class PagamentoActivity : AppCompatActivity() {
     var mPreferences: SharedPreferences? = null
     var cliente: EnderecoCliente? = null
     var confeiteiro: EnderecoConfeiteiro? = null
+    var aprovacao:Char = 'E'
+    var itemPedidoService:ItemPedidoService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pagamento)
 
+        itemPedidoService = ApiConfig.getItemPedido()
+
         mPreferences = this!!.getSharedPreferences("idValue", 0)
         val token = mPreferences!!.getString("token","")
-        val idPerfil = mPreferences!!.getString("codCliente","")
+        val idPerfil = mPreferences!!.getString("codUsuario","")
+        val codConfeiteiro = intent.getSerializableExtra("confeiteiro") as Int
 
         try {
             val field = TextInputLayout::class.java.getDeclaredField("defaultStrokeColor")
@@ -69,15 +81,20 @@ class PagamentoActivity : AppCompatActivity() {
         })
 
 
-        val callConfeiteiro = ApiConfig.getConfeiteiroService().buscarConfeiteiro(token, idPerfil)
+        val callConfeiteiro = ApiConfig.getConfeiteiroService().buscarConfeiteiro(token, codConfeiteiro.toString())
 
         callConfeiteiro.enqueue(object : retrofit2.Callback<EnderecoConfeiteiro>{
             override fun onFailure(call: Call<EnderecoConfeiteiro>?, t: Throwable?) {
+
+                Log.d("falha3333", t!!.message)
+
 
             }
 
             override fun onResponse(call: Call<EnderecoConfeiteiro>?, response: Response<EnderecoConfeiteiro>?) {
                 val perfil = response!!.body()
+
+                Log.d("perfil3333", perfil.toString())
 
                 confeiteiro = EnderecoConfeiteiro(perfil!!.codEnderecoConfeiteiro,perfil.confeiteiro,perfil.endereco)
 
@@ -155,12 +172,6 @@ class PagamentoActivity : AppCompatActivity() {
 
         })
 
-
-
-
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -173,6 +184,25 @@ class PagamentoActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    fun fazerPedido(itemPedido: List<ItemPedido>, token: String){
+
+        val call = itemPedidoService!!.fazerPedido(itemPedido, token)
+
+        call.enqueue(object: Callback<ItemPedido>{
+            override fun onFailure(call: Call<ItemPedido>?, t: Throwable?) {
+                Toast.makeText(this@PagamentoActivity,"Deu errado",Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<ItemPedido>?, response: Response<ItemPedido>?) {
+                Toast.makeText(this@PagamentoActivity,"Deu certo",Toast.LENGTH_LONG).show()
+
+                Log.d("pedido2222222", response!!.body().toString())
+
+            }
+
+        })
+
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -186,11 +216,47 @@ class PagamentoActivity : AppCompatActivity() {
 
                 val pagamento = PagamentoTasks(cliente!!,confeiteiro!!,total.toString(),cartao)
 
+                val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val dataHora = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+
+                val dataAtual = data.format(Date())
+                val dataHoraAtual = dataHora.format(Date())
+
+
                 pagamento.execute()
 
                 val retornoPagamento = pagamento.get() as String
 
-                Log.d("pagamento222", retornoPagamento)
+                if(retornoPagamento == "authorized"){
+                    aprovacao = 'A'
+                }else if(retornoPagamento == "refused"){
+                    aprovacao = 'R'
+                }else{
+                    aprovacao = 'R'
+                }
+
+                val itensPedido = arrayListOf<ItemPedido>()
+
+                val produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>
+
+                val pedido = Pedido(0,total,dataAtual,dataHoraAtual,'C','N', aprovacao ,"",cliente!!.cliente!!)
+
+                for (i in 0 until produtos.size){
+
+                    val itemPedido = ItemPedido(0 , produtos[i], produtos[i].quantidade,produtos[i].precoTotal, pedido)
+
+                    itensPedido.add(itemPedido)
+
+                }
+
+                val gson = Gson()
+                val json = gson.toJson(itensPedido)
+//                val produto2 = gson.fromJson<List<ItemPedido>>(json, ItemPedido::class.java)
+
+                fazerPedido(itensPedido,mPreferences!!.getString("token",""))
+
+                Log.d("pagamento222", json.toString())
+                Log.d("pagamento222", itensPedido.toString())
                 Toast.makeText(this, retornoPagamento , Toast.LENGTH_LONG).show()
 
 
