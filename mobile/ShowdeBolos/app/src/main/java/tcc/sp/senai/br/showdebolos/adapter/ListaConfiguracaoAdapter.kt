@@ -50,7 +50,6 @@ class ListaConfiguracaoAdapter (private val itens :List<ListaConfiguracao>,
                 "Histórico" -> "lala"
                 "Pedidos" -> "lala"
                 "Sair" -> {
-                    Toast.makeText(context,"lalalalaala",Toast.LENGTH_LONG).show()
                     mPreferences = context!!.getSharedPreferences("idValue", 0)
                     mEditor = mPreferences!!.edit()
                     mEditor!!.clear()

@@ -5,9 +5,9 @@ import java.io.Serializable
 data class ProdutoDTO (val codProduto:Int,
                        val nomeProduto:String,
                        val descricao:String,
-                       val codConfeiteiro:Int,
+                       val confeiteiro:Int,
                        val foto:String,
-                       val precoTotal:Double,
+                       val preco:Double,
                        val avaliacao:Double,
                        val quantidade:String):Serializable{
 }

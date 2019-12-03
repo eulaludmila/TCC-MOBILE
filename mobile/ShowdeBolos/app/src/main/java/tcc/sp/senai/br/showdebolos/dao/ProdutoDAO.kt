@@ -13,7 +13,7 @@ class ProdutoDAO : SQLiteOpenHelper {
 
     var context: Context? = null
 
-    constructor(context: Context) : super(context, "db_pedido", null, 1) {
+    constructor(context: Context) : super(context, "db_pedido", null, 5) {
         this.context = context
     }
 
@@ -57,7 +57,7 @@ class ProdutoDAO : SQLiteOpenHelper {
 
         val db = writableDatabase
 
-        db.delete("tbl_produto", null ,null);
+        db.delete("tbl_produto", null ,null)
     }
 
     fun getContentValues(produto:ProdutoDTO):ContentValues{
@@ -67,9 +67,9 @@ class ProdutoDAO : SQLiteOpenHelper {
         dados.put("cod_produto", produto.codProduto)
         dados.put("nome_produto", produto.nomeProduto)
         dados.put("descricao", produto.descricao)
-        dados.put("cod_confeiteiro", produto.codConfeiteiro)
+        dados.put("cod_confeiteiro", produto.confeiteiro)
         dados.put("foto", produto.foto)
-        dados.put("preco_total", produto.precoTotal)
+        dados.put("preco_total", produto.preco)
         dados.put("avaliacao", produto.avaliacao)
         dados.put("quantidade", produto.quantidade)
 
@@ -106,8 +106,10 @@ class ProdutoDAO : SQLiteOpenHelper {
         return produtos
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
 
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+
+        onCreate(db)
     }
 
 }

@@ -1,5 +1,7 @@
 package tcc.sp.senai.br.showdebolos
 
+import android.annotation.TargetApi
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
@@ -18,9 +20,12 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_configuracoes_fragment.*
 import kotlinx.android.synthetic.main.activity_pagamento.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
 import tcc.sp.senai.br.showdebolos.model.*
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
 import tcc.sp.senai.br.showdebolos.services.ItemPedidoService
@@ -184,17 +189,21 @@ class PagamentoActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun fazerPedido(itemPedido: List<ItemPedido>, token: String){
+    fun fazerPedido(itemPedido: String, token: String){
 
-        val call = itemPedidoService!!.fazerPedido(itemPedido, token)
+
+
+        val itemBody = RequestBody.create(MediaType.parse("application/json"), itemPedido)
+        val call = itemPedidoService!!.fazerPedido(itemBody, token)
+
 
         call.enqueue(object: Callback<ItemPedido>{
             override fun onFailure(call: Call<ItemPedido>?, t: Throwable?) {
-                Toast.makeText(this@PagamentoActivity,"Deu errado",Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@PagamentoActivity,"Deu errado",Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<ItemPedido>?, response: Response<ItemPedido>?) {
-                Toast.makeText(this@PagamentoActivity,"Deu certo",Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@PagamentoActivity,"Deu certo",Toast.LENGTH_LONG).show()
 
                 Log.d("pedido2222222", response!!.body().toString())
 
@@ -204,6 +213,7 @@ class PagamentoActivity : AppCompatActivity() {
 
     }
 
+    @TargetApi(28)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
@@ -216,12 +226,12 @@ class PagamentoActivity : AppCompatActivity() {
 
                 val pagamento = PagamentoTasks(cliente!!,confeiteiro!!,total.toString(),cartao)
 
-                val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val dataHora = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+                val getData = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-                val dataAtual = data.format(Date())
-                val dataHoraAtual = dataHora.format(Date())
+                val dataAtual = getData.format(Date())
 
+                val data = intent.getStringExtra("data") as String
+                val hora = intent.getStringExtra("hora") as String
 
                 pagamento.execute()
 
@@ -239,11 +249,13 @@ class PagamentoActivity : AppCompatActivity() {
 
                 val produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>
 
-                val pedido = Pedido(0,total,dataAtual,dataHoraAtual,'C','N', aprovacao ,"",cliente!!.cliente!!)
+                Log.d("produtos3333", produtos.toString())
+
+                val pedido = Pedido(0,total,dataAtual, "${data} $hora:00" ,'C','E', aprovacao ,"",cliente!!.cliente!!)
 
                 for (i in 0 until produtos.size){
 
-                    val itemPedido = ItemPedido(0 , produtos[i], produtos[i].quantidade,produtos[i].precoTotal, pedido)
+                    val itemPedido = ItemPedido(0 , produtos[i], produtos[i].quantidade,produtos[i].preco, pedido)
 
                     itensPedido.add(itemPedido)
 
@@ -251,16 +263,37 @@ class PagamentoActivity : AppCompatActivity() {
 
                 val gson = Gson()
                 val json = gson.toJson(itensPedido)
-//                val produto2 = gson.fromJson<List<ItemPedido>>(json, ItemPedido::class.java)
 
-                fazerPedido(itensPedido,mPreferences!!.getString("token",""))
+                Log.d("produtos4444", json.toString())
 
-                Log.d("pagamento222", json.toString())
-                Log.d("pagamento222", itensPedido.toString())
-                Toast.makeText(this, retornoPagamento , Toast.LENGTH_LONG).show()
+                fazerPedido(json,mPreferences!!.getString("token",""))
 
+                if(aprovacao == 'A'){
 
-                finish()
+                    val builder = AlertDialog.Builder(this@PagamentoActivity)
+                    builder.setTitle("Parabéns")
+                    builder.setIcon(R.drawable.ic_erro)
+                    builder.setMessage("Seu pedido foi efetuado com sucesso.\nAguarde a resposta do confeiteiro")
+                    builder.setPositiveButton("OK"){dialog, which ->
+                        val dao = ProdutoDAO(this)
+                        dao.excluirTodos()
+                        finish()
+                    }
+                    builder.show()
+
+                }else if(aprovacao == 'R'){
+
+                    val builder = AlertDialog.Builder(this@PagamentoActivity)
+                    builder.setTitle("Recusado")
+                    builder.setIcon(R.drawable.ic_erro)
+                    builder.setMessage("Verifique problemas causados com o seu banco")
+                    builder.setPositiveButton("OK"){dialog, which ->
+                        finish()
+                    }
+                    builder.show()
+
+                }
+
 
             }
 

@@ -190,7 +190,7 @@ class VisualizarProdutoActivity : AppCompatActivity() {
 
 
             try {
-                    if(produtos[0].codConfeiteiro == produto.confeiteiro.codConfeiteiro){
+                    if(produtos[0].confeiteiro == produto.confeiteiro.codConfeiteiro){
                         for (i in 0 until produtos.size){
                             if(produtos[i].codProduto == produto.codProduto){
                                 val builder = AlertDialog.Builder(this@VisualizarProdutoActivity)

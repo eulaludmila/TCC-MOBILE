@@ -46,7 +46,7 @@ class ProdutoCarrinhoAdapter (private val produtos: List<ProdutoDTO>,
         Log.d("PRODUTO_ADICIONADO", produtos.toString())
 
         holder.nomeProduto.text = produtos[position].nomeProduto
-        holder.precoProduto.text = "R$: " + produtos[position].precoTotal.toString()
+        holder.precoProduto.text = "R$: " + produtos[position].preco.toString()
         holder.quantidade.text = produtos[position].quantidade
 
         var url = produtos[position].foto

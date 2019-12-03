@@ -86,9 +86,9 @@ class CarrinhoFragment : Fragment() {
         for (i in 0 until produtosCarrinho.size){
 
 
-            total += produtosCarrinho[i].precoTotal
+            total += produtosCarrinho[i].preco
 
-            codConfeiteiro = produtosCarrinho[i].codConfeiteiro
+            codConfeiteiro = produtosCarrinho[i].confeiteiro
 
 
         }
@@ -134,7 +134,7 @@ class CarrinhoFragment : Fragment() {
 
         btnConfirmarPedido.setOnClickListener {
 
-            val abrirPagamento = Intent(context, PagamentoActivity::class.java)
+            val abrirPagamento = Intent(context, DataEntregaActivity::class.java)
             abrirPagamento.putExtra("total",total)
             abrirPagamento.putExtra("produtos",produtosCarrinho as Serializable)
             abrirPagamento.putExtra("confeiteiro", codConfeiteiro)
