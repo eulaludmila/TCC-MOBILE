@@ -19,19 +19,29 @@ import android.widget.TextView
 import android.widget.Toast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_carrinho_fragment.*
+import kotlinx.android.synthetic.main.activity_configuracoes_fragment.*
 import kotlinx.android.synthetic.main.activity_perfil_confeiteiro.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tcc.sp.senai.br.showdebolos.adapter.ProdutoCarrinhoAdapter
 import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
+import tcc.sp.senai.br.showdebolos.model.Cliente
 import tcc.sp.senai.br.showdebolos.model.EnderecoConfeiteiro
+import tcc.sp.senai.br.showdebolos.model.Pedido
 import tcc.sp.senai.br.showdebolos.model.ProdutoDTO
 import tcc.sp.senai.br.showdebolos.services.ApiConfig
+import java.io.Serializable
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CarrinhoFragment : Fragment() {
 
     var sharedPreferences:SharedPreferences? = null
+    var cliente:Cliente? = null
+    var codConfeiteiro: Int = 0
 
     @SuppressLint("WrongConstant")
     @RequiresApi(28)
@@ -66,7 +76,7 @@ class CarrinhoFragment : Fragment() {
 
         val dao = ProdutoDAO(context!!)
 
-        val produtosCarrinho = dao.getProdutos()
+        var produtosCarrinho = dao.getProdutos()
 
         val produtoCarrinhoAdapter = ProdutoCarrinhoAdapter(produtosCarrinho, context!!)
 
@@ -76,9 +86,9 @@ class CarrinhoFragment : Fragment() {
         for (i in 0 until produtosCarrinho.size){
 
 
-            total += produtosCarrinho[i].precoTotal
+            total += produtosCarrinho[i].preco
 
-            codConfeiteiro = produtosCarrinho[i].codConfeiteiro
+            codConfeiteiro = produtosCarrinho[i].confeiteiro
 
 
         }
@@ -98,8 +108,10 @@ class CarrinhoFragment : Fragment() {
 
                     val confeiteiro =  response.body()!!
 
+                    codConfeiteiro = confeiteiro.confeiteiro.codConfeiteiro
+
                     txtNomeConfeiteiro.text = "${confeiteiro.confeiteiro.nome} ${confeiteiro.confeiteiro.sobrenome}"
-                    txtEnderecoConfeiteiro.text = "${confeiteiro.endereco.endereco}, nยบ${confeiteiro.endereco.numero} - ${confeiteiro.endereco.bairro}"
+                    txtEnderecoConfeiteiro.text = "${confeiteiro.endereco.endereco}, nº${confeiteiro.endereco.numero} - ${confeiteiro.endereco.bairro}"
                     Picasso.with(img_foto_confeiteiro_carrinho.context).load("http://3.232.178.219${confeiteiro.confeiteiro.foto}").into(img_foto_confeiteiro_carrinho)
 
 
@@ -122,8 +134,10 @@ class CarrinhoFragment : Fragment() {
 
         btnConfirmarPedido.setOnClickListener {
 
-            val abrirPagamento = Intent(context, PagamentoActivity::class.java)
+            val abrirPagamento = Intent(context, DataEntregaActivity::class.java)
             abrirPagamento.putExtra("total",total)
+            abrirPagamento.putExtra("produtos",produtosCarrinho as Serializable)
+            abrirPagamento.putExtra("confeiteiro", codConfeiteiro)
             startActivity(abrirPagamento)
         }
 

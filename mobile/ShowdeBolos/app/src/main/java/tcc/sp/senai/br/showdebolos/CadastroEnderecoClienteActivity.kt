@@ -46,7 +46,7 @@ class CadastroEnderecoClienteActivity : AppCompatActivity() {
         mPreferences = this!!.getSharedPreferences("idValue", 0)
         token = mPreferences!!.getString("token","")
 
-        idPerfil  = mPreferences!!.getString("codCliente","")
+        idPerfil  = mPreferences!!.getString("codUsuario","")
 
 
         val estado = Estado(0,txt_uf_cliente.text.toString(), "")

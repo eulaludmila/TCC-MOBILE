@@ -4,6 +4,7 @@ import java.util.*
 
 data class ItemPedido (val codItemPedido:Int,
                    val produto:ProdutoDTO,
-                   val quantidade: Int,
+                   val quantidade: String,
+                   val valor:Double,
                    val pedido: Pedido){
 }

@@ -225,6 +225,10 @@ class CadastroClienteActivity : AppCompatActivity() {
 
                                 uploadImage(retornoCliente,rotatedBitmap!!)
 
+                                val intent = Intent(this, SucessoActivity::class.java)
+
+                                startActivity(intent)
+
                                 finish()
 
                             },100)
@@ -329,7 +333,6 @@ class CadastroClienteActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 30,stream)
         val image  = stream.toByteArray()
         val imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), image)
-
         val codBody = RequestBody.create(MediaType.parse("text/plain"), cliente.codCliente.toString())
         val body = MultipartBody.Part.createFormData("foto", file.name, imageBody)
 
