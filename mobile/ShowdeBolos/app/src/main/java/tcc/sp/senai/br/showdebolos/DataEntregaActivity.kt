@@ -11,6 +11,8 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_data_entrega.*
 import tcc.sp.senai.br.showdebolos.model.ProdutoDTO
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DataEntregaActivity : AppCompatActivity() {
 
@@ -23,16 +25,21 @@ class DataEntregaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_entrega)
 
+        val c = Calendar.getInstance()
+        c.add(Calendar.DAY_OF_MONTH, 1)
+        calendarView.minDate = c.timeInMillis
+
+        data = calendarView.date.toString()
+
+        total = intent.getSerializableExtra("total") as Double
+        produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>
+        codConfeiteiro = intent.getSerializableExtra("confeiteiro") as Int
+
         calendarView.setOnDateChangeListener { calendarView, ano, mes, dia ->
 
             val mesCerto = mes+1
 
             data = "$ano-$mesCerto-$dia"
-            total = intent.getSerializableExtra("total") as Double
-            produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>
-            codConfeiteiro = intent.getSerializableExtra("confeiteiro") as Int
-
-
 
         }
 

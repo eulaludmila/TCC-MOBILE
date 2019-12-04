@@ -38,37 +38,51 @@ class AguardandoRespostaAdapter (private val pedidos: List<Pedido>,
         return if (pedidos != null) pedidos.size else 0
     }
 
+    fun formatarData(dataBanco:String):String{
+
+        val date = dataBanco.split("-", " ")
+
+        val ano = date [0]
+        val mes = date [1]
+        val dia = date [2]
+
+        val dataBR = "${dia}/${mes}/${ano}"
+
+        return dataBR
+
+    }
+
+
+    fun formatarHora(dataBanco:String): String {
+
+        val date = dataBanco.split("-",":")
+
+        val hora = date [3]
+        val minuto = date [4]
+
+        val horaBR = "${hora}:${minuto}"
+
+        return horaBR
+
+    }
 
     @RequiresApi(28)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
 
+
         holder.nomeCliente.text = "${pedidos[position].cliente.nome} ${pedidos[position].cliente.sobrenome}"
-        holder.codPedido.text = pedidos[position].codPedido.toString()
-        holder.dataEntrega.text = pedidos[position].dataEntrega
-        holder.tipoPagamento.text = pedidos[position].tipoPagamento.toString()
-        holder.total.text = pedidos[position].valorTotal.toString()
+        holder.codPedido.text = "PEDIDO ${pedidos[position].codPedido}"
+        holder.dataEntrega.text = "${formatarData(pedidos[position].dataEntrega)}\n${formatarHora(pedidos[position].dataEntrega)}"
 
-//        holder.quantidade.text = produtos[position].quantidade
-//
-//        var url = produtos[position].foto
-//        Picasso.with(holder!!.fotoProduto.context).cancelRequest(holder!!.fotoProduto)
-//        Picasso.with(holder!!.fotoProduto.context).load("http://3.232.178.219$url").into(holder!!.fotoProduto)
-//
-//        holder.btnExcluir.setOnClickListener {
-//
-//            val dao = ProdutoDAO(context)
-//
-//            dao.excluir(produtos[position])
-//
-//            val listaProdutos = dao.getProdutos()
-//
-//
-//
-//        }
+        if(pedidos[position].tipoPagamento.equals("C")){
+            holder.tipoPagamento.text = "Cartão de Crédito"
+        } else {
+            holder.tipoPagamento.text = "Boleto"
+        }
 
-
+        holder.total.text = "${pedidos[position].valorTotal}"
 
 
     }

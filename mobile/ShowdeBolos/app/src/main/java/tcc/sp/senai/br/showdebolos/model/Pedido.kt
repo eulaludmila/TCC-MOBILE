@@ -11,5 +11,6 @@ data class Pedido (val codPedido:Int,
                    val status:Char,
                    val aprovacao:Char,
                    val observacao:String,
+                   val producao:String,
                    val cliente:Cliente):Serializable{
 }

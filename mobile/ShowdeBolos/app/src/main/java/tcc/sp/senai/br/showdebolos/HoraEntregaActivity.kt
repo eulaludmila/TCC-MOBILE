@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.RequiresApi
+import android.support.design.widget.TextInputLayout
+import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -38,13 +41,24 @@ class HoraEntregaActivity : AppCompatActivity() {
 
         timePicker.setIs24HourView(true)
 
+        try {
+            val field = TextInputLayout::class.java.getDeclaredField("defaultStrokeColor")
+            field.isAccessible = true
+            field.set(layout_txt_observacao, ContextCompat.getColor(layout_txt_observacao.context, R.color.preto))
+        } catch (e: NoSuchFieldException) {
+            Log.w("TAG", "Failed to change box color, item might look wrong")
+        } catch (e: IllegalAccessException) {
+            Log.w("TAG", "Failed to change box color, item might look wrong")
+        }
+        total = intent.getSerializableExtra("total") as Double
+        produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>
+        codConfeiteiro = intent.getSerializableExtra("confeiteiro") as Int
+        data = intent.getStringExtra("data") as String
+
         timePicker.setOnTimeChangedListener { timePicker, hora, minuto ->
 
 
-            total = intent.getSerializableExtra("total") as Double
-            produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>
-            codConfeiteiro = intent.getSerializableExtra("confeiteiro") as Int
-            data = intent.getStringExtra("data") as String
+
             this.hora = "${hora}:${minuto}"
 
 
@@ -77,6 +91,7 @@ class HoraEntregaActivity : AppCompatActivity() {
                 intent.putExtra("total",total)
                 intent.putExtra("produtos",produtos as Serializable)
                 intent.putExtra("confeiteiro", codConfeiteiro)
+                intent.putExtra("observacao", txt_observacao.text.toString())
 
                 startActivity(intent)
                 finish()

@@ -16,9 +16,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 
 import android.widget.TextView
-import android.widget.Toast
 import org.json.JSONObject
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -180,9 +178,9 @@ class  FirstFragment : Fragment(){
 
     }
 
-    fun CarregarCategoriaHome(categorias: List<Categoria> ){
+    fun CarregarCategoriaHome(categorias: List<Categoria>?){
 
-        this.categorias = categorias
+        this.categorias = categorias!!
 
         val categoriaHomeAdapter = CategoriaHomeAdapter(categorias, context!! ,object : CategoriaHomeAdapter.CategoriaOnlickListener{
             override fun onClickCategoria(view: View, index: Int) {
@@ -198,9 +196,9 @@ class  FirstFragment : Fragment(){
 
     }
 
-    fun CarregarProdutosHome(produtos: List<Produto> ){
+    fun CarregarProdutosHome(produtos: List<Produto>?){
 
-        this.produtos = produtos
+        this.produtos = produtos!!
 
         val produtoHomeAdapter = ProdutoHomeAdapter(produtos, context!!)
 
@@ -210,54 +208,66 @@ class  FirstFragment : Fragment(){
 
     fun carregarRecyclerView(){
 
-        val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros(sharedPreferences!!.getString("token", ""))
 
 
-        callConfeiteiro.enqueue(object : Callback<List<EnderecoConfeiteiro>>{
+            val callConfeiteiro = ApiConfig.getConfeiteiroService()!!.buscarConfeiteiros(sharedPreferences!!.getString("token", ""))
 
-            override fun onResponse(call: Call<List<EnderecoConfeiteiro>>, response: Response<List<EnderecoConfeiteiro>>) {
 
-                CarregarConfeiteiroHome(confeiteiros = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
-            }
+            callConfeiteiro.enqueue(object : Callback<List<EnderecoConfeiteiro>>{
 
-            override fun onFailure(call: Call<List<EnderecoConfeiteiro>>?, t: Throwable?) {
-                Log.i("Retrofit33333", t?.message)
-            }
+                override fun onResponse(call: Call<List<EnderecoConfeiteiro>>, response: Response<List<EnderecoConfeiteiro>>) {
 
-        })
+                    CarregarConfeiteiroHome(confeiteiros = response.body()!!)
+                    Log.d("LIHAS", response.raw().toString())
 
-        val callCategoria = ApiConfig.getCategoriaService()!!.buscarCategoria()
+                    Log.i("Retrofit222", "fgfgfgf")
+                }
 
-        callCategoria.enqueue(object : Callback<List<Categoria>>{
+                override fun onFailure(call: Call<List<EnderecoConfeiteiro>>?, t: Throwable?) {
+                    Log.i("Retrofit33333", t?.message)
+                }
 
-            override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
-//
-                CarregarCategoriaHome(categorias = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
-            }
+            })
 
-            override fun onFailure(call: Call<List<Categoria>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
-            }
+            val callCategoria = ApiConfig.getCategoriaService()!!.buscarCategoria()
 
-        })
+            callCategoria.enqueue(object : Callback<List<Categoria>>{
 
-        val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto(sharedPreferences!!.getString("token", ""))
+                override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
 
-        callProduto.enqueue(object : Callback<List<Produto>>{
+                    CarregarCategoriaHome(categorias = response.body())
+                    Log.d("LIHAS", response.raw().toString())
 
-            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
-//
-                CarregarProdutosHome(produtos = response.body()!!)
-                Log.i("Retrofit222", "fgfgfgf")
-            }
+                    Log.i("Retrofit222", "fgfgfgf")
+                }
 
-            override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {
-                Log.i("Retrofit", t?.message)
-            }
+                override fun onFailure(call: Call<List<Categoria>>?, t: Throwable?) {
+                    Log.i("Retrofit", t?.message)
+                }
 
-        })
+            })
+
+            val callProduto = ApiConfig.getProdutoConfeiteiroService()!!.buscarProduto(sharedPreferences!!.getString("token", ""))
+
+            callProduto.enqueue(object : Callback<List<Produto>>{
+
+                override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+    //
+
+                    CarregarProdutosHome(produtos = response.body())
+                    Log.d("LIHAS", response.raw().toString())
+
+
+                    Log.i("Retrofit222", "fgfgfgf")
+                }
+
+                override fun onFailure(call: Call<List<Produto>>?, t: Throwable?) {
+                    Log.i("Retrofit", t?.message)
+                }
+
+            })
+
+
     }
 
     interface ClickBotao{

@@ -8,10 +8,9 @@ class ApiConfig {
     fun APIutils(){}
 
     companion object {
-        val API_URL = "http://3.232.178.219:8080/foto/"
 
         fun getFotosService(): FotosService? {
-            return RetrofitClient.getclient(API_URL)!!.create(FotosService::class.java)
+            return RetrofitClient.getclient("http://3.232.178.219:8080/foto/")!!.create(FotosService::class.java)
         }
 
         fun getConfeiteiroService(): ConfeiteiroService {
@@ -48,6 +47,10 @@ class ApiConfig {
 
         fun getItemPedido():ItemPedidoService{
             return RetrofitClient.getPedidoAguarde("http://3.232.178.219:8080/")!!.create(ItemPedidoService::class.java)
+        }
+
+        fun getPedido():PedidoService{
+            return RetrofitClient.getPedidoCliente("http://3.232.178.219:8080/")!!.create(PedidoService::class.java)
         }
 
     }

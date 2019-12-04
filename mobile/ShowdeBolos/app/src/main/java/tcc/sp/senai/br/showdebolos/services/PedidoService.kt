@@ -14,4 +14,7 @@ interface PedidoService {
     @GET("pedido/aguarde/mobile/{codConfeiteiro}")
     fun buscarItemPedidoEmAguarde(@Path("codConfeiteiro") codConfeiteiro: String, @Header("Authorization") token:String ): Call<List<Pedido>>
 
+    @GET("pedido/cliente/{codCliente}")
+    fun buscarPedidoCliente(@Path("codCliente") codCliente: String, @Header("Authorization") token:String ): Call<List<Pedido>>
+
 }
