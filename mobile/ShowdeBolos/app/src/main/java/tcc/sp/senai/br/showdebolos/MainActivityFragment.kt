@@ -62,7 +62,7 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
             }R.id.aguardando -> {
 
-               // replaceFragment(PedidosAguardandoRespostaFragment())
+               replaceFragment(PedidosFragment())
 
                 return@setOnNavigationItemSelectedListener true
 

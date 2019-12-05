@@ -232,6 +232,7 @@ class PagamentoActivity : AppCompatActivity() {
 
                 val data = intent.getStringExtra("data") as String
                 val hora = intent.getStringExtra("hora") as String
+                val observacao = intent.getStringExtra("observacao") as String
 
                 pagamento.execute()
 
@@ -251,7 +252,7 @@ class PagamentoActivity : AppCompatActivity() {
 
                 Log.d("produtos3333", produtos.toString())
 
-                val pedido = Pedido(0,total,dataAtual, "${data} $hora:00" ,'C','E', aprovacao ,"",cliente!!.cliente!!)
+                val pedido = Pedido(0,total,dataAtual, "${data} $hora:00" ,'C','E', aprovacao ,observacao,"",cliente!!.cliente!!)
 
                 for (i in 0 until produtos.size){
 

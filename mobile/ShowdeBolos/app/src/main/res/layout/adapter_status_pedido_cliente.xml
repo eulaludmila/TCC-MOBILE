@@ -42,39 +42,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cliente"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"
-                    android:textStyle="bold"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="4dp">
-
-                    <TextView
-                        android:id="@+id/txt_pedido_nome_cliente"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Kailany Sousa"
-                        android:textSize="17sp"
-                        android:textColor="@color/preto"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="4dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="Total"
                     android:textSize="17sp"
                     android:textColor="@color/preto"
@@ -145,7 +112,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pagamento"
+                    android:text="Status"
                     android:textSize="17sp"
                     android:textColor="@color/preto"
                     android:textStyle="bold"/>
@@ -156,12 +123,13 @@
                     android:orientation="horizontal"
                     android:layout_margin="4dp">
 
-
                     <TextView
-                        android:id="@+id/txt_pedido_tipo_pagamento"
+                        android:id="@+id/txt_pedido_status_cliente"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cartão de Crédito"
+                        android:text="24/10/2002"
+                        android:lines="2"
+                        android:lineSpacingExtra="8dp"
                         android:textSize="17sp"
                         android:textColor="@color/preto"
                         android:textAlignment="center"/>
@@ -173,29 +141,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="4dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Produção"
+                    android:textSize="17sp"
+                    android:textColor="@color/preto"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:id="@+id/txt_pedido_producao"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="24/10/2002"
+                        android:lines="2"
+                        android:lineSpacingExtra="8dp"
+                        android:textSize="17sp"
+                        android:textColor="@color/preto"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_margin="4dp">
-                <Button
-                    android:id="@+id/btn_recusar_pedido"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:text="Recusar"
-                    android:textSize="14sp"
-                    android:textColor="@color/branco"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/botao_cancelar_radius"/>
-
-                <Button
-                    android:id="@+id/btn_confirmar_pedido"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:text="Aceitar"
-                    android:layout_marginRight="16dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/branco"
-                    android:background="@drawable/botao_confirmar_radius"/>
 
                 <Button
                     android:id="@+id/btn_detalhes_pedido"

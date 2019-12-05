@@ -199,7 +199,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 //                Toast.makeText(this@CadastroClienteActivity, "sexo selecionado $sexoSelecionado", Toast.LENGTH_LONG).show()
 
                 if(validar()){
-                    if(txtSenha.text.toString() == txtConfirmarSenha.text.toString() && txtSenha.text.toString().length > 8 ) {
+                    if(txtSenha.text.toString() == txtConfirmarSenha.text.toString() && txtSenha.text.toString().length >= 8 ) {
 
                         val cliente = Cliente(0,
                                 txtNome.text.toString(),
