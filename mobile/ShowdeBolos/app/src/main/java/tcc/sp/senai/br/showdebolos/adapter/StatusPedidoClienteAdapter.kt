@@ -1,6 +1,7 @@
 package tcc.sp.senai.br.showdebolos.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import android.support.annotation.RequiresApi
 import android.util.Log
 import android.widget.Button
 import tcc.sp.senai.br.showdebolos.CarrinhoFragment
+import tcc.sp.senai.br.showdebolos.DetalhePedidoActivity
 import tcc.sp.senai.br.showdebolos.dao.ProdutoDAO
 import tcc.sp.senai.br.showdebolos.model.ItemPedido
 import tcc.sp.senai.br.showdebolos.model.Pedido
@@ -56,7 +58,7 @@ class StatusPedidoClienteAdapter (private val pedidos: List<Pedido>,
 
     fun formatarHora(dataBanco: String): String {
 
-        val date = dataBanco.split("-", ":")
+        val date = dataBanco.split("-", ":", " ")
 
         val hora = date[3]
         val minuto = date[4]
@@ -72,50 +74,37 @@ class StatusPedidoClienteAdapter (private val pedidos: List<Pedido>,
 
 
         //holder.nomeCliente.text = "${pedidos[position].cliente.nome} ${pedidos[position].cliente.sobrenome}"
-        holder.codPedido.text = "PEDIDO ${pedidos[position].codPedido}"
-        holder.dataEntrega.text = "${formatarData(pedidos[position].dataEntrega)}\n${formatarHora(pedidos[position].dataEntrega)}"
+        holder.codPedido.text = "Nº ${pedidos[position].codPedido}"
+        holder.dataPedido.text = "Pedido efetuado em ${formatarData(pedidos[position].dataSolicitacao)}"
 
-//        if(pedidos[position].status.equals("E")){
-//            holder.status.text = "Esperando resposta do confeiteiro"
-//        } else if(pedidos[position].status.equals("A")){
-//            holder.status.text = "Pedido aprovado"
-//        } else if(pedidos[position].status.equals("R")){
-//            holder.status.text = "Pedido recusado"
-//        }
-
-        if(pedidos[position].producao.equals("")){
-            holder.producao.text = "Não iniciado"
-        } else if(pedidos[position].status.equals("E")){
-            holder.producao.text = "Em andamento"
-        } else if(pedidos[position].status.equals("F")){
-            holder.producao.text = "Finalizado"
+        when {
+            pedidos[position].status == 'E' -> holder.status.text = "Esperando resposta do confeiteiro"
+            pedidos[position].status == 'A' -> holder.status.text = "Pedido aprovado"
+            pedidos[position].status == 'R' -> holder.status.text = "Pedido recusado"
         }
 
-        if (pedidos[position].tipoPagamento.equals("C")) {
-            holder.tipoPagamento.text = "Cartão de Crédito"
-        } else {
-            holder.tipoPagamento.text = "Boleto"
+        holder.itemView.setOnClickListener {
+
+            val intent = Intent(context, DetalhePedidoActivity::class.java)
+            intent.putExtra("pedido", Pedido(pedidos[position].codPedido,pedidos[position].valorTotal,pedidos[position].dataSolicitacao,
+                                            pedidos[position].dataEntrega,pedidos[position].tipoPagamento,pedidos[position].status,pedidos[position].aprovacao,
+                                            pedidos[position].observacao,pedidos[position].producao,pedidos[position].cliente))
+            context.startActivity(intent)
+
         }
 
-        holder.total.text = "${pedidos[position].valorTotal}"
+        holder.total.text = "R$ ${pedidos[position].valorTotal}0".replace(".",",")
 
 
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var codPedido: TextView = itemView.findViewById(R.id.txt_cod_pedido)
-        //var nomeCliente: TextView = itemView.findViewById(R.id.txt_pedido_nome_cliente)
-        var dataEntrega: TextView = itemView.findViewById(R.id.txt_pedido_data_entrega)
-        var tipoPagamento: TextView = itemView.findViewById(R.id.txt_pedido_tipo_pagamento)
-        var total: TextView = itemView.findViewById(R.id.txt_pedido_valor_total)
-        //var status:TextView = itemView.findViewById(R.id.txt_pedido_status_cliente)
-        var producao:TextView = itemView.findViewById(R.id.txt_pedido_producao)
-        //var quantidade:TextView = itemView.findViewById(R.id.txt_pedido_quantidade)
-//        //        var avaliacao: RatingBar = itemView.findViewById(R.id.rt_avaliacao_produto_home)
-//        var fotoProduto: ImageView = itemView.findViewById(R.id.img_produto_carrinho)
-//
-//        var btnExcluir:ImageView = itemView.findViewById(R.id.img_excluir)
+        var codPedido: TextView = itemView.findViewById(R.id.txt_numero_pedido)
+        var total: TextView = itemView.findViewById(R.id.txt_preco_pedido)
+        var status:TextView = itemView.findViewById(R.id.txt_pedido_status_cliente)
+        var dataPedido:TextView = itemView.findViewById(R.id.txt_data_pedido)
+
 
 
     }

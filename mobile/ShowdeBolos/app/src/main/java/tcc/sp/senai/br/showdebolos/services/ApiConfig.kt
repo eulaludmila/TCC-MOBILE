@@ -10,7 +10,7 @@ class ApiConfig {
     companion object {
 
         fun getFotosService(): FotosService? {
-            return RetrofitClient.getclient("http://3.232.178.219:8080/foto/")!!.create(FotosService::class.java)
+            return RetrofitClient.getclient("http://3.232.178.219:8080/")!!.create(FotosService::class.java)
         }
 
         fun getConfeiteiroService(): ConfeiteiroService {

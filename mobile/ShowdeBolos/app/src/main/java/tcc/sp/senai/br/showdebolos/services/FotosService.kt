@@ -13,11 +13,11 @@ import tcc.sp.senai.br.showdebolos.model.Foto
 interface FotosService {
 
     @Multipart
-    @POST("cliente")
+    @POST("foto/cliente")
     fun uploadImageCliente(@Part image: MultipartBody.Part, @Part("codCliente") codCliente: RequestBody): Call<Cliente>
 
     @Multipart
-    @POST("confeiteiro")
+    @POST("foto/confeiteiro")
     fun uploadImageConfeiteiro(@Part image: MultipartBody.Part, @Part("codConfeiteiro") codConfeiteiro: RequestBody): Call<Confeiteiro>
 
 }

@@ -1,5 +1,7 @@
 package tcc.sp.senai.br.showdebolos.model
 
+import java.io.Serializable
+
 data class Cliente (val codCliente: Int,
                     val nome: String,
                     val sobrenome: String,
@@ -9,7 +11,7 @@ data class Cliente (val codCliente: Int,
                     val senha: String,
                     val celular: Celular,
                     val sexo: String,
-                    val foto: String){
+                    val foto: String): Serializable{
 
 
 
