@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".MyApp"
@@ -82,7 +84,15 @@
             android:name=".SucessoActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity android:name=".DataEntregaActivity" />
-        <activity android:name=".HoraEntregaActivity"></activity>
+        <activity android:name=".HoraEntregaActivity" />
+        <activity
+            android:name=".DetalhePedidoActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".SucessoPedidoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+        <activity android:name=".RecusadoPedidoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
     </application>
 
 </manifest>

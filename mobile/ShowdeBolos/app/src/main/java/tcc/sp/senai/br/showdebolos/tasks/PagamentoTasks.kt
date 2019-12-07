@@ -160,6 +160,9 @@ class PagamentoTasks(val enderecoCliente: EnderecoCliente,
         }catch (e:FileNotFoundException){
             e.printStackTrace()
             Log.d("erro2222", e.message)
+            status = "E"
+            return status
+
         }
 
         return status

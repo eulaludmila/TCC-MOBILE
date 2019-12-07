@@ -1,200 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
         android:orientation="vertical"
+        android:padding="16dp"
         android:background="@drawable/borda_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="16dp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txt_numero_pedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:layout_weight="1"
+                android:text="Nº 3265944"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_cod_pedido"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pedido 20"
-                    android:textSize="20sp"
-                    android:textColor="@color/preto"
-                    android:textStyle="bold"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txt_preco_pedido"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="4dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"
-                    android:textStyle="bold"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="4dp">
-
-                    <TextView
-                        android:id="@+id/txt_pedido_valor_total"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="R$ 20,00"
-                        android:textSize="17sp"
-                        android:textColor="@color/preto"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="4dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Retirada às"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"
-                    android:textStyle="bold"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="4dp">
-
-                    <TextView
-                        android:id="@+id/txt_pedido_data_entrega"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="24/10/2002"
-                        android:lines="2"
-                        android:lineSpacingExtra="8dp"
-                        android:textSize="17sp"
-                        android:textColor="@color/preto"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="4dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"
-                    android:textStyle="bold"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="4dp">
-
-                    <TextView
-                        android:id="@+id/txt_pedido_status_cliente"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="24/10/2002"
-                        android:lines="2"
-                        android:lineSpacingExtra="8dp"
-                        android:textSize="17sp"
-                        android:textColor="@color/preto"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="4dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Produção"
-                    android:textSize="17sp"
-                    android:textColor="@color/preto"
-                    android:textStyle="bold"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="4dp">
-
-                    <TextView
-                        android:id="@+id/txt_pedido_producao"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="24/10/2002"
-                        android:lines="2"
-                        android:lineSpacingExtra="8dp"
-                        android:textSize="17sp"
-                        android:textColor="@color/preto"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="4dp">
-
-                <Button
-                    android:id="@+id/btn_detalhes_pedido"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:text="Detalhes"
-                    android:textSize="14sp"
-                    android:textColor="@color/branco"
-                    android:background="@drawable/botao_detalhes_radius"/>
-
-            </LinearLayout>
+                android:layout_weight="1"
+                android:text="R$: 50,00"
+                android:textAlignment="viewEnd"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/txt_pedido_status_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:text="Esperando resposta"
+            android:textColor="@color/escuro"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txt_data_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pedido efetuado em 28/11/2019"
+            android:textSize="12sp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

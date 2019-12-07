@@ -24,7 +24,16 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_fragment)
 
-        openFirst()
+        val pedido = intent.getStringExtra("pedido")
+
+        if (pedido == "A"){
+            replaceFragment(PedidosFragment())
+            bottomNavigation.selectedItemId = R.id.aguardando
+
+        }else{
+            openFirst()
+        }
+
 
 
         /*val view = inflater.inflate(R.layout.activity_first_fragment, container, false)
@@ -89,6 +98,8 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
         replaceFragment(f)
     }
 
+
+
     fun replaceFragment(fragment: Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.layout_fragment, fragment)
@@ -96,6 +107,7 @@ class MainActivityFragment : AppCompatActivity(), FirstFragment.ClickBotao  {
 
 
     }
+
 
     override fun onBackPressed() {
         if (bottomNavigation.selectedItemId !== R.id.inicio) {

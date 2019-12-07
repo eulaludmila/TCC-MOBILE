@@ -159,9 +159,9 @@ class  FirstFragment : Fragment(){
     }
 
 
-    fun CarregarConfeiteiroHome(confeiteiros: List<EnderecoConfeiteiro> ){
+    fun CarregarConfeiteiroHome(confeiteiros: List<EnderecoConfeiteiro>?){
 
-        this.confeiteiros = confeiteiros
+        this.confeiteiros = confeiteiros!!
 
         val confeiteiroHomeAdapter = ConfeiteiroHomeAdapter(confeiteiros, context ,object : ConfeiteiroHomeAdapter.ConfeiteiroOnlickListener{
             override fun onClickConfeiteiro(view: View, index: Int) {
@@ -215,9 +215,9 @@ class  FirstFragment : Fragment(){
 
             callConfeiteiro.enqueue(object : Callback<List<EnderecoConfeiteiro>>{
 
-                override fun onResponse(call: Call<List<EnderecoConfeiteiro>>, response: Response<List<EnderecoConfeiteiro>>) {
+                override fun onResponse(call: Call<List<EnderecoConfeiteiro>>, response: Response<List<EnderecoConfeiteiro>>?) {
 
-                    CarregarConfeiteiroHome(confeiteiros = response.body()!!)
+                    CarregarConfeiteiroHome(confeiteiros = response!!.body())
                     Log.d("LIHAS", response.raw().toString())
 
                     Log.i("Retrofit222", "fgfgfgf")
@@ -233,9 +233,9 @@ class  FirstFragment : Fragment(){
 
             callCategoria.enqueue(object : Callback<List<Categoria>>{
 
-                override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
+                override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>?) {
 
-                    CarregarCategoriaHome(categorias = response.body())
+                    CarregarCategoriaHome(categorias = response!!.body())
                     Log.d("LIHAS", response.raw().toString())
 
                     Log.i("Retrofit222", "fgfgfgf")
@@ -251,10 +251,10 @@ class  FirstFragment : Fragment(){
 
             callProduto.enqueue(object : Callback<List<Produto>>{
 
-                override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+                override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>?) {
     //
 
-                    CarregarProdutosHome(produtos = response.body())
+                    CarregarProdutosHome(produtos = response!!.body())
                     Log.d("LIHAS", response.raw().toString())
 
 

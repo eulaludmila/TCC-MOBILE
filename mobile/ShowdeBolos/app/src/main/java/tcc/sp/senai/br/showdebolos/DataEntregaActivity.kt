@@ -29,7 +29,12 @@ class DataEntregaActivity : AppCompatActivity() {
         c.add(Calendar.DAY_OF_MONTH, 1)
         calendarView.minDate = c.timeInMillis
 
-        data = calendarView.date.toString()
+        val formataData = SimpleDateFormat("yyyy-MM-dd")
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = calendarView.date
+
+        data = formataData.format(calendar.time)
+
 
         total = intent.getSerializableExtra("total") as Double
         produtos = intent.getSerializableExtra("produtos") as List<ProdutoDTO>

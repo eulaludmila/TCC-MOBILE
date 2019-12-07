@@ -13,6 +13,6 @@ interface ItemPedidoService {
     fun fazerPedido(@Body produto: RequestBody, @Header("authorization") token:String): Call<ItemPedido>
 
     @GET("itemPedido/{codPedido}")
-    fun buscarItensPedido(@Path("codPedido") codPedido: Int, @Header("Authorization") token:String ): Call<JsonArray>
+    fun buscarItensPedido(@Path("codPedido") codPedido: Int, @Header("Authorization") token:String ): Call<List<ItemPedido>>
 
 }

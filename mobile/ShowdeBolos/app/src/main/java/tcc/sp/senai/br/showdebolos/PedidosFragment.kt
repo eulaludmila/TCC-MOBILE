@@ -116,6 +116,7 @@ class PedidosFragment : Fragment() {
                     if(listaPedidos != null){
 
                         CarregarPedidos(listaPedidos, view, tipoPerfil)
+                        Log.d("pedido4444", listaPedidos.toString())
 
                     }
 
